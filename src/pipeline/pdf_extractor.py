@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from pdf2image import convert_from_path
 import pytesseract
-from src.pipeline.preprocess import preprocess_image
+from pipeline.preprocess import preprocess_image
 import fitz  # PyMuPDF
 
 def extract_text_from_pdf_ocr(pdf_path):
@@ -59,3 +59,19 @@ def is_pdf_text_based(pdf_path, min_char_threshold=10):
         if len(text.strip()) >= min_char_threshold:
             return True
     return False
+
+
+def extract_text_from_pdf(pdf_path):
+    """
+    Automatically detect PDF type and extract text using the appropriate method.
+
+    Args:
+        pdf_path (str): Path to the PDF file.
+
+    Returns:
+        str: Extracted text.
+    """
+    if is_pdf_text_based(pdf_path):
+        return extract_text_directly(pdf_path)
+    else:
+        return extract_text_from_pdf_ocr(pdf_path)
