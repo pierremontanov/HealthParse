@@ -13,11 +13,11 @@ class ResultSchema(BaseModel):
     exam_date: str = Field(..., description="Date of the exam or test")
     findings: str = Field(..., description="Clinical findings described in the document")
     impression: Optional[str] = Field(None, description="Final interpretation or diagnosis")
-    
-    radiologist: str = Field(..., description="Name of the doctor who validated the report")
+
+    professional: str = Field(..., description="Name of the doctor who validated the report")
     institution: Optional[str] = Field(None, description="Name of the clinic or institution where the study was performed")
     notes: Optional[str] = Field(None, description="Additional observations")
 
     class Config:
-        anystr_strip_whitespace = True
+        str_strip_whitespace = True
         extra = "forbid"
