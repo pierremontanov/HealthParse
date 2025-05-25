@@ -1,0 +1,19 @@
+{
+  "patient_name": "Carlos Ruiz",
+  "patient_id": "88997766",
+  "date": "2024-05-25",
+  "doctor_name": "Dr. Andrés López",
+  "institution": "Clínica Central",
+  "additional_notes": "Paciente con hipertensión controlada.",
+  "items": [
+    {
+      "type": "medicine",
+      "name": "Losartán 50mg",
+      "notes": "Tomar en la mañana",
+      "dosage": "50mg",
+      "frequency": "1 vez al día",
+      "route": "oral",
+      "duration": "30 días"
+    }
+  ]
+}

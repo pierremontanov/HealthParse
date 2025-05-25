@@ -1,0 +1,19 @@
+{
+  "patient_name": "Lucía Hernández",
+  "patient_id": "55667788",
+  "age": 63,
+  "sex": "F",
+  "date_of_birth": "1960-01-15",
+  "consultation_date": "2024-05-24",
+  "chief_complaint": "Dolor torácico intermitente",
+  "medical_history": "Antecedentes de hipertensión y dislipidemia.",
+  "current_medications": [
+    "Atorvastatina",
+    "Losartán"
+  ],
+  "physical_exam": "PA 135/85, FC 82, sin hallazgos anormales.",
+  "assessment": "Dolor torácico no relacionado a esfuerzo. Posible origen musculoesquelético.",
+  "plan": "Indicar AINE por 5 días, control en 1 semana.",
+  "doctor_name": "Dra. Marcela Gómez",
+  "institution": "Centro Médico Vida"
+}

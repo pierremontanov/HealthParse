@@ -1,0 +1,58 @@
+{
+  "patient_name": "Ana Torres",
+  "patient_id": "11223344",
+  "date": "2024-05-25",
+  "doctor_name": "Dr. Natalia Pineda",
+  "institution": "Hospital San Marcos",
+  "additional_notes": "Múltiples derivaciones según sintomatología.",
+  "items": [
+    {
+      "type": "medicine",
+      "name": "Paracetamol 500mg",
+      "notes": "Tomar después de las comidas",
+      "dosage": "500mg",
+      "frequency": "cada 8 horas",
+      "route": "oral",
+      "duration": "5 días"
+    },
+    {
+      "type": "radiology",
+      "name": "Radiografía de tórax",
+      "notes": "Descartar neumonía",
+      "modality": "RX",
+      "body_part": "tórax"
+    },
+    {
+      "type": "lab_test",
+      "name": "Examen de sangre",
+      "notes": "Ayuno requerido",
+      "test_type": "Hemograma completo",
+      "parameters": [
+        "glóbulos rojos",
+        "glóbulos blancos",
+        "plaquetas"
+      ]
+    },
+    {
+      "type": "specialist",
+      "name": "Consulta con neumólogo",
+      "notes": "Solicitar cita prioritaria",
+      "specialty": "neumología",
+      "reason": "tos persistente"
+    },
+    {
+      "type": "procedure",
+      "name": "Fisioterapia respiratoria",
+      "notes": "Realizar en sede principal",
+      "therapy_type": "respiratoria",
+      "body_part": "pulmones",
+      "frequency": "3 veces por semana",
+      "duration": "2 semanas"
+    },
+    {
+      "type": "other",
+      "name": "Dieta blanda por 7 días",
+      "notes": "Evitar alimentos grasos"
+    }
+  ]
+}
