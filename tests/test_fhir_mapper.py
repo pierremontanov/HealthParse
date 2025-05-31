@@ -1,5 +1,7 @@
 import sys
 import os
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.fhir_mapper import map_to_fhir_loose
@@ -7,30 +9,32 @@ from pipeline.validation.schemas import ResultSchema
 from pipeline.validation.prescription_schema import Prescription
 from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
 
-def test_result_mapping():
-    result = ResultSchema(
+
+@pytest.fixture
+def result_schema_sample():
+    return ResultSchema(
         patient_name="Juan Perez",
         patient_id="12345",
         age=50,
         sex="M",
-        date_of_birth="1973-02-15",
+        date_of_birth="15-02-1973",
         exam_type="CR",
         study_area="Torax",
-        exam_date="2024-06-01",
+        exam_date="01-06-2024",
         findings="Infiltrados pulmonares visibles.",
         impression="Posible neumonía.",
         professional="Dra. Clara Gómez",
         institution="Hospital Nacional",
         notes="Requiere seguimiento clínico."
     )
-    print("\n🧪 FHIR Output for Result:")
-    print(map_to_fhir_loose(result))
 
-def test_prescription_mapping():
-    prescription = Prescription(
+
+@pytest.fixture
+def prescription_sample():
+    return Prescription(
         patient_name="Carlos Ruiz",
         patient_id="88997766",
-        date="2024-05-25",
+        date="25-05-2024",
         doctor_name="Dr. Andrés López",
         institution="Clínica Central",
         additional_notes="Paciente con hipertensión controlada.",
@@ -46,17 +50,17 @@ def test_prescription_mapping():
             }
         ]
     )
-    print("\n🧪 FHIR Output for Prescription:")
-    print(map_to_fhir_loose(prescription))
 
-def test_clinical_history_mapping():
-    clinical = ClinicalHistorySchema(
+
+@pytest.fixture
+def clinical_history_sample():
+    return ClinicalHistorySchema(
         patient_name="Lucía Méndez",
         patient_id="99887766",
         age=42,
         sex="F",
-        date_of_birth="1982-09-13",
-        consultation_date="2024-05-10",
+        date_of_birth="13-09-1982",
+        consultation_date="10-05-2024",
         chief_complaint="Dolor abdominal persistente.",
         medical_history="Antecedente de gastritis.",
         current_medications=["Omeprazol 20mg"],
@@ -66,10 +70,26 @@ def test_clinical_history_mapping():
         doctor_name="Dr. Jorge Méndez",
         institution="Centro Médico Colonial"
     )
-    print("\n🧪 FHIR Output for Clinical History:")
-    print(map_to_fhir_loose(clinical))
 
-if __name__ == "__main__":
-    test_result_mapping()
-    test_prescription_mapping()
-    test_clinical_history_mapping()
+
+def test_result_to_fhir_fields(result_schema_sample):
+    fhir = map_to_fhir_loose(result_schema_sample)
+    assert fhir["resourceType"] == "DiagnosticReport"
+    assert fhir["subject"]["name"] == result_schema_sample.patient_name
+    assert fhir["effectiveDateTime"] == "2024-06-01"
+    assert fhir["conclusion"] == result_schema_sample.impression
+
+
+def test_prescription_to_fhir_fields(prescription_sample):
+    fhir = map_to_fhir_loose(prescription_sample)
+    assert fhir["resourceType"] == "MedicationRequest"
+    assert fhir["subject"]["identifier"]["value"] == prescription_sample.patient_id
+    assert fhir["contained"][0]["resourceType"] == "Medication"
+
+
+def test_clinical_history_to_fhir_fields(clinical_history_sample):
+    fhir = map_to_fhir_loose(clinical_history_sample)
+    assert fhir["resourceType"] == "Encounter"
+    assert fhir["subject"]["display"] == clinical_history_sample.patient_name
+    assert fhir["period"]["start"] == "2024-05-10"
+    assert fhir["note"][0]["text"] == clinical_history_sample.plan
