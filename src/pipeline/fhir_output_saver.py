@@ -1,7 +1,9 @@
 import os
 import json
+import logging
 from pipeline.fhir_mapper import map_to_fhir_loose
 
+logger = logging.getLogger(__name__)
 
 def save_fhir_output(document, output_path):
     """
@@ -17,4 +19,4 @@ def save_fhir_output(document, output_path):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(fhir_data, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ FHIR JSON saved to: {output_path}")
+    logger.info(f"FHIR JSON saved to: {output_path}")
