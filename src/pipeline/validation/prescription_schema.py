@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Optional, List, Union, Literal
 
 
-# Enum-like types
+# Enum for types
 class PrescriptionType(str):
     MEDICINE = "medicine"
     RADIOLOGY = "radiology"
@@ -12,52 +12,53 @@ class PrescriptionType(str):
     OTHER = "other"
 
 
-# Base item schema
+# Base model for shared fields
 class BasePrescriptionItem(BaseModel):
     type: str
     name: str = Field(..., description="Name of the prescribed item")
     notes: Optional[str] = Field(None, description="Optional notes or instructions")
 
 
+# Specialized subtypes
 class MedicineItem(BasePrescriptionItem):
     type: Literal["medicine"]
-    dosage: Optional[str] = Field(None, description="Dosage amount or strength")
-    frequency: Optional[str] = Field(None, description="Frequency of intake")
-    route: Optional[str] = Field(None, description="Route of administration")
-    duration: Optional[str] = Field(None, description="Duration of treatment")
+    dosage: Optional[str]
+    frequency: Optional[str]
+    route: Optional[str]
+    duration: Optional[str]
 
 
 class TherapyItem(BasePrescriptionItem):
     type: Literal["procedure"]
-    therapy_type: Optional[str] = Field(None, description="Type of therapy")
-    body_part: Optional[str] = Field(None, description="Targeted body part")
-    frequency: Optional[str] = Field(None, description="Therapy frequency")
-    duration: Optional[str] = Field(None, description="Duration of therapy")
+    therapy_type: Optional[str]
+    body_part: Optional[str]
+    frequency: Optional[str]
+    duration: Optional[str]
 
 
 class RadiologyItem(BasePrescriptionItem):
     type: Literal["radiology"]
-    modality: Optional[str] = Field(None, description="Imaging modality")
-    body_part: Optional[str] = Field(None, description="Imaged body part")
+    modality: Optional[str]
+    body_part: Optional[str]
 
 
 class SpecialistItem(BasePrescriptionItem):
     type: Literal["specialist"]
-    specialty: Optional[str] = Field(None, description="Medical specialty")
-    reason: Optional[str] = Field(None, description="Reason for referral")
+    specialty: Optional[str]
+    reason: Optional[str]
 
 
 class LabTestItem(BasePrescriptionItem):
     type: Literal["lab_test"]
-    test_type: Optional[str] = Field(None, description="Type of lab test")
-    parameters: Optional[List[str]] = Field(None, description="Test parameters")
+    test_type: Optional[str]
+    parameters: Optional[List[str]]
 
 
 class GenericItem(BasePrescriptionItem):
     type: Literal["other"]
 
 
-# Union type
+# Union of all items
 PrescriptionItem = Union[
     MedicineItem,
     TherapyItem,
@@ -68,16 +69,12 @@ PrescriptionItem = Union[
 ]
 
 
-# Final prescription schema
+# Complete prescription schema
 class Prescription(BaseModel):
-    patient_name: Optional[str] = Field(None, description="Full name of the patient")
-    patient_id: Optional[str] = Field(None, description="Patient ID or document number")
-    date: Optional[str] = Field(None, description="Date of the prescription")
-    doctor_name: Optional[str] = Field(None, description="Doctor issuing the prescription")
-    institution: Optional[str] = Field(None, description="Name of the issuing clinic or hospital")
-    additional_notes: Optional[str] = Field(None, description="General comments")
-    items: List[PrescriptionItem] = Field(..., description="List of prescribed items")
-
-    class Config:
-        anystr_strip_whitespace = True
-        extra = "forbid"
+    patient_name: Optional[str]
+    patient_id: Optional[str]
+    date: Optional[str]
+    doctor_name: Optional[str]
+    institution: Optional[str]
+    additional_notes: Optional[str]
+    items: List[PrescriptionItem]
