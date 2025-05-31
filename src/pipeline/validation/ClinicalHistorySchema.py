@@ -6,9 +6,9 @@ class ClinicalHistorySchema(BaseModel):
     patient_id: Optional[str] = Field(None, description="Patient ID or document number")
     age: Optional[int] = Field(None, description="Patient's age")
     sex: Optional[str] = Field(None, description="Gender: M/F/Other")
-    date_of_birth: Optional[str] = Field(None, description="Date of birth in dd-mm-yyyy format")
+    date_of_birth: Optional[str] = Field(None, description="ISO 8601 date format (yyyy-mm-dd)")
 
-    consultation_date: str = Field(..., description="Date of consultation")
+    consultation_date: str = Field(..., description="ISO 8601 consultation date")
     chief_complaint: Optional[str] = Field(None, description="Primary reason for the visit")
     medical_history: Optional[str] = Field(None, description="Relevant past medical/surgical history")
     current_medications: Optional[List[str]] = Field(None, description="List of current medications")
@@ -20,5 +20,5 @@ class ClinicalHistorySchema(BaseModel):
     institution: Optional[str] = Field(None, description="Clinic or hospital name")
 
     class Config:
-        anystr_strip_whitespace = True
+        str_strip_whitespace = True
         extra = "forbid"
