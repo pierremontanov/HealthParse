@@ -1,11 +1,15 @@
 import sys
 import os
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.validation.validator import validate_clinical_history
+from pydantic import ValidationError
 
-def test_validate_clinical_history():
-    data = {
+@pytest.fixture
+def valid_clinical_history_data():
+    return {
         "patient_name": "Laura Gómez",
         "patient_id": "123456789",
         "age": 52,
@@ -22,5 +26,8 @@ def test_validate_clinical_history():
         "institution": "Hospital General"
     }
 
-    validated = validate_clinical_history(data)
-    print("✅ Clinical history schema validated:", validated)
+def test_validate_clinical_history(valid_clinical_history_data):
+    validated = validate_clinical_history(valid_clinical_history_data)
+    assert validated.patient_name == "Laura Gómez"
+    assert validated.sex == "F"
+    assert validated.doctor_name.startswith("Dra.")

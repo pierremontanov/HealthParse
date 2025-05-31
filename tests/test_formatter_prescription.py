@@ -1,5 +1,8 @@
 import sys
 import os
+import pytest
+import json
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.validation.prescription_schema import (
@@ -13,8 +16,9 @@ from pipeline.validation.prescription_schema import (
 )
 from pipeline.output_formatter import save_json_output
 
-def run_prescription_test_all_types():
-    prescription = Prescription(
+@pytest.fixture
+def sample_prescription():
+    return Prescription(
         patient_name="Ana Torres",
         patient_id="11223344",
         date="2024-05-25",
@@ -69,11 +73,15 @@ def run_prescription_test_all_types():
         ]
     )
 
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    output_path = os.path.join(project_root, "output", "formatted_prescription.json")
+def test_save_formatted_prescription(tmp_path, sample_prescription):
+    output_path = tmp_path / "formatted_prescription.json"
+    save_json_output(sample_prescription, str(output_path))
+    
+    assert output_path.exists(), "Output JSON file was not created"
+    
+    with open(output_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-    save_json_output(prescription, output_path)
-    print(f"✅ Formatted prescription with all item types saved to: {output_path}")
-
-if __name__ == "__main__":
-    run_prescription_test_all_types()
+    assert data["patient_name"] == "Ana Torres"
+    assert len(data["items"]) == 6
+    assert data["items"][0]["type"] == "medicine"

@@ -1,12 +1,16 @@
 import sys
 import os
+import json
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
 from pipeline.output_formatter import save_json_output
 
-def run_clinical_history_test():
-    example_history = ClinicalHistorySchema(
+@pytest.fixture
+def clinical_history_example():
+    return ClinicalHistorySchema(
         patient_name="Lucía Hernández",
         patient_id="55667788",
         age=63,
@@ -23,11 +27,15 @@ def run_clinical_history_test():
         institution="Centro Médico Vida"
     )
 
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    output_path = os.path.join(project_root, "output", "formatted_clinical_history_output.json")
+def test_save_clinical_history_output(clinical_history_example, tmp_path):
+    output_path = tmp_path / "formatted_clinical_history_output.json"
+    save_json_output(clinical_history_example, str(output_path))
 
-    save_json_output(example_history, output_path)
-    print(f"✅ Formatted clinical history output saved to: {output_path}")
+    assert output_path.exists()
 
-if __name__ == "__main__":
-    run_clinical_history_test()
+    with open(output_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data["patient_name"] == "Lucía Hernández"
+    assert data["doctor_name"] == "Dra. Marcela Gómez"
+    assert data["institution"] == "Centro Médico Vida"
