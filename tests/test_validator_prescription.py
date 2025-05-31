@@ -1,8 +1,11 @@
 import sys
 import os
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.validation.validator import validate_prescription
+from pipeline.validation.prescription_schema import Prescription
 
 def test_validate_prescription():
     test_data = {
@@ -26,4 +29,7 @@ def test_validate_prescription():
     }
 
     result = validate_prescription(test_data)
-    print("✅ Prescription schema validated:", result)
+    assert isinstance(result, Prescription)
+    assert result.patient_name == "Carlos Ruiz"
+    assert result.items[0].type == "medicine"
+    assert result.items[0].name == "Losartán 50mg"

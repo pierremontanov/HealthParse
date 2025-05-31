@@ -1,12 +1,18 @@
+# test_formatter_result.py
+
 import sys
 import os
+import json
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from pipeline.validation.schemas import ResultSchema
 from pipeline.output_formatter import format_document, save_json_output
 
-def run_formatter_test():
-    example_result = ResultSchema(
+@pytest.fixture
+def example_result():
+    return ResultSchema(
         patient_name="Gloria Ines Montaño Villada",
         patient_id="24314628",
         age=71,
@@ -22,11 +28,15 @@ def run_formatter_test():
         notes="No se evidencian fracturas."
     )
 
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    output_path = os.path.join(project_root, "output", "formatted_result_output.json")
+def test_result_formatter_output(tmp_path, example_result):
+    output_path = tmp_path / "formatted_result_output.json"
+    save_json_output(example_result, str(output_path))
 
-    save_json_output(example_result, output_path)
-    print(f"✅ Formatted output saved to: {output_path}")
+    assert output_path.exists(), "Output file was not created"
 
-if __name__ == "__main__":
-    run_formatter_test()
+    with open(output_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data["patient_name"] == "Gloria Ines Montaño Villada"
+    assert data["exam_type"] == "CR"
+    assert data["institution"] == "Centro Médico San José"
