@@ -1,0 +1,16 @@
+```mermaid
+graph TD
+    A[Document Intake] --> B[Extension Filter]
+    B --> C{PDF?}
+    C -- Yes --> D[Sample & Detect PDF Language]
+    D --> E{Text-based?}
+    E -- Yes --> F[Direct Text Extraction (PyMuPDF)]
+    E -- No --> G[OCR Pipeline (pdf2image + Tesseract)]
+    F --> H[Language Finalisation]
+    G --> H
+    C -- No --> I[Image OCR]
+    H --> J[Preprocess & Normalise Text]
+    J --> K[Validation & Structuring]
+    K --> L[FHIR Mapping]
+    L --> M[Persist Outputs]
+```
