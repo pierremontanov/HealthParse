@@ -1,15 +1,24 @@
-from langdetect import detect, DetectorFactory
+"""Backwards compatible language utilities built on top of the central
+language detection module."""
+from src.pipeline.language import (
+    PDFLanguageDetection,
+    detect_language,
+    detect_pdf_language,
+)
 
-DetectorFactory.seed = 0  # ensures consistent results
-
-def detect_language(text: str) -> str:
-    try:
-        return detect(text)
-    except Exception:
-        return "en"  # fallback
 
 def is_english(text: str) -> bool:
     return detect_language(text) == "en"
 
+
 def is_spanish(text: str) -> bool:
     return detect_language(text) == "es"
+
+
+__all__ = [
+    "detect_language",
+    "detect_pdf_language",
+    "PDFLanguageDetection",
+    "is_english",
+    "is_spanish",
+]
