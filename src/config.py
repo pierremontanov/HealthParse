@@ -165,6 +165,16 @@ class DocIQSettings(BaseSettings):
         "json", description="Default export format."
     )
 
+    # ── FHIR ─────────────────────────────────────────────────────
+    fhir_bundle: bool = Field(
+        True,
+        description="Write a combined FHIR Bundle alongside individual resources.",
+    )
+    fhir_output_dir: str = Field(
+        "dociq_fhir",
+        description="Sub-directory name for FHIR output within output_dir.",
+    )
+
     # ── API ───────────────────────────────────────────────────────
     api_host: str = Field("0.0.0.0", description="FastAPI bind host.")
     api_port: int = Field(8000, ge=1, le=65535, description="FastAPI bind port.")

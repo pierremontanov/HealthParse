@@ -273,7 +273,7 @@ class TestDocIQEngineExport:
         with open(fhir_file) as f:
             data = json.load(f)
         assert data["resourceType"] == "DiagnosticReport"
-        assert data["subject"]["name"] == "Test Patient"
+        assert data["subject"]["display"] == "Test Patient"
 
     def test_export_fhir_skips_unclassified(self, tmp_path):
         items = [

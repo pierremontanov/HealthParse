@@ -179,12 +179,15 @@ def export_fhir(
     output_dir: str,
     *,
     dirname: str | None = None,
+    bundle: bool = True,
 ) -> str:
     """Export results as FHIR-mapped JSON resources.
 
     Each document whose type is recognised and whose ``extracted_data``
     can be validated is converted to a loose FHIR resource and saved as
-    a ``<stem>_fhir.json`` file.
+    a ``<stem>_fhir.json`` file.  When *bundle* is ``True`` (default),
+    a ``bundle.json`` containing all successfully-mapped resources is
+    also written.
 
     Parameters
     ----------
@@ -194,18 +197,23 @@ def export_fhir(
         Parent directory.
     dirname : str, optional
         Sub-directory name.  Defaults to ``dociq_fhir``.
+    bundle : bool
+        When ``True`` (default), also write a FHIR Bundle that wraps
+        every individual resource.
 
     Returns
     -------
     str
         Path to the output sub-directory.
     """
-    from src.pipeline.fhir_mapper import map_to_fhir_loose
+    from src.pipeline.fhir_mapper import build_fhir_bundle, map_to_fhir_loose
 
     fhir_dir = Path(output_dir) / (dirname or "dociq_fhir")
     fhir_dir.mkdir(parents=True, exist_ok=True)
 
     exported = 0
+    all_resources: List[dict] = []
+
     for item in items:
         doc_type = item.get("document_type")
         data = item.get("extracted_data")
@@ -215,13 +223,24 @@ def export_fhir(
             model_cls = _SCHEMA_MAP[doc_type]
             model = model_cls(**data)
             fhir_resource = map_to_fhir_loose(model)
+
             safe_name = Path(item["file"]).stem
             fhir_path = fhir_dir / f"{safe_name}_fhir.json"
             with open(fhir_path, "w", encoding="utf-8") as f:
                 json.dump(fhir_resource, f, indent=2, ensure_ascii=False)
+
+            all_resources.append(fhir_resource)
             exported += 1
         except Exception as exc:
             logger.warning("FHIR export skipped for %s: %s", item.get("file"), exc)
+
+    # Write combined FHIR Bundle
+    if bundle and all_resources:
+        bundle_data = build_fhir_bundle(all_resources)
+        bundle_path = fhir_dir / "bundle.json"
+        with open(bundle_path, "w", encoding="utf-8") as f:
+            json.dump(bundle_data, f, indent=2, ensure_ascii=False)
+        logger.info("FHIR Bundle (%d entries) → %s", exported, bundle_path)
 
     logger.info("Exported %d FHIR resource(s) to %s", exported, fhir_dir)
     return str(fhir_dir)
@@ -278,7 +297,17 @@ def export_results(
     elif fmt == "csv":
         return export_csv(items, output_dir, filename=filename)
     elif fmt == "fhir":
-        return export_fhir(items, output_dir, dirname=filename)
+        # Read FHIR settings from config when available
+        try:
+            from src.config import settings as _settings
+            fhir_bundle = _settings.fhir_bundle
+            fhir_dirname = filename or _settings.fhir_output_dir
+        except Exception:
+            fhir_bundle = True
+            fhir_dirname = filename
+        return export_fhir(
+            items, output_dir, dirname=fhir_dirname, bundle=fhir_bundle,
+        )
     else:
         raise ValueError(
             f"Unsupported export format: {fmt!r}. Use 'json', 'csv', or 'fhir'."
