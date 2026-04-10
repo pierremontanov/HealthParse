@@ -3,11 +3,15 @@
 This module exposes utilities to lazily load NER and classification models for
 specific document types, run them over the preprocessed text, and validate the
 structured payload using the existing Pydantic schemas.
+
+It also provides a :func:`create_default_engine` factory that registers the
+built-in rule-based extractors so the engine is ready to use out of the box.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Callable, Dict, Optional
+import logging
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional
 
 from pydantic import BaseModel
 
@@ -17,6 +21,8 @@ from src.pipeline.validation.validator import (
     validate_prescription,
     validate_result_schema,
 )
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class ModelBundle:
@@ -132,8 +138,10 @@ class InferenceEngine:
         bundle = self._registry.get_bundle(document_type)
         preprocessed_text = self._text_preprocessor(raw_text)
 
+        # Classifier works on normalised/lowercased text; NER extractors
+        # need original casing to preserve proper nouns and dates.
         classifier_output = self._apply_model(bundle.classifier, preprocessed_text)
-        ner_output = self._apply_model(bundle.ner, preprocessed_text)
+        ner_output = self._apply_model(bundle.ner, raw_text)
         combined_output = self._merge_outputs(classifier_output, ner_output)
         validated = self._validate(document_type, combined_output)
 
@@ -151,23 +159,38 @@ class InferenceEngine:
         if model is None:
             return {}
 
-        if hasattr(model, "predict") and callable(model.predict):
-            output = model.predict(text)
-        elif hasattr(model, "extract") and callable(model.extract):
-            output = model.extract(text)
-        elif hasattr(model, "extract_entities") and callable(model.extract_entities):
-            output = model.extract_entities(text)
-        elif callable(model):
-            output = model(text)
-        else:
-            raise TypeError("Model must be callable or expose predict/extract methods")
+        model_name = type(model).__name__
+        try:
+            if hasattr(model, "predict") and callable(model.predict):
+                output = model.predict(text)
+            elif hasattr(model, "extract") and callable(model.extract):
+                output = model.extract(text)
+            elif hasattr(model, "extract_entities") and callable(model.extract_entities):
+                output = model.extract_entities(text)
+            elif callable(model):
+                output = model(text)
+            else:
+                raise TypeError(
+                    f"Model {model_name} must be callable or expose "
+                    "predict/extract/extract_entities methods"
+                )
+        except TypeError:
+            raise
+        except Exception as exc:
+            logger.error("Model %s raised %s: %s", model_name, type(exc).__name__, exc)
+            raise RuntimeError(
+                f"Model {model_name} failed during inference: {exc}"
+            ) from exc
 
         if output is None:
             return {}
         if isinstance(output, BaseModel):
             return output.model_dump()
         if not isinstance(output, dict):
-            raise TypeError("Model outputs must be dictionaries or Pydantic BaseModel instances")
+            raise TypeError(
+                f"Model {model_name} returned {type(output).__name__}; "
+                "expected dict or Pydantic BaseModel"
+            )
         return output
 
     @staticmethod
@@ -181,8 +204,68 @@ class InferenceEngine:
 
     def _validate(self, document_type: str, payload: Dict[str, Any]) -> Optional[BaseModel]:
         if not payload:
+            logger.warning("Empty payload for document type '%s'; skipping validation.", document_type)
             return None
         validator = self._validators.get(document_type)
         if validator is None:
+            logger.warning("No validator registered for document type '%s'.", document_type)
             return None
-        return validator(payload)
+        # Remove engine metadata that isn't part of the target schema.
+        validation_payload = {k: v for k, v in payload.items() if k != "document_type"}
+        try:
+            return validator(validation_payload)
+        except Exception as exc:
+            logger.error(
+                "Validation failed for document type '%s': %s", document_type, exc
+            )
+            raise
+
+    # ── Introspection helpers ─────────────────────────────────────
+
+    @property
+    def registered_types(self) -> List[str]:
+        """Return the document types that have models registered."""
+        return list(self._registry._bundles.keys())
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Factory: default engine with built-in rule-based extractors
+# ═══════════════════════════════════════════════════════════════════
+
+def create_default_engine() -> InferenceEngine:
+    """Build an :class:`InferenceEngine` pre-loaded with rule-based extractors.
+
+    This is the recommended way to instantiate the engine for v1.0.  The
+    returned engine can process ``prescription``, ``result``, and
+    ``clinical_history`` document types out of the box.
+
+    Returns
+    -------
+    InferenceEngine
+        Ready-to-use engine instance.
+    """
+    from src.pipeline.extractors import (
+        ClinicalHistoryExtractor,
+        LabResultExtractor,
+        PrescriptionExtractor,
+    )
+    from src.pipeline.extractors.document_classifier import DocumentClassifier
+
+    classifier = DocumentClassifier()
+
+    registry = ModelRegistry({
+        "prescription": ModelBundle(
+            classifier=classifier,
+            ner=PrescriptionExtractor(),
+        ),
+        "result": ModelBundle(
+            classifier=classifier,
+            ner=LabResultExtractor(),
+        ),
+        "clinical_history": ModelBundle(
+            classifier=classifier,
+            ner=ClinicalHistoryExtractor(),
+        ),
+    })
+
+    return InferenceEngine(registry=registry)
