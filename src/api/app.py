@@ -27,11 +27,10 @@ from src.api.models import (
     ReadinessCheck,
     ReadinessResponse,
 )
+from src.config import settings
 from src.pipeline.core_engine import DocIQEngine
 
 logger = logging.getLogger(__name__)
-
-VERSION = "1.0.0"
 
 # ── Application factory ──────────────────────────────────────────
 
@@ -42,7 +41,7 @@ app = FastAPI(
         "Upload PDF or image files and receive structured, validated JSON "
         "with optional FHIR resource mapping."
     ),
-    version=VERSION,
+    version=settings.version,
     responses={
         422: {"model": ErrorResponse, "description": "Validation error"},
         500: {"model": ErrorResponse, "description": "Internal server error"},
@@ -56,7 +55,7 @@ _engine: DocIQEngine | None = None
 def _get_engine() -> DocIQEngine:
     global _engine
     if _engine is None:
-        _engine = DocIQEngine(run_inference=True)
+        _engine = DocIQEngine(run_inference=settings.run_inference)
         logger.info("DocIQEngine initialised for API.")
     return _engine
 
@@ -71,7 +70,7 @@ def _get_engine() -> DocIQEngine:
 )
 async def health():
     """Returns 200 if the service is alive."""
-    return HealthResponse(status="ok", version=VERSION)
+    return HealthResponse(status="ok", version=settings.version)
 
 
 @app.get(
