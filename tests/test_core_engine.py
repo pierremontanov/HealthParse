@@ -16,7 +16,7 @@ from src.pipeline.exceptions import (
     UnsupportedFileError,
     ValidationError,
 )
-from src.cli import main as cli_main, _build_parser
+from src.cli import main as cli_main, _build_parser, _load_config
 
 
 # ── Shared mocks ──────────────────────────────────────────────────
@@ -250,6 +250,39 @@ class TestDocIQEngineExport:
         content = open(path).read()
         assert "Test" in content
 
+    def test_export_fhir(self, tmp_path):
+        items = [
+            {
+                "file": "result_1.pdf",
+                "status": "ok",
+                "document_type": "result",
+                "extracted_data": {
+                    "patient_name": "Test Patient",
+                    "exam_type": "CBC",
+                    "exam_date": "2024-01-01",
+                    "findings": "Normal",
+                    "professional": "Dr. Test",
+                    "institution": "Test Lab",
+                },
+            },
+        ]
+        path = DocIQEngine.export(items, output_dir=str(tmp_path), fmt="fhir")
+        assert os.path.isdir(path)
+        fhir_file = os.path.join(path, "result_1_fhir.json")
+        assert os.path.exists(fhir_file)
+        with open(fhir_file) as f:
+            data = json.load(f)
+        assert data["resourceType"] == "DiagnosticReport"
+        assert data["subject"]["name"] == "Test Patient"
+
+    def test_export_fhir_skips_unclassified(self, tmp_path):
+        items = [
+            {"file": "x.pdf", "status": "ok", "document_type": None, "extracted_data": None},
+        ]
+        path = DocIQEngine.export(items, output_dir=str(tmp_path), fmt="fhir")
+        assert os.path.isdir(path)
+        assert len(os.listdir(path)) == 0
+
     def test_export_invalid_format_raises(self, tmp_path):
         with pytest.raises(ValueError, match="Unsupported"):
             DocIQEngine.export([], output_dir=str(tmp_path), fmt="xml")
@@ -277,10 +310,7 @@ class TestCLI:
         parser = _build_parser()
         args = parser.parse_args(["--input", "data/generated"])
         assert args.input == "data/generated"
-        assert args.output_dir == "output"
-        assert args.format == "json"
-        assert args.no_inference is False
-        assert args.log_level == "INFO"
+        assert args.config is None
 
     def test_parser_all_flags(self):
         parser = _build_parser()
@@ -291,6 +321,7 @@ class TestCLI:
             "--no-inference",
             "--max-workers", "4",
             "--log-level", "DEBUG",
+            "--config", "dociq.yaml",
         ])
         assert args.input == "file.pdf"
         assert args.output_dir == "out"
@@ -298,9 +329,19 @@ class TestCLI:
         assert args.no_inference is True
         assert args.max_workers == 4
         assert args.log_level == "DEBUG"
+        assert args.config == "dociq.yaml"
+
+    def test_parser_accepts_fhir_format(self):
+        parser = _build_parser()
+        args = parser.parse_args(["--input", "x", "--format", "fhir"])
+        assert args.format == "fhir"
 
     def test_cli_returns_1_for_missing_input(self):
         code = cli_main(["--input", "/nonexistent/path"])
+        assert code == 1
+
+    def test_cli_returns_1_for_no_input_at_all(self):
+        code = cli_main([])
         assert code == 1
 
     def test_cli_processes_folder(self, fake_folder, tmp_path, _mock_extraction):
@@ -321,3 +362,75 @@ class TestCLI:
             "--no-inference",
         ])
         assert code == 0
+
+    def test_cli_returns_1_for_bad_config(self):
+        code = cli_main(["--config", "/nonexistent/config.yaml"])
+        assert code == 1
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Config loading
+# ═══════════════════════════════════════════════════════════════════
+
+class TestConfigLoading:
+    def test_load_simple_yaml(self, tmp_path):
+        cfg = tmp_path / "dociq.yaml"
+        cfg.write_text(
+            "input: data/generated\n"
+            "output_dir: output\n"
+            "format: fhir\n"
+            "log_level: DEBUG\n"
+            "no_inference: true\n"
+            "max_workers: 4\n"
+        )
+        data = _load_config(str(cfg))
+        assert data["input"] == "data/generated"
+        assert data["output_dir"] == "output"
+        assert data["format"] == "fhir"
+        assert data["log_level"] == "DEBUG"
+        assert data["no_inference"] is True
+        assert data["max_workers"] == 4
+
+    def test_config_missing_file_raises(self):
+        with pytest.raises(FileNotFoundError):
+            _load_config("/nonexistent/config.yaml")
+
+    def test_config_comments_and_blanks_ignored(self, tmp_path):
+        cfg = tmp_path / "test.yaml"
+        cfg.write_text(
+            "# Comment line\n"
+            "\n"
+            "input: data/test\n"
+            "# Another comment\n"
+        )
+        data = _load_config(str(cfg))
+        assert data["input"] == "data/test"
+        assert len(data) == 1
+
+    def test_cli_uses_config_values(self, fake_folder, tmp_path, _mock_extraction):
+        cfg = tmp_path / "dociq.yaml"
+        cfg.write_text(
+            f"input: {fake_folder}\n"
+            f"output_dir: {tmp_path / 'out'}\n"
+            "format: csv\n"
+            "no_inference: true\n"
+        )
+        code = cli_main(["--config", str(cfg)])
+        assert code == 0
+        assert (tmp_path / "out" / "dociq_results.csv").exists()
+
+    def test_cli_flags_override_config(self, fake_folder, tmp_path, _mock_extraction):
+        cfg = tmp_path / "dociq.yaml"
+        cfg.write_text(
+            f"input: {fake_folder}\n"
+            "format: csv\n"
+            "no_inference: true\n"
+        )
+        # --format json overrides config's csv
+        code = cli_main([
+            "--config", str(cfg),
+            "--output-dir", str(tmp_path / "out"),
+            "--format", "json",
+        ])
+        assert code == 0
+        assert (tmp_path / "out" / "dociq_results").is_dir()

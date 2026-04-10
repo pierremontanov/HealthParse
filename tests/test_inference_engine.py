@@ -103,7 +103,7 @@ def test_process_result_document_returns_validated_schema(inference_engine):
     dummy_classifier = inference_engine["result_classifier"]
     dummy_ner = inference_engine["result_ner"]
     assert dummy_classifier.calls == [result.preprocessed_text]
-    assert dummy_ner.calls == [result.preprocessed_text]
+    assert dummy_ner.calls == [raw_text]  # NER receives raw text to preserve casing
 
 
 def test_process_prescription_document_uses_prescription_validator(inference_engine):

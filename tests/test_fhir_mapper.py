@@ -1,13 +1,9 @@
-import sys
-import os
 import pytest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
-from pipeline.fhir_mapper import map_to_fhir_loose
-from pipeline.validation.schemas import ResultSchema
-from pipeline.validation.prescription_schema import Prescription
-from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.fhir_mapper import map_to_fhir_loose
+from src.pipeline.validation.schemas import ResultSchema
+from src.pipeline.validation.prescription_schema import Prescription
+from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
 
 
 @pytest.fixture
@@ -76,7 +72,7 @@ def test_result_to_fhir_fields(result_schema_sample):
     fhir = map_to_fhir_loose(result_schema_sample)
     assert fhir["resourceType"] == "DiagnosticReport"
     assert fhir["subject"]["name"] == result_schema_sample.patient_name
-    assert fhir["effectiveDateTime"] == "2024-06-01"
+    assert fhir["effectiveDateTime"] == result_schema_sample.exam_date
     assert fhir["conclusion"] == result_schema_sample.impression
 
 
@@ -91,5 +87,5 @@ def test_clinical_history_to_fhir_fields(clinical_history_sample):
     fhir = map_to_fhir_loose(clinical_history_sample)
     assert fhir["resourceType"] == "Encounter"
     assert fhir["subject"]["display"] == clinical_history_sample.patient_name
-    assert fhir["period"]["start"] == "2024-05-10"
+    assert fhir["period"]["start"] == clinical_history_sample.consultation_date
     assert fhir["note"][0]["text"] == clinical_history_sample.plan
