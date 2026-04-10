@@ -1,6 +1,27 @@
+"""Batch document ingestion.
+
+Scans a folder for supported documents (PDF and image files), extracts text
+via the appropriate method (direct extraction or OCR), detects the language,
+classifies the document type, runs NER extraction through the inference
+engine, and returns structured results.
+
+Usage
+-----
+    from src.pipeline.process_folder import process_folder
+
+    results = process_folder("data/generated")
+    for r in results:
+        print(r["file"], r["document_type"], r["status"])
+"""
+
+from __future__ import annotations
+
+import logging
 import os
+import time
 from concurrent.futures import Future, ThreadPoolExecutor
-from typing import Dict, List, Tuple
+from dataclasses import asdict, dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.pipeline.language import detect_language, detect_pdf_language
 from src.pipeline.ocr import extract_text_from_image
@@ -10,9 +31,36 @@ from src.pipeline.pdf_extractor import (
 )
 from src.pipeline.pdf_type_detector import is_pdf_text_based
 
+logger = logging.getLogger(__name__)
 
-SUPPORTED_EXTENSIONS = [".png", ".jpg", ".jpeg", ".pdf"]
+SUPPORTED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".pdf"}
 
+
+# ── Result dataclass ──────────────────────────────────────────────
+
+@dataclass
+class DocumentResult:
+    """Structured result for a single processed document."""
+
+    file: str
+    status: str  # "ok", "extraction_error", "inference_error", "skipped"
+    text: str = ""
+    language: str = "unknown"
+    language_hint: str = "unknown"
+    language_sample: str = ""
+    method: str = ""  # "direct", "ocr", "image"
+    document_type: Optional[str] = None
+    extracted_data: Optional[Dict[str, Any]] = None
+    validated: bool = False
+    error: Optional[str] = None
+    elapsed_ms: int = 0
+
+    def as_dict(self) -> Dict[str, Any]:
+        """Serialise to a flat dictionary."""
+        return asdict(self)
+
+
+# ── Internal helpers ──────────────────────────────────────────────
 
 def _finalise_language(full_text: str, fallback: str) -> str:
     detected = detect_language(full_text)
@@ -21,9 +69,8 @@ def _finalise_language(full_text: str, fallback: str) -> str:
     return detected
 
 
-def _process_pdf(file_path: str, filename: str) -> Dict[str, str]:
-    print(f"Processing: {filename}")
-
+def _extract_pdf(file_path: str, filename: str) -> Dict[str, Any]:
+    """Extract text and metadata from a PDF file."""
     language_result = detect_pdf_language(file_path)
     language_hint = language_result.language
     text_sample = language_result.text_sample
@@ -38,7 +85,6 @@ def _process_pdf(file_path: str, filename: str) -> Dict[str, str]:
     language = _finalise_language(text, language_hint)
 
     return {
-        "file": filename,
         "text": text.strip(),
         "language": language,
         "language_hint": language_hint,
@@ -47,14 +93,12 @@ def _process_pdf(file_path: str, filename: str) -> Dict[str, str]:
     }
 
 
-def _process_image(file_path: str, filename: str) -> Dict[str, str]:
-    print(f"Processing: {filename}")
-
+def _extract_image(file_path: str, filename: str) -> Dict[str, Any]:
+    """Extract text from an image file via OCR."""
     text = extract_text_from_image(file_path)
     language = detect_language(text)
 
     return {
-        "file": filename,
         "text": text.strip(),
         "language": language,
         "language_hint": "unknown",
@@ -63,30 +107,133 @@ def _process_image(file_path: str, filename: str) -> Dict[str, str]:
     }
 
 
-def process_folder(folder_path: str) -> List[Dict[str, str]]:
-    """Process documents in a folder and collect OCR/NER routing metadata."""
-    indexed_results: List[Tuple[int, Dict[str, str]]] = []
-    pdf_futures: List[Tuple[int, Future[Dict[str, str]]]] = []
+# ── Public API ────────────────────────────────────────────────────
 
-    with ThreadPoolExecutor() as executor:
-        for index, filename in enumerate(os.listdir(folder_path)):
+def process_folder(
+    folder_path: str,
+    *,
+    run_inference: bool = False,
+    engine: object = None,
+    max_workers: Optional[int] = None,
+) -> List[Dict[str, Any]]:
+    """Process every supported document in *folder_path*.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the directory containing documents to process.
+    run_inference : bool, optional
+        When ``True`` each document is also classified and run through NER
+        extraction via the inference engine.  Defaults to ``False`` for
+        backward-compatibility with the existing CSV-export workflow.
+    engine : InferenceEngine, optional
+        A pre-built inference engine instance.  If *run_inference* is ``True``
+        and no engine is supplied, :func:`create_default_engine` is called to
+        build one automatically.
+    max_workers : int, optional
+        Cap the number of threads.  ``None`` lets the executor decide.
+
+    Returns
+    -------
+    list[dict]
+        One dictionary per processed file (see :class:`DocumentResult`).
+    """
+    if not os.path.isdir(folder_path):
+        raise FileNotFoundError(f"Folder not found: {folder_path}")
+
+    # Lazy-import to avoid circular imports and heavy deps when not needed.
+    if run_inference and engine is None:
+        from src.pipeline.inference import create_default_engine
+        engine = create_default_engine()
+
+    filenames = sorted(
+        f
+        for f in os.listdir(folder_path)
+        if os.path.splitext(f)[1].lower() in SUPPORTED_EXTENSIONS
+    )
+
+    if not filenames:
+        logger.warning("No supported documents found in %s", folder_path)
+        return []
+
+    logger.info(
+        "Starting ingestion of %d document(s) from %s", len(filenames), folder_path
+    )
+
+    results: List[DocumentResult] = []
+    extraction_futures: List[Tuple[str, Future]] = []
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit extraction jobs
+        for filename in filenames:
             ext = os.path.splitext(filename)[1].lower()
-            if ext not in SUPPORTED_EXTENSIONS:
-                continue
-
             file_path = os.path.join(folder_path, filename)
 
             if ext == ".pdf":
-                future = executor.submit(_process_pdf, file_path, filename)
-                pdf_futures.append((index, future))
+                future = executor.submit(_extract_pdf, file_path, filename)
             else:
-                indexed_results.append((index, _process_image(file_path, filename)))
+                future = executor.submit(_extract_image, file_path, filename)
+            extraction_futures.append((filename, future))
 
-        for index, future in pdf_futures:
-            indexed_results.append((index, future.result()))
+        # Collect extraction results and optionally run inference
+        for filename, future in extraction_futures:
+            t0 = time.monotonic()
+            try:
+                extraction = future.result()
+            except Exception as exc:
+                logger.error("Extraction failed for %s: %s", filename, exc)
+                results.append(
+                    DocumentResult(
+                        file=filename,
+                        status="extraction_error",
+                        error=str(exc),
+                        elapsed_ms=int((time.monotonic() - t0) * 1000),
+                    )
+                )
+                continue
 
-    indexed_results.sort(key=lambda item: item[0])
-    return [result for _, result in indexed_results]
+            doc = DocumentResult(
+                file=filename,
+                status="ok",
+                text=extraction["text"],
+                language=extraction["language"],
+                language_hint=extraction["language_hint"],
+                language_sample=extraction["language_sample"],
+                method=extraction["method"],
+            )
 
+            # ── Inference pass ────────────────────────────────────
+            if run_inference and engine is not None and doc.text:
+                try:
+                    doc_type = engine.classify(doc.text)
 
-print("✅ process_folder.py loaded")
+                    if doc_type is None:
+                        doc.document_type = "unknown"
+                        doc.status = "ok"
+                        logger.warning(
+                            "Could not classify %s; skipping NER.", filename
+                        )
+                    else:
+                        doc.document_type = doc_type
+                        inference_result = engine.process_document(doc_type, doc.text)
+                        doc.extracted_data = inference_result.as_dict()
+                        doc.validated = inference_result.validated_data is not None
+                except Exception as exc:
+                    logger.error("Inference failed for %s: %s", filename, exc)
+                    doc.status = "inference_error"
+                    doc.error = str(exc)
+
+            doc.elapsed_ms = int((time.monotonic() - t0) * 1000)
+            results.append(doc)
+
+    # Summary
+    ok = sum(1 for r in results if r.status == "ok")
+    errors = len(results) - ok
+    logger.info(
+        "Ingestion complete: %d ok, %d errors out of %d documents.",
+        ok,
+        errors,
+        len(results),
+    )
+
+    return [r.as_dict() for r in results]

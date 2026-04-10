@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from pdf2image import convert_from_path
 import pytesseract
-from pipeline.preprocess import preprocess_image
+from src.pipeline.preprocess import preprocess_image
 import fitz  # PyMuPDF
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Iterable, List, Optional, Tuple

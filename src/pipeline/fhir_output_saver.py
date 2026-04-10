@@ -1,7 +1,7 @@
 import os
 import json
 import logging
-from pipeline.fhir_mapper import map_to_fhir_loose
+from src.pipeline.fhir_mapper import map_to_fhir_loose
 
 logger = logging.getLogger(__name__)
 
