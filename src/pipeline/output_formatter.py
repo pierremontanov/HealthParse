@@ -24,6 +24,7 @@ from pydantic import BaseModel
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.prescription_schema import Prescription
 from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.validator import SCHEMA_REGISTRY, validate_batch
 
 logger = logging.getLogger(__name__)
 
@@ -31,11 +32,7 @@ logger = logging.getLogger(__name__)
 
 FormattedDoc = Union[ResultSchema, Prescription, ClinicalHistorySchema]
 
-_SCHEMA_MAP: Dict[str, type] = {
-    "result": ResultSchema,
-    "prescription": Prescription,
-    "clinical_history": ClinicalHistorySchema,
-}
+_SCHEMA_MAP = SCHEMA_REGISTRY  # single source of truth
 
 
 # ── Single-document helpers ──────────────────────────────────────
@@ -152,7 +149,14 @@ def export_csv(
         csv_path.write_text("")
         return str(csv_path)
 
-    fieldnames = list(items[0].keys())
+    # Collect all keys across items (some may have _validation_error).
+    seen: dict = {}
+    for item in items:
+        for k in item:
+            if k not in seen:
+                seen[k] = None
+    fieldnames = list(seen)
+
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -231,6 +235,8 @@ def export_results(
     output_dir: str,
     fmt: str = "json",
     filename: str | None = None,
+    validate: bool = True,
+    strict: bool = False,
 ) -> str:
     """Persist results to disk in the requested format.
 
@@ -244,6 +250,13 @@ def export_results(
         ``"json"`` | ``"csv"`` | ``"fhir"``.
     filename : str, optional
         Override the output filename or sub-directory name.
+    validate : bool
+        When ``True`` (default), each item with ``extracted_data`` is
+        re-validated against its schema before export.  Items that fail
+        gain a ``_validation_error`` key (or are dropped when *strict*).
+    strict : bool
+        When ``True`` **and** *validate* is ``True``, items that fail
+        schema re-validation are excluded from the export entirely.
 
     Returns
     -------
@@ -256,6 +269,9 @@ def export_results(
         If *fmt* is not one of the supported formats.
     """
     items = list(results)
+
+    if validate:
+        items = validate_batch(items, strict=strict)
 
     if fmt == "json":
         return export_json(items, output_dir, dirname=filename)

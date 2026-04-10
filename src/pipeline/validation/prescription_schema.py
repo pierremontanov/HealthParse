@@ -97,6 +97,7 @@ class Prescription(BaseModel):
 
     model_config = ConfigDict(
         str_strip_whitespace=True,
+        extra="forbid",
     )
 
     patient_name: Optional[str] = Field(
