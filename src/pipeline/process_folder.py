@@ -19,7 +19,7 @@ from __future__ import annotations
 import logging
 import os
 import time
-from concurrent.futures import Future, ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -176,10 +176,29 @@ def process_folder(
             extraction_futures.append((filename, future))
 
         # Collect extraction results and optionally run inference
+        # File-level timeout: generous (page_timeout * 2) since a file may
+        # contain many pages, each with their own page-level timeout.
+        try:
+            from src.config import settings as _cfg
+            file_timeout = _cfg.page_timeout * 2
+        except Exception:
+            file_timeout = 600
+
         for filename, future in extraction_futures:
             t0 = time.monotonic()
             try:
-                extraction = future.result()
+                extraction = future.result(timeout=file_timeout)
+            except TimeoutError:
+                logger.error("Extraction timed out for %s after %ds", filename, file_timeout)
+                results.append(
+                    DocumentResult(
+                        file=filename,
+                        status="extraction_error",
+                        error=f"Timed out after {file_timeout}s",
+                        elapsed_ms=int((time.monotonic() - t0) * 1000),
+                    )
+                )
+                continue
             except Exception as exc:
                 logger.error("Extraction failed for %s: %s", filename, exc)
                 results.append(
