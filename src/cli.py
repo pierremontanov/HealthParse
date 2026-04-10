@@ -30,6 +30,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict, Optional
 
+from src.config import get_settings
 from src.pipeline.core_engine import DocIQEngine
 
 
@@ -143,32 +144,33 @@ def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
 
-    # ── Load config file (if provided) and merge with CLI flags ───
-    config: Dict[str, Any] = {}
-    if args.config:
-        try:
-            config = _load_config(args.config)
-        except FileNotFoundError as exc:
-            print(f"Error: {exc}", file=sys.stderr)
-            return 1
+    # ── Build settings: YAML config -> env -> CLI overrides ──────
+    cli_overrides: Dict[str, Any] = {}
+    if args.input is not None:
+        cli_overrides["input_dir"] = args.input
+    if args.output_dir is not None:
+        cli_overrides["output_dir"] = args.output_dir
+    if args.format is not None:
+        cli_overrides["export_format"] = args.format
+    if args.log_level is not None:
+        cli_overrides["log_level"] = args.log_level
+    if args.max_workers is not None:
+        cli_overrides["max_workers"] = args.max_workers
+    if args.no_inference:
+        cli_overrides["run_inference"] = False
 
-    # CLI flags override config values; apply defaults last
-    input_path_str = args.input or config.get("input") or config.get("input_dir")
-    output_dir = args.output_dir or config.get("output_dir", "output")
-    fmt = args.format or config.get("format", "json")
-    log_level = args.log_level or config.get("log_level", "INFO")
-    max_workers = args.max_workers or config.get("max_workers")
-    no_inference = (
-        args.no_inference
-        if args.no_inference is not None and args.no_inference
-        else config.get("no_inference", False)
-    )
+    try:
+        cfg = get_settings(config_path=args.config, **cli_overrides)
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
 
-    _configure_logging(str(log_level))
+    _configure_logging(cfg.log_level)
     logger = logging.getLogger("dociq")
 
+    input_path_str = cfg.input_dir
     if not input_path_str:
-        logger.error("No input specified. Use --input or set 'input' in config file.")
+        logger.error("No input specified. Use --input or set 'input_dir' in config file.")
         return 1
 
     input_path = Path(input_path_str)
@@ -176,8 +178,7 @@ def main(argv: list[str] | None = None) -> int:
         logger.error("Input path does not exist: %s", input_path)
         return 1
 
-    run_inference = not no_inference
-    engine = DocIQEngine(run_inference=run_inference)
+    engine = DocIQEngine(run_inference=cfg.run_inference)
 
     t0 = time.monotonic()
 
@@ -191,7 +192,7 @@ def main(argv: list[str] | None = None) -> int:
         results = [result]
     elif input_path.is_dir():
         logger.info("Processing folder: %s", input_path)
-        batch = engine.process_batch(str(input_path), max_workers=max_workers)
+        batch = engine.process_batch(str(input_path), max_workers=cfg.max_workers)
         results = batch.all
     else:
         logger.error("Input is neither a file nor a directory: %s", input_path)
@@ -203,8 +204,8 @@ def main(argv: list[str] | None = None) -> int:
     if results:
         out_path = DocIQEngine.export(
             results,
-            output_dir=output_dir,
-            fmt=fmt,
+            output_dir=cfg.output_dir,
+            fmt=cfg.export_format,
         )
         logger.info("Exported %d result(s) to %s", len(results), out_path)
     else:

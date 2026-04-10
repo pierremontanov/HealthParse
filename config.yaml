@@ -1,0 +1,45 @@
+# ──────────────────────────────────────────────────────────────────
+# DocIQ Configuration
+# ──────────────────────────────────────────────────────────────────
+# Copy this file to your project root and customise as needed.
+# CLI flags and DOCIQ_* environment variables override these values.
+# See src/config.py for the full list of settings and descriptions.
+# ──────────────────────────────────────────────────────────────────
+
+# ── General ───────────────────────────────────────────────────────
+version: "1.0.0"
+log_level: INFO                     # DEBUG | INFO | WARNING | ERROR
+
+# ── Paths / I/O ──────────────────────────────────────────────────
+# input_dir: data/generated         # Default input path (CLI --input overrides)
+output_dir: output                  # Where exported results are written
+
+# ── Pipeline – OCR / Extraction ──────────────────────────────────
+ocr_dpi: 300                        # DPI for PDF-to-image rasterisation
+ocr_lang: eng+spa                   # Tesseract language packs
+min_char_threshold: 10              # Below this, a PDF is treated as scanned
+preprocessing_threshold: 120        # Binary threshold for image binarisation (0-255)
+
+# ── Pipeline – Language Detection ────────────────────────────────
+lang_detect_max_pages: 3            # Max pages sampled for language detection
+lang_detect_min_chars: 120          # Min chars for reliable detection
+
+# ── Pipeline – Concurrency ───────────────────────────────────────
+# max_workers: 4                    # Thread-pool cap (null = auto = cpu_count * 2)
+
+# ── Pipeline – Inference ─────────────────────────────────────────
+run_inference: true                 # false = extraction-only, skip NER/classification
+supported_extensions:               # File types the pipeline accepts
+  - .pdf
+  - .png
+  - .jpg
+  - .jpeg
+
+# ── Export ────────────────────────────────────────────────────────
+export_format: json                 # json | csv | fhir
+
+# ── API Server ────────────────────────────────────────────────────
+api_host: "0.0.0.0"
+api_port: 8000
+api_workers: 1
+api_reload: false
