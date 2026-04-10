@@ -38,6 +38,10 @@ supported_extensions:               # File types the pipeline accepts
 # ── Export ────────────────────────────────────────────────────────
 export_format: json                 # json | csv | fhir
 
+# ── FHIR ─────────────────────────────────────────────────────────
+fhir_bundle: true                   # Write a combined FHIR Bundle alongside individual resources
+fhir_output_dir: dociq_fhir         # Sub-directory name for FHIR output within output_dir
+
 # ── API Server ────────────────────────────────────────────────────
 api_host: "0.0.0.0"
 api_port: 8000

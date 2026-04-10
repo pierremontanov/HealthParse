@@ -163,23 +163,43 @@ class TestExportCsv:
 
 class TestExportFhir:
     def test_exports_recognised_types(self, tmp_path, sample_result_dicts):
-        path = export_fhir(sample_result_dicts, str(tmp_path))
+        path = export_fhir(sample_result_dicts, str(tmp_path), bundle=False)
         fhir_dir = tmp_path / "dociq_fhir"
         files = list(fhir_dir.glob("*_fhir.json"))
         # Only doc_a has document_type="result" + extracted_data
         assert len(files) == 1
 
     def test_fhir_content(self, tmp_path, sample_result_dicts):
-        export_fhir(sample_result_dicts, str(tmp_path))
+        export_fhir(sample_result_dicts, str(tmp_path), bundle=False)
         with open(tmp_path / "dociq_fhir" / "doc_a_fhir.json", encoding="utf-8") as f:
             data = json.load(f)
         assert data["resourceType"] == "DiagnosticReport"
 
     def test_skips_unclassified(self, tmp_path, sample_result_dicts):
-        export_fhir(sample_result_dicts, str(tmp_path))
+        export_fhir(sample_result_dicts, str(tmp_path), bundle=False)
         fhir_dir = tmp_path / "dociq_fhir"
         # doc_b has no document_type, should be skipped
         assert not (fhir_dir / "doc_b_fhir.json").exists()
+
+    def test_bundle_created_by_default(self, tmp_path, sample_result_dicts):
+        export_fhir(sample_result_dicts, str(tmp_path))
+        bundle_path = tmp_path / "dociq_fhir" / "bundle.json"
+        assert bundle_path.exists()
+        data = json.loads(bundle_path.read_text("utf-8"))
+        assert data["resourceType"] == "Bundle"
+        assert data["total"] == 1
+
+    def test_bundle_disabled(self, tmp_path, sample_result_dicts):
+        export_fhir(sample_result_dicts, str(tmp_path), bundle=False)
+        bundle_path = tmp_path / "dociq_fhir" / "bundle.json"
+        assert not bundle_path.exists()
+
+    def test_fhir_resource_has_meta(self, tmp_path, sample_result_dicts):
+        export_fhir(sample_result_dicts, str(tmp_path), bundle=False)
+        with open(tmp_path / "dociq_fhir" / "doc_a_fhir.json", encoding="utf-8") as f:
+            data = json.load(f)
+        assert "meta" in data
+        assert "lastUpdated" in data["meta"]
 
 
 # ── export_results dispatcher ────────────────────────────────────
