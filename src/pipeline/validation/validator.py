@@ -1,8 +1,8 @@
 from pydantic import ValidationError
-from pipeline.validation.schemas import ResultSchema
-from pipeline.validation.prescription_schema import Prescription
-from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
-from pipeline.utils.date_utils import normalize_dates
+from src.pipeline.validation.schemas import ResultSchema
+from src.pipeline.validation.prescription_schema import Prescription
+from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.utils.date_utils import normalize_dates
 
 @normalize_dates("date_of_birth", "exam_date")
 def validate_result_schema(data: dict) -> ResultSchema:

@@ -1,6 +1,6 @@
 import cv2
-from pipeline.utils.text_utils import clean_text, remove_numbers, lowercase
-from pipeline.utils.language import detect_language, is_english, is_spanish
+from src.pipeline.utils.text_utils import clean_text, remove_numbers, lowercase
+from src.pipeline.utils.language import detect_language, is_english, is_spanish
 
 def preprocess_image(image):
     """
