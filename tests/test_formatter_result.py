@@ -1,14 +1,10 @@
 # test_formatter_result.py
 
-import sys
-import os
 import json
 import pytest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
-from pipeline.validation.schemas import ResultSchema
-from pipeline.output_formatter import format_document, save_json_output
+from src.pipeline.validation.schemas import ResultSchema
+from src.pipeline.output_formatter import format_document, save_json_output
 
 @pytest.fixture
 def example_result():

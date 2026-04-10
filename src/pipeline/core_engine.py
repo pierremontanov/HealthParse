@@ -22,7 +22,6 @@ Usage
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 import time
@@ -244,6 +243,8 @@ class DocIQEngine:
     ) -> str:
         """Persist results to disk.
 
+        Delegates to :func:`src.pipeline.output_formatter.export_results`.
+
         Parameters
         ----------
         results : EngineResult or list[dict]
@@ -251,90 +252,16 @@ class DocIQEngine:
         output_dir : str
             Directory to write output into (created if missing).
         fmt : str
-            ``"json"`` (one file per document) or ``"csv"`` (single table).
+            ``"json"`` | ``"csv"`` | ``"fhir"``.
         filename : str, optional
-            Override the output filename.  For CSV this is the file name;
-            for JSON it's ignored (each document gets its own file).
+            Override the output filename / sub-directory name.
 
         Returns
         -------
         str
             Path to the output file or directory.
         """
-        out = Path(output_dir)
-        out.mkdir(parents=True, exist_ok=True)
+        from src.pipeline.output_formatter import export_results
 
         items = list(results) if not isinstance(results, list) else results
-
-        if fmt == "csv":
-            import csv
-
-            csv_path = out / (filename or "dociq_results.csv")
-            if not items:
-                csv_path.write_text("")
-                return str(csv_path)
-
-            fieldnames = list(items[0].keys())
-            with open(csv_path, "w", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-                for row in items:
-                    # Flatten extracted_data for CSV
-                    flat = dict(row)
-                    if isinstance(flat.get("extracted_data"), dict):
-                        flat["extracted_data"] = json.dumps(
-                            flat["extracted_data"], ensure_ascii=False
-                        )
-                    writer.writerow(flat)
-            logger.info("Exported %d results to %s", len(items), csv_path)
-            return str(csv_path)
-
-        elif fmt == "json":
-            json_dir = out / (filename or "dociq_results")
-            json_dir.mkdir(parents=True, exist_ok=True)
-            for item in items:
-                safe_name = Path(item["file"]).stem
-                doc_path = json_dir / f"{safe_name}.json"
-                with open(doc_path, "w", encoding="utf-8") as f:
-                    json.dump(item, f, indent=2, ensure_ascii=False)
-            logger.info("Exported %d JSON files to %s", len(items), json_dir)
-            return str(json_dir)
-
-        elif fmt == "fhir":
-            from src.pipeline.fhir_mapper import map_to_fhir_loose
-            from src.pipeline.validation.schemas import ResultSchema
-            from src.pipeline.validation.prescription_schema import Prescription
-            from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
-
-            _SCHEMA_MAP = {
-                "result": ResultSchema,
-                "prescription": Prescription,
-                "clinical_history": ClinicalHistorySchema,
-            }
-
-            fhir_dir = out / (filename or "dociq_fhir")
-            fhir_dir.mkdir(parents=True, exist_ok=True)
-            exported = 0
-            for item in items:
-                doc_type = item.get("document_type")
-                data = item.get("extracted_data")
-                if not doc_type or not data or doc_type not in _SCHEMA_MAP:
-                    continue
-                try:
-                    model_cls = _SCHEMA_MAP[doc_type]
-                    model = model_cls(**data)
-                    fhir_resource = map_to_fhir_loose(model)
-                    safe_name = Path(item["file"]).stem
-                    fhir_path = fhir_dir / f"{safe_name}_fhir.json"
-                    with open(fhir_path, "w", encoding="utf-8") as f:
-                        json.dump(fhir_resource, f, indent=2, ensure_ascii=False)
-                    exported += 1
-                except Exception as exc:
-                    logger.warning(
-                        "FHIR export skipped for %s: %s", item.get("file"), exc
-                    )
-            logger.info("Exported %d FHIR resource(s) to %s", exported, fhir_dir)
-            return str(fhir_dir)
-
-        else:
-            raise ValueError(f"Unsupported export format: {fmt!r}. Use 'json', 'csv', or 'fhir'.")
+        return export_results(items, output_dir=output_dir, fmt=fmt, filename=filename)

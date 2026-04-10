@@ -6,6 +6,7 @@ import numpy as np
 from pdf2image import convert_from_path
 import pytesseract
 from src.pipeline.preprocess import preprocess_image
+from src.pipeline.pdf_type_detector import is_pdf_text_based
 import fitz  # PyMuPDF
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Iterable, List, Optional, Tuple
@@ -162,25 +163,6 @@ def extract_text_directly(
         return full_text, page_results
 
     return full_text
-
-def is_pdf_text_based(pdf_path, min_char_threshold=10):
-    """
-    Check if a PDF is text-based by attempting to extract text from its pages.
-
-    Args:
-        pdf_path (str): Path to the PDF file.
-        min_char_threshold (int): Minimum number of characters to consider the page 'text-based'.
-
-    Returns:
-        bool: True if the PDF has extractable text, False if it's likely scanned.
-    """
-    doc = fitz.open(pdf_path)
-    for page in doc:
-        text = page.get_text()
-        if len(text.strip()) >= min_char_threshold:
-            return True
-    return False
-
 
 def extract_text_from_pdf(
     pdf_path: str,
