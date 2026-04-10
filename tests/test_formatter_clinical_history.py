@@ -1,12 +1,8 @@
-import sys
-import os
 import json
 import pytest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
-from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
-from pipeline.output_formatter import save_json_output
+from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.output_formatter import save_json_output
 
 @pytest.fixture
 def clinical_history_example():

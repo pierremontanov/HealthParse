@@ -1,20 +1,16 @@
-import sys
-import os
-import pytest
 import json
+import pytest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
-from pipeline.validation.prescription_schema import (
+from src.pipeline.validation.prescription_schema import (
     Prescription,
     MedicineItem,
     RadiologyItem,
     LabTestItem,
     SpecialistItem,
     TherapyItem,
-    GenericItem
+    GenericItem,
 )
-from pipeline.output_formatter import save_json_output
+from src.pipeline.output_formatter import save_json_output
 
 @pytest.fixture
 def sample_prescription():
