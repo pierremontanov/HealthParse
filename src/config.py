@@ -141,7 +141,13 @@ class DocIQSettings(BaseSettings):
     # ── Pipeline – Concurrency ───────────────────────────────────
     max_workers: Optional[int] = Field(
         None,
+        ge=1,
         description="Thread-pool cap for batch processing. None = auto (cpu_count * 2).",
+    )
+    page_timeout: int = Field(
+        300,
+        ge=10,
+        description="Seconds to wait for a single page extraction before timing out.",
     )
 
     # ── Pipeline – Inference ─────────────────────────────────────

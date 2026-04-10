@@ -1,17 +1,68 @@
+"""PDF text extraction with per-page threading.
+
+Provides two extraction strategies:
+
+- **Direct extraction** for text-based PDFs (via PyMuPDF)
+- **OCR extraction** for scanned/image PDFs (via pdf2image + Tesseract)
+
+Both strategies parallelise work across pages using a
+:class:`~concurrent.futures.ThreadPoolExecutor`.  Configuration values
+(DPI, thread-pool size) are read from :mod:`src.config` at call-time.
+"""
 from __future__ import annotations
 
+import logging
 import os
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
+
 import cv2
-import numpy as np
-from pdf2image import convert_from_path
-import pytesseract
-from src.pipeline.preprocess import preprocess_image
-from src.pipeline.pdf_type_detector import is_pdf_text_based
 import fitz  # PyMuPDF
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Any, Callable, Iterable, List, Optional, Tuple
+import numpy as np
+import pytesseract
+from pdf2image import convert_from_path
+
+from src.pipeline.pdf_type_detector import is_pdf_text_based
+from src.pipeline.preprocess import preprocess_image
+
+logger = logging.getLogger(__name__)
 
 PageClassifier = Optional[Callable[[str, int], Any]]
+
+
+def _get_page_timeout() -> int:
+    """Return the configured page-level timeout in seconds (default 300)."""
+    try:
+        from src.config import settings
+        return settings.page_timeout
+    except Exception:
+        return 300
+
+
+# ── Helpers ──────────────────────────────────────────────────────
+
+def _get_page_workers(n_pages: int) -> int:
+    """Calculate a sensible thread-pool size for *n_pages*.
+
+    Falls back to ``settings.max_workers`` when configured, otherwise
+    uses ``min(n_pages, cpu_count * 2)``.
+    """
+    try:
+        from src.config import settings
+        if settings.max_workers is not None:
+            return min(n_pages, settings.max_workers)
+    except Exception:
+        pass
+    return min(n_pages, (os.cpu_count() or 1) * 2)
+
+
+def _get_ocr_dpi() -> int:
+    """Return the configured OCR DPI (default 300)."""
+    try:
+        from src.config import settings
+        return settings.ocr_dpi
+    except Exception:
+        return 300
 
 
 def _run_classifier(text: str, page_index: int, classifier: PageClassifier) -> Any:
@@ -20,21 +71,57 @@ def _run_classifier(text: str, page_index: int, classifier: PageClassifier) -> A
     return classifier(text, page_index)
 
 
-def _sorted_page_results(results: Iterable[Tuple[int, str, Any]]) -> List[Tuple[int, str, Any]]:
+def _sorted_page_results(
+    results: Iterable[Tuple[int, str, Any]],
+) -> List[Tuple[int, str, Any]]:
     return sorted(results, key=lambda item: item[0])
+
+
+def _assemble_text(ordered: List[Tuple[int, str, Any]]) -> str:
+    """Combine per-page text into a single string."""
+    return "".join(
+        f"\n--- Page {index + 1} ---\n{text}" for index, text, _ in ordered
+    )
+
+
+def _build_page_results(
+    ordered: List[Tuple[int, str, Any]],
+) -> List[Dict[str, Any]]:
+    return [
+        {"page": index + 1, "text": text, "classification": classification}
+        for index, text, classification in ordered
+    ]
+
+
+# ── Per-page workers ─────────────────────────────────────────────
 
 def _process_ocr_page(
     page_index: int,
-    page_image,
+    page_image: Any,
     classifier: PageClassifier,
-):
-    img = page_image.convert("RGB")  # PIL to RGB
-    open_cv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)  # PIL to OpenCV
+) -> Tuple[int, str, Any]:
+    """OCR a single page image and optionally classify it."""
+    img = page_image.convert("RGB")
+    open_cv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     preprocessed = preprocess_image(open_cv_image)
     text = pytesseract.image_to_string(preprocessed)
     classification = _run_classifier(text, page_index, classifier)
     return page_index, text, classification
 
+
+def _process_direct_page(
+    doc: fitz.Document,
+    page_index: int,
+    classifier: PageClassifier,
+) -> Tuple[int, str, Any]:
+    """Extract text from a single page of an already-opened PDF."""
+    page = doc.load_page(page_index)
+    text = page.get_text()
+    classification = _run_classifier(text, page_index, classifier)
+    return page_index, text, classification
+
+
+# ── OCR extraction ───────────────────────────────────────────────
 
 def extract_text_from_pdf_ocr(
     pdf_path: str,
@@ -42,70 +129,56 @@ def extract_text_from_pdf_ocr(
     page_classifier: PageClassifier = None,
     return_page_results: bool = False,
 ):
+    """Convert each page of a scanned PDF to an image, then OCR.
+
+    Pages are processed in parallel via a thread pool.  Per-page
+    failures are isolated — a failing page contributes empty text
+    rather than crashing the entire document.
+
+    Parameters
+    ----------
+    pdf_path : str
+        Path to the PDF file.
+    page_classifier : callable, optional
+        Receives ``(text, page_index)``; return value is stored as the
+        page's classification payload.
+    return_page_results : bool
+        When ``True``, return ``(text, page_results)`` instead of just
+        ``text``.
     """
-    Convert each page of a scanned PDF to an image, then extract and combine text using OCR.
-
-    The heavy-weight OCR preprocessing and classification are executed in a
-    thread pool so that multi-page documents can be processed faster.
-
-    Args:
-        pdf_path (str): Path to the PDF file.
-        page_classifier: Optional callable that receives the extracted text and
-            zero-based page index, returning any classification payload. The
-            callable is executed inside the worker thread.
-        return_page_results: When ``True`` the function returns both the
-            combined text and a list of per-page dictionaries containing the
-            page number, raw text, and classification result.
-
-    Returns:
-        str or Tuple[str, List[dict]]: Combined text extracted from all pages.
-            When ``return_page_results`` is enabled, the tuple also contains the
-            per-page metadata.
-    """
-    pages = convert_from_path(pdf_path, dpi=300)
+    dpi = _get_ocr_dpi()
+    pages = convert_from_path(pdf_path, dpi=dpi)
     if not pages:
         return ("", []) if return_page_results else ""
 
-    max_workers = min(len(pages), (os.cpu_count() or 1) * 2)
+    max_workers = _get_page_workers(len(pages))
     results: List[Tuple[int, str, Any]] = []
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [
-            executor.submit(_process_ocr_page, index, page, page_classifier)
-            for index, page in enumerate(pages)
-        ]
 
-        for future in as_completed(futures):
-            results.append(future.result())
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_page: Dict[Future, int] = {}
+        for index, page in enumerate(pages):
+            fut = executor.submit(_process_ocr_page, index, page, page_classifier)
+            future_to_page[fut] = index
+
+        for future in as_completed(future_to_page):
+            page_idx = future_to_page[future]
+            try:
+                results.append(future.result(timeout=_get_page_timeout()))
+            except Exception as exc:
+                logger.error(
+                    "OCR failed for page %d of '%s': %s", page_idx + 1, pdf_path, exc,
+                )
+                results.append((page_idx, "", None))
 
     ordered = _sorted_page_results(results)
-    full_text = "".join(
-        f"\n--- Page {index + 1} ---\n{text}" for index, text, _ in ordered
-    )
+    full_text = _assemble_text(ordered)
 
     if return_page_results:
-        page_results = [
-            {
-                "page": index + 1,
-                "text": text,
-                "classification": classification,
-            }
-            for index, text, classification in ordered
-        ]
-        return full_text, page_results
-
+        return full_text, _build_page_results(ordered)
     return full_text
 
-def _process_direct_page(
-    pdf_path: str,
-    page_index: int,
-    classifier: PageClassifier,
-):
-    with fitz.open(pdf_path) as doc:
-        page = doc.load_page(page_index)
-        text = page.get_text()
-    classification = _run_classifier(text, page_index, classifier)
-    return page_index, text, classification
 
+# ── Direct text extraction ───────────────────────────────────────
 
 def extract_text_directly(
     pdf_path: str,
@@ -113,56 +186,62 @@ def extract_text_directly(
     page_classifier: PageClassifier = None,
     return_page_results: bool = False,
 ):
-    """
-    Extract text directly from a text-based PDF using PyMuPDF.
+    """Extract text from a text-based PDF using PyMuPDF.
 
-    Args:
-        pdf_path (str): Path to the PDF file.
-        page_classifier: Optional callable executed per page inside the worker
-            thread. It receives the extracted text and zero-based page index.
-        return_page_results: When ``True`` the function returns the combined
-            text together with per-page metadata containing classification
-            results.
+    The PDF is opened **once** in the calling thread; each worker
+    receives the open :class:`fitz.Document` handle and loads only its
+    assigned page, avoiding the N-opens-per-N-pages resource leak.
 
-    Returns:
-        str or Tuple[str, List[dict]]: Combined extracted text from all pages.
-            When ``return_page_results`` is enabled, the tuple also contains the
-            per-page metadata.
+    Per-page failures are isolated — a failing page contributes empty
+    text rather than crashing the entire document.
+
+    Parameters
+    ----------
+    pdf_path : str
+        Path to the PDF file.
+    page_classifier : callable, optional
+        Receives ``(text, page_index)``; return value stored per-page.
+    return_page_results : bool
+        When ``True``, return ``(text, page_results)`` tuple.
     """
     with fitz.open(pdf_path) as doc:
-        page_indices = list(range(doc.page_count))
+        page_count = doc.page_count
+        if page_count == 0:
+            return ("", []) if return_page_results else ""
 
-    if not page_indices:
-        return ("", []) if return_page_results else ""
+        max_workers = _get_page_workers(page_count)
+        results: List[Tuple[int, str, Any]] = []
 
-    max_workers = min(len(page_indices), (os.cpu_count() or 1) * 2)
-    results: List[Tuple[int, str, Any]] = []
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [
-            executor.submit(_process_direct_page, pdf_path, index, page_classifier)
-            for index in page_indices
-        ]
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_page: Dict[Future, int] = {}
+            for index in range(page_count):
+                fut = executor.submit(
+                    _process_direct_page, doc, index, page_classifier,
+                )
+                future_to_page[fut] = index
 
-        for future in as_completed(futures):
-            results.append(future.result())
+            for future in as_completed(future_to_page):
+                page_idx = future_to_page[future]
+                try:
+                    results.append(future.result(timeout=_get_page_timeout()))
+                except Exception as exc:
+                    logger.error(
+                        "Direct extraction failed for page %d of '%s': %s",
+                        page_idx + 1,
+                        pdf_path,
+                        exc,
+                    )
+                    results.append((page_idx, "", None))
 
     ordered = _sorted_page_results(results)
-    full_text = "".join(
-        f"\n--- Page {index + 1} ---\n{text}" for index, text, _ in ordered
-    )
+    full_text = _assemble_text(ordered)
 
     if return_page_results:
-        page_results = [
-            {
-                "page": index + 1,
-                "text": text,
-                "classification": classification,
-            }
-            for index, text, classification in ordered
-        ]
-        return full_text, page_results
-
+        return full_text, _build_page_results(ordered)
     return full_text
+
+
+# ── Auto-detect convenience ──────────────────────────────────────
 
 def extract_text_from_pdf(
     pdf_path: str,
@@ -170,19 +249,16 @@ def extract_text_from_pdf(
     page_classifier: PageClassifier = None,
     return_page_results: bool = False,
 ):
-    """
-    Automatically detect PDF type and extract text using the appropriate method.
+    """Detect PDF type and extract text using the appropriate method.
 
-    Args:
-        pdf_path (str): Path to the PDF file.
-        page_classifier: Optional callable executed per page after extraction.
-        return_page_results: When ``True`` return both the aggregated text and
-            the per-page metadata.
-
-    Returns:
-        str or Tuple[str, List[dict]]: Extracted text. When
-            ``return_page_results`` is enabled, the tuple also contains the
-            per-page metadata.
+    Parameters
+    ----------
+    pdf_path : str
+        Path to the PDF file.
+    page_classifier : callable, optional
+        Executed per page after extraction.
+    return_page_results : bool
+        When ``True``, also return per-page metadata.
     """
     if is_pdf_text_based(pdf_path):
         return extract_text_directly(

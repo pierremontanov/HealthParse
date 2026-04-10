@@ -2,10 +2,8 @@ import os
 import pytest
 
 fitz = pytest.importorskip("fitz", reason="PyMuPDF is required for PDF threading tests")
-from src.pipeline.pdf_extractor import (
-    is_pdf_text_based,
-    extract_text_directly,
-)
+from src.pipeline.pdf_type_detector import is_pdf_text_based
+from src.pipeline.pdf_extractor import extract_text_directly
 
 @pytest.mark.skipif(not os.path.exists("data/generated/sample_text_based.pdf"), reason="Sample PDF not found")
 def test_text_based_pdf():
