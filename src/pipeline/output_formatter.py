@@ -3,9 +3,9 @@ import json
 from typing import Union
 from pydantic import BaseModel
 
-from pipeline.validation.schemas import ResultSchema
-from pipeline.validation.prescription_schema import Prescription
-from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.schemas import ResultSchema
+from src.pipeline.validation.prescription_schema import Prescription
+from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
 
 # 1. Union of valid schemas
 FormattedDoc = Union[ResultSchema, Prescription, ClinicalHistorySchema]

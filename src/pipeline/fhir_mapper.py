@@ -1,8 +1,8 @@
 # fhir_mapper.py
 
-from pipeline.validation.schemas import ResultSchema
-from pipeline.validation.prescription_schema import Prescription
-from pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.schemas import ResultSchema
+from src.pipeline.validation.prescription_schema import Prescription
+from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
 
 
 # ----------------------------

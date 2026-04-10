@@ -227,6 +227,22 @@ class InferenceEngine:
         """Return the document types that have models registered."""
         return list(self._registry._bundles.keys())
 
+    def classify(self, raw_text: str) -> Optional[str]:
+        """Classify *raw_text* using the first available classifier.
+
+        Iterates over registered bundles and returns the first non-None
+        classification result.  Returns ``None`` if no classifier matches.
+        """
+        for doc_type in self.registered_types:
+            bundle = self._registry.get_bundle(doc_type)
+            if bundle.classifier is None:
+                continue
+            result = self._apply_model(bundle.classifier, raw_text)
+            doc_type_detected = result.get("document_type")
+            if doc_type_detected is not None:
+                return doc_type_detected
+        return None
+
 
 # ═══════════════════════════════════════════════════════════════════
 # Factory: default engine with built-in rule-based extractors
