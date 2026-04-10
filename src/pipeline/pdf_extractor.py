@@ -65,6 +65,26 @@ def _get_ocr_dpi() -> int:
         return 300
 
 
+def _get_ocr_lang() -> str:
+    """Return the configured Tesseract language pack (default ``eng+spa``)."""
+    try:
+        from src.config import settings
+        if settings.tesseract_cmd:
+            pytesseract.pytesseract.tesseract_cmd = settings.tesseract_cmd
+        return settings.ocr_lang
+    except Exception:
+        return "eng+spa"
+
+
+def _get_poppler_path() -> Optional[str]:
+    """Return the configured Poppler bin path, or ``None``."""
+    try:
+        from src.config import settings
+        return settings.poppler_path
+    except Exception:
+        return None
+
+
 def _run_classifier(text: str, page_index: int, classifier: PageClassifier) -> Any:
     if classifier is None:
         return None
@@ -99,12 +119,16 @@ def _process_ocr_page(
     page_index: int,
     page_image: Any,
     classifier: PageClassifier,
+    ocr_lang: str = "eng+spa",
 ) -> Tuple[int, str, Any]:
     """OCR a single page image and optionally classify it."""
+    from PIL import Image as PILImage
+
     img = page_image.convert("RGB")
     open_cv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     preprocessed = preprocess_image(open_cv_image)
-    text = pytesseract.image_to_string(preprocessed)
+    pil_preprocessed = PILImage.fromarray(preprocessed)
+    text = pytesseract.image_to_string(pil_preprocessed, lang=ocr_lang)
     classification = _run_classifier(text, page_index, classifier)
     return page_index, text, classification
 
@@ -147,7 +171,14 @@ def extract_text_from_pdf_ocr(
         ``text``.
     """
     dpi = _get_ocr_dpi()
-    pages = convert_from_path(pdf_path, dpi=dpi)
+    ocr_lang = _get_ocr_lang()
+    poppler = _get_poppler_path()
+
+    convert_kwargs: Dict[str, Any] = {"dpi": dpi}
+    if poppler:
+        convert_kwargs["poppler_path"] = poppler
+
+    pages = convert_from_path(pdf_path, **convert_kwargs)
     if not pages:
         return ("", []) if return_page_results else ""
 
@@ -157,7 +188,9 @@ def extract_text_from_pdf_ocr(
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_page: Dict[Future, int] = {}
         for index, page in enumerate(pages):
-            fut = executor.submit(_process_ocr_page, index, page, page_classifier)
+            fut = executor.submit(
+                _process_ocr_page, index, page, page_classifier, ocr_lang,
+            )
             future_to_page[fut] = index
 
         for future in as_completed(future_to_page):
