@@ -300,5 +300,41 @@ class DocIQEngine:
             logger.info("Exported %d JSON files to %s", len(items), json_dir)
             return str(json_dir)
 
+        elif fmt == "fhir":
+            from src.pipeline.fhir_mapper import map_to_fhir_loose
+            from src.pipeline.validation.schemas import ResultSchema
+            from src.pipeline.validation.prescription_schema import Prescription
+            from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+
+            _SCHEMA_MAP = {
+                "result": ResultSchema,
+                "prescription": Prescription,
+                "clinical_history": ClinicalHistorySchema,
+            }
+
+            fhir_dir = out / (filename or "dociq_fhir")
+            fhir_dir.mkdir(parents=True, exist_ok=True)
+            exported = 0
+            for item in items:
+                doc_type = item.get("document_type")
+                data = item.get("extracted_data")
+                if not doc_type or not data or doc_type not in _SCHEMA_MAP:
+                    continue
+                try:
+                    model_cls = _SCHEMA_MAP[doc_type]
+                    model = model_cls(**data)
+                    fhir_resource = map_to_fhir_loose(model)
+                    safe_name = Path(item["file"]).stem
+                    fhir_path = fhir_dir / f"{safe_name}_fhir.json"
+                    with open(fhir_path, "w", encoding="utf-8") as f:
+                        json.dump(fhir_resource, f, indent=2, ensure_ascii=False)
+                    exported += 1
+                except Exception as exc:
+                    logger.warning(
+                        "FHIR export skipped for %s: %s", item.get("file"), exc
+                    )
+            logger.info("Exported %d FHIR resource(s) to %s", exported, fhir_dir)
+            return str(fhir_dir)
+
         else:
-            raise ValueError(f"Unsupported export format: {fmt!r}. Use 'json' or 'csv'.")
+            raise ValueError(f"Unsupported export format: {fmt!r}. Use 'json', 'csv', or 'fhir'.")

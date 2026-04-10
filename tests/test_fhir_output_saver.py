@@ -1,12 +1,8 @@
-import sys
-import os
 import json
 import pytest
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-
-from pipeline.fhir_output_saver import save_fhir_output
-from pipeline.validation.schemas import ResultSchema
+from src.pipeline.fhir_output_saver import save_fhir_output
+from src.pipeline.validation.schemas import ResultSchema
 
 @pytest.fixture
 def sample_result():
