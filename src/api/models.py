@@ -17,6 +17,8 @@ class HealthResponse(BaseModel):
     """Response for GET /health."""
     status: str = Field(..., description="Service status.", examples=["ok"])
     version: str = Field(..., description="DocIQ version string.", examples=["1.0.0"])
+    uptime_seconds: float = Field(..., description="Seconds since the process started.")
+    timestamp: str = Field(..., description="Current server UTC timestamp in ISO-8601.")
 
 
 class ReadinessCheck(BaseModel):
@@ -24,12 +26,14 @@ class ReadinessCheck(BaseModel):
     name: str
     available: bool
     detail: Optional[str] = None
+    elapsed_ms: float = Field(0.0, description="Time taken to run this check in ms.")
 
 
 class ReadinessResponse(BaseModel):
     """Response for GET /ready."""
     ready: bool = Field(..., description="True when all dependencies are available.")
     checks: List[ReadinessCheck]
+    total_elapsed_ms: float = Field(0.0, description="Total time for all checks in ms.")
 
 
 # ── Processing ────────────────────────────────────────────────────

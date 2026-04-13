@@ -2,6 +2,7 @@
 
 import io
 import pytest
+from datetime import datetime
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
@@ -48,7 +49,7 @@ def _mock_extraction():
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Health endpoints
+# Health endpoint
 # ═══════════════════════════════════════════════════════════════════
 
 class TestHealthEndpoint:
@@ -59,33 +60,89 @@ class TestHealthEndpoint:
         assert data["status"] == "ok"
         assert "version" in data
 
+    def test_health_includes_uptime(self, client):
+        data = client.get("/health").json()
+        assert "uptime_seconds" in data
+        assert data["uptime_seconds"] >= 0
+
+    def test_health_includes_iso_timestamp(self, client):
+        data = client.get("/health").json()
+        assert "timestamp" in data
+        # Must be valid ISO-8601
+        datetime.fromisoformat(data["timestamp"])
+
     def test_health_matches_model(self, client):
         resp = client.get("/health")
-        HealthResponse(**resp.json())  # validates against schema
+        HealthResponse(**resp.json())
 
+
+# ═══════════════════════════════════════════════════════════════════
+# Readiness endpoint
+# ═══════════════════════════════════════════════════════════════════
 
 class TestReadinessEndpoint:
-    def test_ready_returns_200(self, client):
+    """Tests for GET /ready."""
+
+    EXPECTED_CHECKS = {"tesseract", "poppler", "inference_engine", "config", "disk"}
+
+    def test_ready_returns_200_or_503(self, client):
         resp = client.get("/ready")
-        assert resp.status_code == 200
-        data = resp.json()
+        assert resp.status_code in (200, 503)
+
+    def test_ready_payload_shape(self, client):
+        data = client.get("/ready").json()
         assert "ready" in data
         assert "checks" in data
-        assert len(data["checks"]) >= 2
+        assert "total_elapsed_ms" in data
+        assert isinstance(data["checks"], list)
+        assert len(data["checks"]) >= 5
 
-    def test_ready_checks_tesseract(self, client):
-        resp = client.get("/ready")
-        names = [c["name"] for c in resp.json()["checks"]]
-        assert "tesseract" in names
+    def test_ready_check_names(self, client):
+        names = {c["name"] for c in client.get("/ready").json()["checks"]}
+        assert self.EXPECTED_CHECKS.issubset(names)
 
-    def test_ready_checks_inference_engine(self, client):
-        resp = client.get("/ready")
-        names = [c["name"] for c in resp.json()["checks"]]
-        assert "inference_engine" in names
+    def test_ready_each_check_has_elapsed(self, client):
+        for check in client.get("/ready").json()["checks"]:
+            assert "elapsed_ms" in check
+            assert check["elapsed_ms"] >= 0
+
+    def test_ready_total_elapsed_positive(self, client):
+        data = client.get("/ready").json()
+        assert data["total_elapsed_ms"] >= 0
+
+    def test_ready_config_check_passes(self, client):
+        """Config check should pass since settings already loaded."""
+        checks = {c["name"]: c for c in client.get("/ready").json()["checks"]}
+        assert checks["config"]["available"] is True
+
+    def test_ready_disk_check_passes(self, client):
+        checks = {c["name"]: c for c in client.get("/ready").json()["checks"]}
+        assert checks["disk"]["available"] is True
+        assert "MB free" in checks["disk"]["detail"]
 
     def test_ready_matches_model(self, client):
-        resp = client.get("/ready")
-        ReadinessResponse(**resp.json())
+        ReadinessResponse(**client.get("/ready").json())
+
+    def test_ready_returns_503_when_dependency_fails(self, client):
+        """When a dependency is unavailable, /ready returns 503."""
+        with patch("src.api.app._check_tesseract", return_value=(False, "missing")):
+            resp = client.get("/ready")
+            assert resp.status_code == 503
+            data = resp.json()
+            assert data["ready"] is False
+
+    def test_ready_returns_200_when_all_pass(self, client):
+        """Force every check to pass → 200."""
+        with (
+            patch("src.api.app._check_tesseract", return_value=(True, "/usr/bin/tesseract")),
+            patch("src.api.app._check_poppler", return_value=(True, "/usr/bin/pdftoppm")),
+            patch("src.api.app._check_inference", return_value=(True, "registered types: result")),
+            patch("src.api.app._check_config", return_value=(True, "settings loaded")),
+            patch("src.api.app._check_disk", return_value=(True, "5000 MB free")),
+        ):
+            resp = client.get("/ready")
+            assert resp.status_code == 200
+            assert resp.json()["ready"] is True
 
 
 # ═══════════════════════════════════════════════════════════════════
