@@ -14,6 +14,7 @@ import os
 import shutil
 import tempfile
 import time
+from datetime import datetime, timezone
 from typing import List
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
@@ -49,6 +50,10 @@ app = FastAPI(
     },
 )
 
+# ── Process-level bookkeeping ────────────────────────────────────
+_STARTUP_TIME: float = time.monotonic()
+_STARTUP_UTC: datetime = datetime.now(timezone.utc)
+
 # Singleton engine — created once, reused across requests.
 _engine: DocIQEngine | None = None
 
@@ -61,7 +66,74 @@ def _get_engine() -> DocIQEngine:
     return _engine
 
 
-# ── Health & readiness ────────────────────────────────────────────
+# ── Health & readiness helpers ───────────────────────────────────
+
+def _timed_check(name: str, fn) -> ReadinessCheck:
+    """Run *fn* and return a ReadinessCheck with elapsed time."""
+    t0 = time.monotonic()
+    try:
+        available, detail = fn()
+    except Exception as exc:
+        available, detail = False, str(exc)
+    elapsed = (time.monotonic() - t0) * 1000
+    return ReadinessCheck(name=name, available=available, detail=detail, elapsed_ms=round(elapsed, 2))
+
+
+def _check_tesseract():
+    path = settings.tesseract_cmd or shutil.which("tesseract")
+    if path and os.path.isfile(path):
+        return True, path
+    if shutil.which("tesseract"):
+        return True, shutil.which("tesseract")
+    return False, "not found on PATH"
+
+
+def _check_poppler():
+    """Verify that pdftoppm (Poppler) is reachable."""
+    exe = "pdftoppm"
+    if settings.poppler_path:
+        candidate = os.path.join(settings.poppler_path, exe)
+        if os.path.isfile(candidate):
+            return True, candidate
+    found = shutil.which(exe)
+    if found:
+        return True, found
+    return False, "pdftoppm not found on PATH"
+
+
+def _check_inference():
+    engine = _get_engine()
+    types = engine._engine.registered_types if engine._engine else []
+    if types:
+        return True, f"registered types: {', '.join(types)}"
+    return False, "no models loaded"
+
+
+def _check_config():
+    """Validate that the current settings object loaded successfully."""
+    try:
+        # Accessing a few key fields forces any lazy validation errors.
+        _ = settings.ocr_dpi, settings.export_format, settings.version
+        return True, "settings loaded"
+    except Exception as exc:
+        return False, str(exc)
+
+
+def _check_disk():
+    """Ensure the output directory is writable and has >100 MB free."""
+    out_dir = settings.output_dir or "output"
+    try:
+        os.makedirs(out_dir, exist_ok=True)
+        usage = shutil.disk_usage(out_dir)
+        free_mb = usage.free / (1024 * 1024)
+        if free_mb < 100:
+            return False, f"{free_mb:.0f} MB free (< 100 MB minimum)"
+        return True, f"{free_mb:.0f} MB free"
+    except Exception as exc:
+        return False, str(exc)
+
+
+# ── Health & readiness endpoints ─────────────────────────────────
 
 @app.get(
     "/health",
@@ -70,8 +142,19 @@ def _get_engine() -> DocIQEngine:
     summary="Liveness probe",
 )
 async def health():
-    """Returns 200 if the service is alive."""
-    return HealthResponse(status="ok", version=settings.version)
+    """Returns 200 if the service is alive.
+
+    Includes uptime and a UTC timestamp so monitoring dashboards can
+    detect stale instances.
+    """
+    uptime = time.monotonic() - _STARTUP_TIME
+    now = datetime.now(timezone.utc).isoformat()
+    return HealthResponse(
+        status="ok",
+        version=settings.version,
+        uptime_seconds=round(uptime, 2),
+        timestamp=now,
+    )
 
 
 @app.get(
@@ -79,39 +162,37 @@ async def health():
     response_model=ReadinessResponse,
     tags=["Health"],
     summary="Readiness probe",
+    responses={503: {"model": ReadinessResponse, "description": "Not ready"}},
 )
 async def ready():
-    """Check that runtime dependencies (Tesseract, models) are available."""
-    checks: List[ReadinessCheck] = []
+    """Check that runtime dependencies are available.
 
-    # Tesseract
-    tesseract_available = shutil.which("tesseract") is not None
-    checks.append(
-        ReadinessCheck(
-            name="tesseract",
-            available=tesseract_available,
-            detail=shutil.which("tesseract") if tesseract_available else "not found on PATH",
-        )
+    Returns **200** when all checks pass or **503** when at least one
+    dependency is unavailable — compatible with Kubernetes readiness
+    probes.
+    """
+    t0 = time.monotonic()
+
+    checks: List[ReadinessCheck] = [
+        _timed_check("tesseract", _check_tesseract),
+        _timed_check("poppler", _check_poppler),
+        _timed_check("inference_engine", _check_inference),
+        _timed_check("config", _check_config),
+        _timed_check("disk", _check_disk),
+    ]
+
+    total_ms = round((time.monotonic() - t0) * 1000, 2)
+    all_ready = all(c.available for c in checks)
+
+    payload = ReadinessResponse(
+        ready=all_ready,
+        checks=checks,
+        total_elapsed_ms=total_ms,
     )
 
-    # Inference engine
-    try:
-        engine = _get_engine()
-        types = engine._engine.registered_types if engine._engine else []
-        checks.append(
-            ReadinessCheck(
-                name="inference_engine",
-                available=len(types) > 0,
-                detail=f"registered types: {', '.join(types)}" if types else "no models loaded",
-            )
-        )
-    except Exception as exc:
-        checks.append(
-            ReadinessCheck(name="inference_engine", available=False, detail=str(exc))
-        )
-
-    all_ready = all(c.available for c in checks)
-    return ReadinessResponse(ready=all_ready, checks=checks)
+    if all_ready:
+        return payload
+    return JSONResponse(status_code=503, content=payload.model_dump())
 
 
 # ── Document processing ──────────────────────────────────────────
