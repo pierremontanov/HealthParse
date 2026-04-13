@@ -128,14 +128,9 @@ def _load_config(config_path: str) -> Dict[str, Any]:
     return normalised
 
 
-def _configure_logging(level_name: str) -> None:
-    level = getattr(logging, level_name.upper())
-    logging.basicConfig(
-        level=level,
-        format="%(asctime)s [%(levelname)-7s] %(name)s: %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-        stream=sys.stderr,
-    )
+def _configure_logging(level_name: str, fmt: str = "text") -> None:
+    from src.logging_config import setup_logging
+    setup_logging(level=level_name, fmt=fmt)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -171,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         raise
 
-    _configure_logging(cfg.log_level)
+    _configure_logging(cfg.log_level, cfg.log_format)
     logger = logging.getLogger("dociq")
 
     input_path_str = cfg.input_dir

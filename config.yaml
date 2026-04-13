@@ -9,6 +9,7 @@
 # ── General ───────────────────────────────────────────────────────
 version: "1.0.0"
 log_level: INFO                     # DEBUG | INFO | WARNING | ERROR
+log_format: text                    # text | json (json for structured log aggregators)
 
 # ── Paths / I/O ──────────────────────────────────────────────────
 # input_dir: data/generated         # Default input path (CLI --input overrides)
