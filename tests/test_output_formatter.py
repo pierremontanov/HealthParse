@@ -218,5 +218,6 @@ class TestExportResults:
         assert "fhir" in path
 
     def test_invalid_format_raises(self, tmp_path, sample_result_dicts):
-        with pytest.raises(ValueError, match="Unsupported"):
+        from src.pipeline.exceptions import ExportError
+        with pytest.raises(ExportError):
             export_results(sample_result_dicts, output_dir=str(tmp_path), fmt="xml")

@@ -52,8 +52,9 @@ def is_pdf_text_based(pdf_path: str, min_char_threshold: int | None = None) -> b
     try:
         doc = fitz.open(pdf_path)
     except Exception as exc:
+        from src.pipeline.exceptions import PDFOpenError
         logger.error("Failed to open PDF '%s': %s", pdf_path, exc)
-        raise RuntimeError(f"Cannot open PDF: {pdf_path}") from exc
+        raise PDFOpenError(pdf_path, str(exc)) from exc
 
     try:
         for page in doc:

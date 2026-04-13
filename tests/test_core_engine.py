@@ -284,7 +284,8 @@ class TestDocIQEngineExport:
         assert len(os.listdir(path)) == 0
 
     def test_export_invalid_format_raises(self, tmp_path):
-        with pytest.raises(ValueError, match="Unsupported"):
+        from src.pipeline.exceptions import ExportError
+        with pytest.raises(ExportError):
             DocIQEngine.export([], output_dir=str(tmp_path), fmt="xml")
 
     def test_export_empty_csv(self, tmp_path):

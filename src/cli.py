@@ -164,6 +164,12 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
+    except Exception as exc:
+        from src.pipeline.exceptions import ConfigurationError
+        if isinstance(exc, ConfigurationError):
+            print(f"Error: {exc}", file=sys.stderr)
+            return 1
+        raise
 
     _configure_logging(cfg.log_level)
     logger = logging.getLogger("dociq")
