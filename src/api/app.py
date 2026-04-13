@@ -29,6 +29,7 @@ from src.api.models import (
 )
 from src.config import settings
 from src.pipeline.core_engine import DocIQEngine
+from src.pipeline.exceptions import DocIQError
 
 logger = logging.getLogger(__name__)
 
@@ -233,6 +234,41 @@ async def process_documents(
 
 
 # ── Error handlers ────────────────────────────────────────────────
+
+_DOCIQ_STATUS_MAP = {
+    "UnsupportedFileError": 400,
+    "ConfigurationError": 500,
+    "ConfigFileNotFoundError": 500,
+    "ConfigParseError": 500,
+    "DocumentExtractionError": 422,
+    "PDFOpenError": 422,
+    "PDFExtractionError": 422,
+    "PageTimeoutError": 504,
+    "OCRError": 422,
+    "ImageLoadError": 422,
+    "TesseractError": 422,
+    "ClassificationError": 422,
+    "NERExtractionError": 422,
+    "ModelError": 500,
+    "ModelLoadError": 500,
+    "ModelExecutionError": 500,
+    "SchemaValidationError": 422,
+    "ExportError": 500,
+    "FHIRMappingError": 422,
+}
+
+
+@app.exception_handler(DocIQError)
+async def dociq_exception_handler(request, exc: DocIQError):
+    """Map DocIQ custom exceptions to appropriate HTTP status codes."""
+    exc_name = type(exc).__name__
+    status_code = _DOCIQ_STATUS_MAP.get(exc_name, 500)
+    logger.error("DocIQ error (%s): %s", exc_name, exc)
+    return JSONResponse(
+        status_code=status_code,
+        content={"error": exc_name, "detail": str(exc)},
+    )
+
 
 @app.exception_handler(Exception)
 async def generic_exception_handler(request, exc):

@@ -33,6 +33,7 @@ from src.pipeline.exceptions import (
     ClassificationError,
     DocIQError,
     DocumentExtractionError,
+    ExportError,
     UnsupportedFileError,
 )
 from src.pipeline.inference import InferenceEngine, InferenceResult, create_default_engine

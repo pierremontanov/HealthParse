@@ -65,9 +65,10 @@ class TestIsPdfTextBased:
         doc.close.assert_called_once()
 
     @patch("src.pipeline.pdf_type_detector.fitz.open")
-    def test_corrupt_pdf_raises_runtime_error(self, mock_open):
+    def test_corrupt_pdf_raises_pdf_open_error(self, mock_open):
+        from src.pipeline.exceptions import PDFOpenError
         mock_open.side_effect = Exception("corrupt file")
-        with pytest.raises(RuntimeError, match="Cannot open PDF"):
+        with pytest.raises(PDFOpenError):
             is_pdf_text_based("bad.pdf")
 
     @patch("src.pipeline.pdf_type_detector.fitz.open")

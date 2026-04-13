@@ -309,8 +309,9 @@ def export_results(
             items, output_dir, dirname=fhir_dirname, bundle=fhir_bundle,
         )
     else:
-        raise ValueError(
-            f"Unsupported export format: {fmt!r}. Use 'json', 'csv', or 'fhir'."
+        from src.pipeline.exceptions import ExportError
+        raise ExportError(
+            fmt, f"Unsupported format {fmt!r}. Use 'json', 'csv', or 'fhir'."
         )
 
 

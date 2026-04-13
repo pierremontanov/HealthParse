@@ -138,7 +138,8 @@ class TestYAMLConfig:
         assert cfg.ocr_dpi == 600
 
     def test_missing_yaml_raises(self):
-        with pytest.raises(FileNotFoundError):
+        from src.pipeline.exceptions import ConfigFileNotFoundError
+        with pytest.raises(ConfigFileNotFoundError):
             get_settings(config_path="/nonexistent/config.yaml")
 
     def test_yaml_with_hyphens_normalised(self, tmp_path):

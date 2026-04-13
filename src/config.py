@@ -35,9 +35,11 @@ __all__ = ["DocIQSettings", "get_settings", "settings"]
 
 def _load_yaml(path: str | Path) -> Dict[str, Any]:
     """Load a YAML file, with a fallback key:value parser when PyYAML is absent."""
+    from src.pipeline.exceptions import ConfigFileNotFoundError, ConfigParseError
+
     p = Path(path)
     if not p.exists():
-        raise FileNotFoundError(f"Config file not found: {path}")
+        raise ConfigFileNotFoundError(str(path))
 
     try:
         import yaml  # type: ignore[import-untyped]

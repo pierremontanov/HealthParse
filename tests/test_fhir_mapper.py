@@ -241,7 +241,8 @@ class TestMapToFhirLoose:
         assert fhir["resourceType"] == "Encounter"
 
     def test_unsupported_type_raises(self):
-        with pytest.raises(TypeError, match="Unsupported"):
+        from src.pipeline.exceptions import FHIRMappingError
+        with pytest.raises(FHIRMappingError):
             map_to_fhir_loose({"not": "a model"})
 
 

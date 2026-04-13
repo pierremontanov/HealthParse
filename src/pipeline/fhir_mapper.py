@@ -75,7 +75,7 @@ def map_to_fhir_loose(document: object) -> dict:
 
     Raises
     ------
-    TypeError
+    FHIRMappingError
         If *document* is not a recognised schema type.
     """
     if isinstance(document, ResultSchema):
@@ -85,7 +85,10 @@ def map_to_fhir_loose(document: object) -> dict:
     elif isinstance(document, ClinicalHistorySchema):
         return clinical_history_to_fhir(document)
     else:
-        raise TypeError(f"Unsupported document type: {type(document).__name__}")
+        from src.pipeline.exceptions import FHIRMappingError
+        raise FHIRMappingError(
+            "unknown", f"Unsupported document type: {type(document).__name__}"
+        )
 
 
 # ── Result → DiagnosticReport ───────────────────────────────────

@@ -177,10 +177,9 @@ class InferenceEngine:
         except TypeError:
             raise
         except Exception as exc:
+            from src.pipeline.exceptions import ModelExecutionError
             logger.error("Model %s raised %s: %s", model_name, type(exc).__name__, exc)
-            raise RuntimeError(
-                f"Model {model_name} failed during inference: {exc}"
-            ) from exc
+            raise ModelExecutionError(model_name, str(exc)) from exc
 
         if output is None:
             return {}
