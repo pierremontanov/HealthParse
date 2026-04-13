@@ -110,6 +110,10 @@ class DocIQSettings(BaseSettings):
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = Field(
         "INFO", description="Logging verbosity."
     )
+    log_format: Literal["text", "json"] = Field(
+        "text",
+        description="Log output format: 'text' for human-readable, 'json' for structured JSON lines.",
+    )
     supported_languages: Set[str] = Field(
         {"en", "es"}, description="ISO-639-1 codes for supported languages."
     )

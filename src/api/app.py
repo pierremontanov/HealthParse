@@ -29,8 +29,12 @@ from src.api.models import (
     ReadinessResponse,
 )
 from src.config import settings
+from src.logging_config import setup_logging
 from src.pipeline.core_engine import DocIQEngine
 from src.pipeline.exceptions import DocIQError
+
+# Configure structured logging before anything else logs.
+setup_logging(level=settings.log_level, fmt=settings.log_format)
 
 logger = logging.getLogger(__name__)
 
