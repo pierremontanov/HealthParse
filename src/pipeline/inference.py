@@ -247,18 +247,43 @@ class InferenceEngine:
 # Factory: default engine with built-in rule-based extractors
 # ═══════════════════════════════════════════════════════════════════
 
-def create_default_engine() -> InferenceEngine:
+def create_default_engine(
+    model_path: str | None = None,
+) -> InferenceEngine:
     """Build an :class:`InferenceEngine` pre-loaded with rule-based extractors.
 
     This is the recommended way to instantiate the engine for v1.0.  The
     returned engine can process ``prescription``, ``result``, and
     ``clinical_history`` document types out of the box.
 
+    Parameters
+    ----------
+    model_path : str, optional
+        Path to a trained model JSON artefact.  When provided, classifier
+        weights and OCR settings are loaded from the file before building
+        the engine.  Falls back to ``settings.model_path`` when ``None``.
+
     Returns
     -------
     InferenceEngine
         Ready-to-use engine instance.
     """
+    # Apply trained model weights when a path is configured.
+    effective_path = model_path
+    if effective_path is None:
+        try:
+            from src.config import settings as _cfg
+            effective_path = _cfg.model_path
+        except Exception:
+            pass
+
+    if effective_path is not None:
+        from src.pipeline.model_manager import ModelManager
+
+        mgr = ModelManager.load(effective_path)
+        mgr.apply()
+        logger.info("Loaded trained model from %s", effective_path)
+
     from src.pipeline.extractors import (
         ClinicalHistoryExtractor,
         LabResultExtractor,
