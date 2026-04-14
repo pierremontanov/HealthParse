@@ -25,6 +25,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from src.pipeline.language import detect_language, detect_pdf_language
 from src.pipeline.ocr import extract_text_from_image
+from src.pipeline.output_collector import OutputCollector
 from src.pipeline.pdf_extractor import (
     extract_text_directly,
     extract_text_from_pdf_ocr,
@@ -160,7 +161,7 @@ def process_folder(
         "Starting ingestion of %d document(s) from %s", len(filenames), folder_path
     )
 
-    results: List[DocumentResult] = []
+    collector = OutputCollector()
     extraction_futures: List[Tuple[str, Future]] = []
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -190,24 +191,24 @@ def process_folder(
                 extraction = future.result(timeout=file_timeout)
             except TimeoutError:
                 logger.error("Extraction timed out for %s after %ds", filename, file_timeout)
-                results.append(
+                collector.add(
                     DocumentResult(
                         file=filename,
                         status="extraction_error",
                         error=f"Timed out after {file_timeout}s",
                         elapsed_ms=int((time.monotonic() - t0) * 1000),
-                    )
+                    ).as_dict()
                 )
                 continue
             except Exception as exc:
                 logger.error("Extraction failed for %s: %s", filename, exc)
-                results.append(
+                collector.add(
                     DocumentResult(
                         file=filename,
                         status="extraction_error",
                         error=str(exc),
                         elapsed_ms=int((time.monotonic() - t0) * 1000),
-                    )
+                    ).as_dict()
                 )
                 continue
 
@@ -243,16 +244,14 @@ def process_folder(
                     doc.error = str(exc)
 
             doc.elapsed_ms = int((time.monotonic() - t0) * 1000)
-            results.append(doc)
+            collector.add(doc.as_dict())
 
     # Summary
-    ok = sum(1 for r in results if r.status == "ok")
-    errors = len(results) - ok
     logger.info(
         "Ingestion complete: %d ok, %d errors out of %d documents.",
-        ok,
-        errors,
-        len(results),
+        collector.ok_count,
+        collector.error_count,
+        collector.count,
     )
 
-    return [r.as_dict() for r in results]
+    return collector.results()

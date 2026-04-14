@@ -161,6 +161,12 @@ class DocIQSettings(BaseSettings):
         True,
         description="Run classification + NER. False = extraction-only.",
     )
+    model_path: Optional[str] = Field(
+        None,
+        description="Path to a trained model JSON artefact. When set, the "
+        "inference engine loads classifier weights and OCR config from "
+        "this file instead of using built-in defaults.",
+    )
     supported_extensions: Set[str] = Field(
         {".pdf", ".png", ".jpg", ".jpeg"},
         description="File extensions the pipeline will accept.",
