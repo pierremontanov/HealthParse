@@ -16,6 +16,7 @@ import csv
 import json
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Union
 
@@ -78,11 +79,21 @@ def save_json_output(doc: FormattedDoc, output_path: str) -> str:
 
 # ── Batch export – JSON ──────────────────────────────────────────
 
+def _write_json_item(item: Dict[str, Any], json_dir: Path) -> str:
+    """Write a single result dict as a JSON file. Thread-safe."""
+    safe_name = Path(item["file"]).stem
+    doc_path = json_dir / f"{safe_name}.json"
+    with open(doc_path, "w", encoding="utf-8") as f:
+        json.dump(item, f, indent=2, ensure_ascii=False)
+    return str(doc_path)
+
+
 def export_json(
     items: List[Dict[str, Any]],
     output_dir: str,
     *,
     dirname: str | None = None,
+    max_workers: int | None = None,
 ) -> str:
     """Export each result dict as a separate JSON file.
 
@@ -95,6 +106,9 @@ def export_json(
     dirname : str, optional
         Name of the sub-directory for the JSON files.  Defaults to
         ``dociq_results``.
+    max_workers : int, optional
+        Thread-pool size for parallel writes.  ``None`` lets the executor
+        decide.  Pass ``1`` to force sequential writes.
 
     Returns
     -------
@@ -104,11 +118,21 @@ def export_json(
     json_dir = Path(output_dir) / (dirname or "dociq_results")
     json_dir.mkdir(parents=True, exist_ok=True)
 
-    for item in items:
-        safe_name = Path(item["file"]).stem
-        doc_path = json_dir / f"{safe_name}.json"
-        with open(doc_path, "w", encoding="utf-8") as f:
-            json.dump(item, f, indent=2, ensure_ascii=False)
+    if not items:
+        logger.info("No items to export as JSON.")
+        return str(json_dir)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(_write_json_item, item, json_dir): item
+            for item in items
+        }
+        for future in as_completed(futures):
+            try:
+                future.result()
+            except Exception as exc:
+                item = futures[future]
+                logger.warning("JSON write failed for %s: %s", item.get("file"), exc)
 
     logger.info("Exported %d JSON files to %s", len(items), json_dir)
     return str(json_dir)
@@ -174,12 +198,44 @@ def export_csv(
 
 # ── Batch export – FHIR ─────────────────────────────────────────
 
+def _process_fhir_item(
+    item: Dict[str, Any],
+    fhir_dir: Path,
+) -> Optional[dict]:
+    """Validate, map to FHIR, and write a single item. Thread-safe.
+
+    Returns the FHIR resource dict on success, or ``None`` on failure.
+    """
+    from src.pipeline.fhir_mapper import map_to_fhir_loose
+
+    doc_type = item.get("document_type")
+    data = item.get("extracted_data")
+    if not doc_type or not data or doc_type not in _SCHEMA_MAP:
+        return None
+
+    try:
+        model_cls = _SCHEMA_MAP[doc_type]
+        model = model_cls(**data)
+        fhir_resource = map_to_fhir_loose(model)
+
+        safe_name = Path(item["file"]).stem
+        fhir_path = fhir_dir / f"{safe_name}_fhir.json"
+        with open(fhir_path, "w", encoding="utf-8") as f:
+            json.dump(fhir_resource, f, indent=2, ensure_ascii=False)
+
+        return fhir_resource
+    except Exception as exc:
+        logger.warning("FHIR export skipped for %s: %s", item.get("file"), exc)
+        return None
+
+
 def export_fhir(
     items: List[Dict[str, Any]],
     output_dir: str,
     *,
     dirname: str | None = None,
     bundle: bool = True,
+    max_workers: int | None = None,
 ) -> str:
     """Export results as FHIR-mapped JSON resources.
 
@@ -200,39 +256,38 @@ def export_fhir(
     bundle : bool
         When ``True`` (default), also write a FHIR Bundle that wraps
         every individual resource.
+    max_workers : int, optional
+        Thread-pool size for parallel FHIR mapping and writes.
 
     Returns
     -------
     str
         Path to the output sub-directory.
     """
-    from src.pipeline.fhir_mapper import build_fhir_bundle, map_to_fhir_loose
+    from src.pipeline.fhir_mapper import build_fhir_bundle
 
     fhir_dir = Path(output_dir) / (dirname or "dociq_fhir")
     fhir_dir.mkdir(parents=True, exist_ok=True)
 
-    exported = 0
     all_resources: List[dict] = []
 
-    for item in items:
-        doc_type = item.get("document_type")
-        data = item.get("extracted_data")
-        if not doc_type or not data or doc_type not in _SCHEMA_MAP:
-            continue
-        try:
-            model_cls = _SCHEMA_MAP[doc_type]
-            model = model_cls(**data)
-            fhir_resource = map_to_fhir_loose(model)
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(_process_fhir_item, item, fhir_dir): item
+            for item in items
+        }
+        for future in as_completed(futures):
+            try:
+                resource = future.result()
+                if resource is not None:
+                    all_resources.append(resource)
+            except Exception as exc:
+                item = futures[future]
+                logger.warning(
+                    "FHIR worker failed for %s: %s", item.get("file"), exc
+                )
 
-            safe_name = Path(item["file"]).stem
-            fhir_path = fhir_dir / f"{safe_name}_fhir.json"
-            with open(fhir_path, "w", encoding="utf-8") as f:
-                json.dump(fhir_resource, f, indent=2, ensure_ascii=False)
-
-            all_resources.append(fhir_resource)
-            exported += 1
-        except Exception as exc:
-            logger.warning("FHIR export skipped for %s: %s", item.get("file"), exc)
+    exported = len(all_resources)
 
     # Write combined FHIR Bundle
     if bundle and all_resources:
@@ -256,6 +311,7 @@ def export_results(
     filename: str | None = None,
     validate: bool = True,
     strict: bool = False,
+    max_workers: int | None = None,
 ) -> str:
     """Persist results to disk in the requested format.
 
@@ -276,6 +332,9 @@ def export_results(
     strict : bool
         When ``True`` **and** *validate* is ``True``, items that fail
         schema re-validation are excluded from the export entirely.
+    max_workers : int, optional
+        Thread-pool size for parallel file writes (JSON, FHIR).
+        ``None`` lets the executor choose a sensible default.
 
     Returns
     -------
@@ -293,7 +352,7 @@ def export_results(
         items = validate_batch(items, strict=strict)
 
     if fmt == "json":
-        return export_json(items, output_dir, dirname=filename)
+        return export_json(items, output_dir, dirname=filename, max_workers=max_workers)
     elif fmt == "csv":
         return export_csv(items, output_dir, filename=filename)
     elif fmt == "fhir":
@@ -307,6 +366,7 @@ def export_results(
             fhir_dirname = filename
         return export_fhir(
             items, output_dir, dirname=fhir_dirname, bundle=fhir_bundle,
+            max_workers=max_workers,
         )
     else:
         from src.pipeline.exceptions import ExportError
