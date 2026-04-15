@@ -1,0 +1,46 @@
+# ── Version control ──────────────────────────────────────────────
+.git
+.gitignore
+
+# ── Python artefacts ─────────────────────────────────────────────
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.eggs
+dist
+build
+
+# ── Test / CI ────────────────────────────────────────────────────
+tests/
+.pytest_cache
+pytest-cache-files-*/
+htmlcov/
+.coverage
+.tox
+
+# ── IDE / editor ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Environment / secrets ────────────────────────────────────────
+.env
+.env.*
+venv/
+.venv/
+
+# ── Runtime output (mount at runtime instead) ────────────────────
+output/
+data/
+
+# ── Docs / project files ────────────────────────────────────────
+*.md
+*.docx
+*.xlsx
+LICENSE
+
+# ── Docker (avoid recursive copy) ───────────────────────────────
+Dockerfile
+docker-compose*.yml

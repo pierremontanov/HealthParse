@@ -1,0 +1,67 @@
+# ══════════════════════════════════════════════════════════════════
+# DocIQ – Docker Compose
+# ══════════════════════════════════════════════════════════════════
+# Usage:
+#   docker compose up              # API server (default)
+#   docker compose up --build      # rebuild and start
+#   docker compose --profile dev up # run with test suite
+# ══════════════════════════════════════════════════════════════════
+
+services:
+  # ── API Server (default) ───────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dociq:latest
+    container_name: dociq-api
+    ports:
+      - "${DOCIQ_API_PORT:-8000}:8000"
+    volumes:
+      - ./output:/app/output
+      - ./data:/data:ro
+    environment:
+      - DOCIQ_LOG_LEVEL=${DOCIQ_LOG_LEVEL:-INFO}
+      - DOCIQ_LOG_FORMAT=${DOCIQ_LOG_FORMAT:-json}
+      - DOCIQ_API_WORKERS=${DOCIQ_API_WORKERS:-1}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+
+  # ── CLI Runner (on-demand) ─────────────────────────────────────
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dociq:latest
+    container_name: dociq-cli
+    volumes:
+      - ./output:/app/output
+      - ./data:/data:ro
+    environment:
+      - DOCIQ_LOG_LEVEL=${DOCIQ_LOG_LEVEL:-INFO}
+      - DOCIQ_LOG_FORMAT=${DOCIQ_LOG_FORMAT:-text}
+    entrypoint: ["python", "-m", "src.main"]
+    command: ["--input", "/data", "--output-dir", "/app/output"]
+    profiles:
+      - cli
+
+  # ── Test Runner (dev only) ─────────────────────────────────────
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: dociq:latest
+    container_name: dociq-test
+    volumes:
+      - .:/app:ro
+    working_dir: /app
+    entrypoint: ["python", "-m", "pytest"]
+    command: ["-v", "--tb=short"]
+    profiles:
+      - dev
