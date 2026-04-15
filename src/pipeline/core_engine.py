@@ -29,6 +29,8 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
+from src.pipeline.metrics import Timer, get_collector
+
 from src.pipeline.exceptions import (
     ClassificationError,
     DocIQError,
@@ -159,14 +161,19 @@ class DocIQEngine:
 
         filename = path.name
         t0 = time.monotonic()
+        collector = get_collector()
 
         # ── Extraction ──
         try:
-            if ext == ".pdf":
-                extraction = _extract_pdf(str(path), filename)
-            else:
-                extraction = _extract_image(str(path), filename)
+            with Timer("extraction") as t_ext:
+                if ext == ".pdf":
+                    extraction = _extract_pdf(str(path), filename)
+                else:
+                    extraction = _extract_image(str(path), filename)
+            collector.record("extraction", t_ext.elapsed_ms)
+            collector.record(f"extraction.{extraction['method']}", t_ext.elapsed_ms)
         except Exception as exc:
+            collector.record_error("extraction")
             logger.error("Extraction failed for %s: %s", filename, exc)
             raise DocumentExtractionError(filename, str(exc)) from exc
 
@@ -183,21 +190,29 @@ class DocIQEngine:
         # ── Inference ──
         if self._run_inference and self._engine is not None and doc.text:
             try:
-                doc_type = self._engine.classify(doc.text)
+                with Timer("classification") as t_cls:
+                    doc_type = self._engine.classify(doc.text)
+                collector.record("classification", t_cls.elapsed_ms)
+
                 if doc_type is None:
                     doc.document_type = "unknown"
                     logger.warning("Could not classify %s.", filename)
                 else:
                     doc.document_type = doc_type
-                    inference_result = self._engine.process_document(doc_type, doc.text)
+                    with Timer("ner_extraction") as t_ner:
+                        inference_result = self._engine.process_document(doc_type, doc.text)
+                    collector.record("ner_extraction", t_ner.elapsed_ms)
                     doc.extracted_data = inference_result.as_dict()
                     doc.validated = inference_result.validated_data is not None
             except Exception as exc:
+                collector.record_error("inference")
                 logger.error("Inference failed for %s: %s", filename, exc)
                 doc.status = "inference_error"
                 doc.error = str(exc)
 
         doc.elapsed_ms = int((time.monotonic() - t0) * 1000)
+        collector.record("process_file", doc.elapsed_ms)
+        collector.increment("documents_processed")
         return doc.as_dict()
 
     # ── Batch processing ──────────────────────────────────────────
