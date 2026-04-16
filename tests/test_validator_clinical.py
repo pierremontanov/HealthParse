@@ -4,7 +4,7 @@ import pytest
 from pydantic import ValidationError
 
 from src.pipeline.validation.validator import validate_clinical_history
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 
 
 @pytest.fixture

@@ -16,6 +16,7 @@ from typing import Optional
 import cv2
 import numpy as np
 
+from src.pipeline.utils.language import detect_language
 from src.pipeline.utils.text_utils import clean_text, lowercase
 
 logger = logging.getLogger(__name__)
@@ -93,8 +94,6 @@ def preprocess_text(raw_text: str) -> str:
     str
         Cleaned, lowercased text.
     """
-    from src.pipeline.utils.language import detect_language
-
     lang = detect_language(raw_text)
     logger.debug("Language detected during preprocessing: %s", lang)
 

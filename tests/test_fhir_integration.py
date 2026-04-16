@@ -14,7 +14,7 @@ from src.pipeline.fhir_output_saver import save_fhir_bundle, save_fhir_output
 from src.pipeline.output_formatter import export_fhir, export_results
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.prescription_schema import Prescription
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 
 
 # ── Fixtures ────────────────────────────────────────────────────

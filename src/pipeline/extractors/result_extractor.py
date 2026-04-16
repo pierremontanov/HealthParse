@@ -14,6 +14,11 @@ from src.pipeline.extractors.base import (
     extract_field,
     extract_test_results,
 )
+from src.pipeline.extractors.field_aliases import (
+    resolve_doctor,
+    resolve_exam_date,
+    resolve_institution,
+)
 
 
 class LabResultExtractor:
@@ -42,17 +47,9 @@ class LabResultExtractor:
         patient_name = extract_field(text, "Patient Name")
         patient_id = extract_field(text, "Patient ID")
         date_of_birth = extract_date(text, "Date of Birth")
-        exam_date = (
-            extract_date(text, "Exam Date")
-            or extract_date(text, "Date of Exam")
-            or extract_date(text, "Date")
-        )
-        institution = extract_field(text, "Clinic") or extract_field(text, "Institution")
-        professional = (
-            extract_field(text, "Doctor")
-            or extract_field(text, "Professional")
-            or extract_field(text, "Physician")
-        )
+        exam_date = resolve_exam_date(text)
+        institution = resolve_institution(text)
+        professional = resolve_doctor(text)
 
         # ── Extract test results block ──
         results_block = extract_block(text, "Test Results")

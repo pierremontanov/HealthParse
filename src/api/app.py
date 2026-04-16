@@ -268,15 +268,14 @@ async def process_documents(
             if format == "fhir" and result.get("extracted_data") and result.get("document_type"):
                 try:
                     from src.pipeline.fhir_mapper import map_to_fhir_loose
-                    from src.pipeline.validation.schemas import ResultSchema
-                    from src.pipeline.validation.prescription_schema import Prescription
-                    from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+                    from src.pipeline.validation import (
+                        ClinicalHistorySchema,
+                        Prescription,
+                        ResultSchema,
+                        SCHEMA_REGISTRY,
+                    )
 
-                    _SCHEMA_MAP = {
-                        "result": ResultSchema,
-                        "prescription": Prescription,
-                        "clinical_history": ClinicalHistorySchema,
-                    }
+                    _SCHEMA_MAP = SCHEMA_REGISTRY
                     doc_type = result["document_type"]
                     if doc_type in _SCHEMA_MAP:
                         model = _SCHEMA_MAP[doc_type](**result["extracted_data"])

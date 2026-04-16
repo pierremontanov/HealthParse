@@ -7,7 +7,7 @@ from src.pipeline.fhir_mapper import map_to_fhir_loose
 from src.pipeline.fhir_output_saver import save_fhir_bundle, save_fhir_output
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.prescription_schema import Prescription
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 
 
 @pytest.fixture

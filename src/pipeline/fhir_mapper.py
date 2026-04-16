@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Sequence
 
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.prescription_schema import Prescription
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 
 __all__ = [
     "map_to_fhir_loose",

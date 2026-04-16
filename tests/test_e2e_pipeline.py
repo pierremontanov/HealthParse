@@ -486,7 +486,7 @@ class TestFHIRFidelityE2E:
 
     def test_encounter_has_patient(self, inference_engine):
         from src.pipeline.fhir_mapper import map_to_fhir_loose
-        from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+        from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 
         ir = inference_engine.process_document("clinical_history", CLINICAL_HISTORY_TEXT)
         model = ClinicalHistorySchema(**ir.as_dict())
