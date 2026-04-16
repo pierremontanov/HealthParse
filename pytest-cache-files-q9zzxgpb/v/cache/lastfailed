@@ -1,0 +1,10 @@
+{
+  "tests/test_pipeline.py::test_pipeline_extraction_and_cleaning[C:/Users/PIERRE/Aivora/Projects/DocIQ/data/Test/Test_32_HC.pdf]": true,
+  "tests/test_threading.py::TestExtractTextDirectly::test_empty_pdf": true,
+  "tests/test_threading.py::TestExtractTextDirectly::test_empty_pdf_with_page_results": true,
+  "tests/test_pdf_type_detector.py::TestIsPdfTextBased::test_corrupt_pdf_raises_runtime_error": true,
+  "tests/test_e2e_pipeline.py::TestPrescriptionE2E::test_date_normalised_to_iso": true,
+  "tests/test_ocr_comprehensive.py::TestExtractTextEdgeCases::test_returns_empty_on_tesseract_exception": true,
+  "tests/test_ner_comprehensive.py::TestExtractBlock::test_block_stops_at_next_header": true,
+  "tests/test_ner_comprehensive.py::TestExtractBlock::test_returns_none_for_empty_block": true
+}
