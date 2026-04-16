@@ -21,7 +21,7 @@ from pydantic import BaseModel, ValidationError
 
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.prescription_schema import Prescription
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 from src.pipeline.utils.date_utils import normalize_dates
 
 logger = logging.getLogger(__name__)

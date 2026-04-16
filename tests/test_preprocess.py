@@ -72,35 +72,35 @@ class TestPreprocessImage:
 # ── preprocess_text ─────────────────────────────────────────────
 
 class TestPreprocessText:
-    @patch("src.pipeline.utils.language.detect_language", return_value="en")
+    @patch("src.pipeline.preprocess.detect_language", return_value="en")
     def test_lowercases_text(self, mock_lang):
         result = preprocess_text("Hello WORLD")
         assert result == result.lower()
 
-    @patch("src.pipeline.utils.language.detect_language", return_value="en")
+    @patch("src.pipeline.preprocess.detect_language", return_value="en")
     def test_collapses_whitespace(self, mock_lang):
         result = preprocess_text("hello   world\n\nfoo")
         assert "  " not in result
 
-    @patch("src.pipeline.utils.language.detect_language", return_value="en")
+    @patch("src.pipeline.preprocess.detect_language", return_value="en")
     def test_unicode_normalisation(self, mock_lang):
         # NFKD normalises ﬁ (U+FB01) to fi
         result = preprocess_text("ﬁnd")
         assert "fi" in result
 
-    @patch("src.pipeline.utils.language.detect_language", return_value="en")
+    @patch("src.pipeline.preprocess.detect_language", return_value="en")
     def test_removes_special_chars(self, mock_lang):
         result = preprocess_text("hello @#$ world!")
         # @ and # should be removed, word chars + punctuation kept
         assert "@" not in result
         assert "#" not in result
 
-    @patch("src.pipeline.utils.language.detect_language", return_value="es")
+    @patch("src.pipeline.preprocess.detect_language", return_value="es")
     def test_detects_language(self, mock_lang):
         preprocess_text("Hola mundo esto es texto en español")
         mock_lang.assert_called_once()
 
-    @patch("src.pipeline.utils.language.detect_language", return_value="en")
+    @patch("src.pipeline.preprocess.detect_language", return_value="en")
     def test_empty_string(self, mock_lang):
         result = preprocess_text("")
         assert result == ""

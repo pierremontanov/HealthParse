@@ -9,7 +9,7 @@ Convenience imports::
     )
 """
 
-from src.pipeline.validation.ClinicalHistorySchema import ClinicalHistorySchema
+from src.pipeline.validation.clinical_history_schema import ClinicalHistorySchema
 from src.pipeline.validation.prescription_schema import Prescription
 from src.pipeline.validation.schemas import ResultSchema
 from src.pipeline.validation.validator import (

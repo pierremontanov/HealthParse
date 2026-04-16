@@ -9,7 +9,11 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional
 
-from src.pipeline.extractors.base import extract_block, extract_date, extract_field
+from src.pipeline.extractors.base import extract_block, extract_field
+from src.pipeline.extractors.field_aliases import (
+    resolve_institution,
+    resolve_prescription_date,
+)
 
 
 class PrescriptionExtractor:
@@ -35,12 +39,9 @@ class PrescriptionExtractor:
         """Return a dictionary that matches the ``Prescription`` schema."""
         patient_name = extract_field(text, "Patient Name")
         patient_id = extract_field(text, "Patient ID")
-        date = (
-            extract_date(text, "Date of Prescription")
-            or extract_date(text, "Date")
-        )
+        date = resolve_prescription_date(text)
         doctor_name = extract_field(text, "Doctor")
-        institution = extract_field(text, "Clinic") or extract_field(text, "Institution")
+        institution = resolve_institution(text)
 
         prescription_body = extract_block(text, "Prescription")
         items = self._parse_items(prescription_body)

@@ -15,6 +15,15 @@ from src.pipeline.extractors.base import (
     extract_dated_entries,
     extract_field,
 )
+from src.pipeline.extractors.field_aliases import (
+    resolve_assessment,
+    resolve_chief_complaint,
+    resolve_doctor,
+    resolve_institution,
+    resolve_medications,
+    resolve_physical_exam,
+    resolve_plan,
+)
 
 
 class ClinicalHistoryExtractor:
@@ -40,12 +49,8 @@ class ClinicalHistoryExtractor:
         patient_name = extract_field(text, "Patient Name")
         patient_id = extract_field(text, "Patient ID")
         date_of_birth = extract_date(text, "Date of Birth")
-        institution = extract_field(text, "Clinic") or extract_field(text, "Institution")
-        doctor_name = (
-            extract_field(text, "Doctor")
-            or extract_field(text, "Physician")
-            or extract_field(text, "Professional")
-        )
+        institution = resolve_institution(text)
+        doctor_name = resolve_doctor(text)
 
         # ── Parse annotations ──
         annotations_block = extract_block(text, "Annotations")
@@ -56,11 +61,11 @@ class ClinicalHistoryExtractor:
         chief_complaint = self._derive_chief_complaint(entries)
 
         # ── Try alternative fields for richer documents ──
-        assessment = extract_field(text, "Assessment") or extract_field(text, "Diagnosis")
-        plan = extract_field(text, "Plan") or extract_field(text, "Treatment Plan")
-        physical_exam = extract_field(text, "Physical Exam") or extract_field(text, "Examination")
-        chief_complaint_explicit = extract_field(text, "Chief Complaint") or extract_field(text, "Reason for Visit")
-        medications_field = extract_field(text, "Current Medications") or extract_field(text, "Medications")
+        assessment = resolve_assessment(text)
+        plan = resolve_plan(text)
+        physical_exam = resolve_physical_exam(text)
+        chief_complaint_explicit = resolve_chief_complaint(text)
+        medications_field = resolve_medications(text)
 
         current_medications: Optional[List[str]] = None
         if medications_field:
