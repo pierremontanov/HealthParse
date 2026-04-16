@@ -4,6 +4,10 @@ This module exposes utilities to lazily load NER and classification models for
 specific document types, run them over the preprocessed text, and validate the
 structured payload using the existing Pydantic schemas.
 
+When NER output contains a flat ``"entities"`` list (as produced by ML-based
+NER models), the engine automatically applies the :class:`RelationMapper` to
+wire entities into structured relations before validation.
+
 It also provides a :func:`create_default_engine` factory that registers the
 built-in rule-based extractors so the engine is ready to use out of the box.
 """
@@ -11,11 +15,13 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Sequence
 
 from pydantic import BaseModel
 
 from src.pipeline.preprocess import preprocess_text
+from src.pipeline.relation_configs import RELATION_CONFIG_REGISTRY, get_relation_config
+from src.pipeline.relation_mapper import RelationMapper, RelationMappingResult
 from src.pipeline.validation.validator import (
     validate_clinical_history,
     validate_prescription,
@@ -97,6 +103,7 @@ class InferenceResult:
     ner_output: Dict[str, Any]
     combined_output: Dict[str, Any]
     validated_data: Optional[BaseModel]
+    relation_mapping: Optional[RelationMappingResult] = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the validated data as a dictionary when available."""
@@ -119,10 +126,12 @@ class InferenceEngine:
         registry: ModelRegistry,
         validators: Optional[Dict[str, Callable[[Dict[str, Any]], BaseModel]]] = None,
         text_preprocessor: Callable[[str], str] = preprocess_text,
+        proximity_window: Optional[int] = None,
     ) -> None:
         self._registry = registry
         self._validators = validators or self.DEFAULT_VALIDATORS
         self._text_preprocessor = text_preprocessor
+        self._proximity_window = proximity_window
 
     def process_document(self, document_type: str, raw_text: str) -> InferenceResult:
         """Run the full inference pipeline for a document.
@@ -134,6 +143,17 @@ class InferenceEngine:
             and validation schema.
         raw_text : str
             Text extracted from the document.
+
+        The pipeline steps are:
+
+        1. **Preprocessing** – normalise the raw text.
+        2. **Classification** – extract global attributes.
+        3. **NER** – extract entities (structured dict *or* flat entity list).
+        4. **Relation mapping** – if NER output contains a flat ``"entities"``
+           list, run :class:`RelationMapper` to wire entities into structured
+           relations that match the validation schema.
+        5. **Merge** – combine classifier, NER, and relation outputs.
+        6. **Validation** – validate the merged dict against the Pydantic schema.
         """
         bundle = self._registry.get_bundle(document_type)
         preprocessed_text = self._text_preprocessor(raw_text)
@@ -142,7 +162,18 @@ class InferenceEngine:
         # need original casing to preserve proper nouns and dates.
         classifier_output = self._apply_model(bundle.classifier, preprocessed_text)
         ner_output = self._apply_model(bundle.ner, raw_text)
+
+        # Relation mapping: wire flat entity lists into structured relations.
+        relation_result = self._apply_relation_mapping(document_type, ner_output)
+
         combined_output = self._merge_outputs(classifier_output, ner_output)
+
+        # If relation mapping produced results, merge them (relations take
+        # precedence over raw NER fields for structured data).
+        if relation_result is not None:
+            relation_dict = self._relations_to_dict(relation_result)
+            combined_output.update(relation_dict)
+
         validated = self._validate(document_type, combined_output)
 
         return InferenceResult(
@@ -153,6 +184,7 @@ class InferenceEngine:
             ner_output=ner_output,
             combined_output=combined_output,
             validated_data=validated,
+            relation_mapping=relation_result,
         )
 
     def _apply_model(self, model: Optional[Any], text: str) -> Dict[str, Any]:
@@ -218,6 +250,71 @@ class InferenceEngine:
                 "Validation failed for document type '%s': %s", document_type, exc
             )
             raise
+
+    # ── Relation mapping ───────────────────────────────────────────
+
+    def _apply_relation_mapping(
+        self, document_type: str, ner_output: Dict[str, Any]
+    ) -> Optional[RelationMappingResult]:
+        """Run :class:`RelationMapper` when NER output has a flat entity list.
+
+        If ``ner_output`` contains an ``"entities"`` key whose value is a list
+        of entity dicts, the mapper converts them into structured relations
+        using the domain config for *document_type*.
+
+        Returns ``None`` when the NER output is already structured (i.e. the
+        rule-based extractors) or when no relation config exists.
+        """
+        entities = ner_output.get("entities")
+        if not isinstance(entities, list) or not entities:
+            return None
+
+        try:
+            config = get_relation_config(document_type)
+        except KeyError:
+            logger.debug("No relation config for '%s'; skipping entity wiring.", document_type)
+            return None
+
+        mapper = RelationMapper(
+            config,
+            proximity_window=self._proximity_window,
+            keep_metadata=False,
+        )
+        result = mapper.map_relations(entities)
+        logger.info(
+            "Relation mapping for '%s': %d relations, %d orphans",
+            document_type, len(result.relations), len(result.orphans),
+        )
+        return result
+
+    @staticmethod
+    def _relations_to_dict(result: RelationMappingResult) -> Dict[str, Any]:
+        """Flatten a :class:`RelationMappingResult` into a schema-friendly dict.
+
+        Converts the list of relation dicts into a structure that can be
+        merged with the combined output before validation.  For example, a
+        list of MEDICATION relations becomes an ``"items"`` list for the
+        prescription schema.
+        """
+        output: Dict[str, Any] = {}
+        if not result.relations:
+            return output
+
+        # Group relations by their anchor label.
+        from collections import defaultdict
+        by_anchor: Dict[str, list] = defaultdict(list)
+        for rel in result.relations:
+            # First key is always the anchor label.
+            anchor_label = next(iter(rel))
+            by_anchor[anchor_label].append(rel)
+
+        # Expose grouped relations under a predictable key.
+        output["_relations"] = dict(by_anchor)
+        output["_orphans"] = [
+            {"label": o.get("label", ""), "text": o.get("text", "")}
+            for o in result.orphans
+        ]
+        return output
 
     # ── Introspection helpers ─────────────────────────────────────
 

@@ -25,6 +25,14 @@ from src.pipeline.inference import (
 )
 from src.pipeline.model_manager import ModelManager, ModelMeta
 from src.pipeline.output_collector import OutputCollector
+from src.pipeline.relation_configs import (
+    CLINICAL_HISTORY_RELATIONS,
+    PRESCRIPTION_RELATIONS,
+    RELATION_CONFIG_REGISTRY,
+    RESULT_RELATIONS,
+    get_relation_config,
+)
+from src.pipeline.relation_mapper import RelationMapper, RelationMappingResult, connect_entities
 
 # NOTE: We deliberately avoid ``from src.pipeline.process_folder import
 # process_folder`` here.  Importing a name identical to a sub-module shadows
@@ -48,4 +56,13 @@ __all__ = [
     "ModelMeta",
     # Batch processing
     "OutputCollector",
+    # Relation mapping
+    "RelationMapper",
+    "RelationMappingResult",
+    "connect_entities",
+    "get_relation_config",
+    "PRESCRIPTION_RELATIONS",
+    "RESULT_RELATIONS",
+    "CLINICAL_HISTORY_RELATIONS",
+    "RELATION_CONFIG_REGISTRY",
 ]
