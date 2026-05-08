@@ -1,9 +1,8 @@
 """Shared field-alias helpers for rule-based entity extractors.
 
-Each medical document type uses slightly different headers for the same
-semantic field (e.g. ``Clinic`` vs ``Institution``, ``Doctor`` vs
-``Physician``).  This module centralises the ordered fallback chains so
-that every extractor resolves them identically.
+This module now delegates to the comprehensive bilingual helpers in
+``base.py``.  The public functions are kept for backward compatibility
+so existing imports continue to work.
 
 Usage
 -----
@@ -13,69 +12,54 @@ Usage
 """
 from __future__ import annotations
 
-from typing import Callable, Optional, Sequence, Tuple
+from typing import Optional
 
-from src.pipeline.extractors.base import extract_date, extract_field
-
-# ── Generic resolver ──────────────────────────────────────────────
-
-
-def _resolve(
-    text: str,
-    aliases: Sequence[str],
-    extractor: Callable[[str, str], Optional[str]],
-) -> Optional[str]:
-    """Try *aliases* in order using *extractor*, return the first hit."""
-    for alias in aliases:
-        value = extractor(text, alias)
-        if value:
-            return value
-    return None
-
-
-# ── Shared field resolvers ────────────────────────────────────────
-
-
-def resolve_institution(text: str) -> Optional[str]:
-    """Resolve institution name from ``Clinic`` / ``Institution``."""
-    return _resolve(text, ("Clinic", "Institution"), extract_field)
-
-
-def resolve_doctor(text: str) -> Optional[str]:
-    """Resolve doctor name from ``Doctor`` / ``Physician`` / ``Professional``."""
-    return _resolve(text, ("Doctor", "Physician", "Professional"), extract_field)
-
-
-def resolve_exam_date(text: str) -> Optional[str]:
-    """Resolve exam date from ``Exam Date`` / ``Date of Exam`` / ``Date``."""
-    return _resolve(text, ("Exam Date", "Date of Exam", "Date"), extract_date)
-
-
-def resolve_prescription_date(text: str) -> Optional[str]:
-    """Resolve prescription date from ``Date of Prescription`` / ``Date``."""
-    return _resolve(text, ("Date of Prescription", "Date"), extract_date)
+# Re-export unified helpers from base for backward compatibility
+from src.pipeline.extractors.base import (
+    extract_institution as resolve_institution,
+    extract_doctor as resolve_doctor,
+    extract_exam_date as resolve_exam_date,
+    extract_prescription_date as resolve_prescription_date,
+    resolve_field_flexible,
+    extract_field,
+)
 
 
 def resolve_assessment(text: str) -> Optional[str]:
-    """Resolve assessment from ``Assessment`` / ``Diagnosis``."""
-    return _resolve(text, ("Assessment", "Diagnosis"), extract_field)
+    """Resolve assessment from ``Assessment`` / ``Diagnosis`` / Spanish equivalents."""
+    return resolve_field_flexible(text, [
+        "Assessment", "Diagnosis",
+        "Diagnostico", "Valoracion", "Evaluacion", "Impresion Diagnostica",
+    ])
 
 
 def resolve_plan(text: str) -> Optional[str]:
-    """Resolve plan from ``Plan`` / ``Treatment Plan``."""
-    return _resolve(text, ("Plan", "Treatment Plan"), extract_field)
+    """Resolve plan from ``Plan`` / ``Treatment Plan`` / Spanish equivalents."""
+    return resolve_field_flexible(text, [
+        "Plan", "Treatment Plan",
+        "Plan de Tratamiento", "Plan Terapeutico", "Conducta", "Manejo",
+    ])
 
 
 def resolve_physical_exam(text: str) -> Optional[str]:
-    """Resolve physical exam from ``Physical Exam`` / ``Examination``."""
-    return _resolve(text, ("Physical Exam", "Examination"), extract_field)
+    """Resolve physical exam from ``Physical Exam`` / ``Examination`` / Spanish equivalents."""
+    return resolve_field_flexible(text, [
+        "Physical Exam", "Examination",
+        "Examen Fisico", "Exploracion Fisica", "Examen Clinico",
+    ])
 
 
 def resolve_chief_complaint(text: str) -> Optional[str]:
-    """Resolve chief complaint from ``Chief Complaint`` / ``Reason for Visit``."""
-    return _resolve(text, ("Chief Complaint", "Reason for Visit"), extract_field)
+    """Resolve chief complaint from ``Chief Complaint`` / ``Reason for Visit`` / Spanish equivalents."""
+    return resolve_field_flexible(text, [
+        "Chief Complaint", "Reason for Visit",
+        "Motivo de Consulta", "Motivo Consulta", "Motivo de Ingreso",
+    ])
 
 
 def resolve_medications(text: str) -> Optional[str]:
-    """Resolve medications from ``Current Medications`` / ``Medications``."""
-    return _resolve(text, ("Current Medications", "Medications"), extract_field)
+    """Resolve medications from ``Current Medications`` / ``Medications`` / Spanish equivalents."""
+    return resolve_field_flexible(text, [
+        "Current Medications", "Medications",
+        "Medicamentos", "Medicamentos Actuales", "Tratamiento Actual",
+    ])

@@ -2,6 +2,9 @@
 
 Parses the structured text layout produced by the document generator and
 returns a dictionary compatible with the ``ResultSchema`` Pydantic schema.
+
+Uses the unified bilingual helpers from ``base.py`` so that English and
+Spanish (Chile, Colombia, Mexico, etc.) documents are handled identically.
 """
 
 from __future__ import annotations
@@ -10,14 +13,20 @@ from typing import Any, Dict, Optional
 
 from src.pipeline.extractors.base import (
     extract_block,
-    extract_date,
-    extract_field,
     extract_test_results,
-)
-from src.pipeline.extractors.field_aliases import (
-    resolve_doctor,
-    resolve_exam_date,
-    resolve_institution,
+    # Unified bilingual helpers
+    extract_patient_name,
+    extract_patient_id,
+    extract_exam_date,
+    extract_birth_date,
+    extract_doctor,
+    extract_institution,
+    extract_age,
+    extract_sex,
+    extract_findings_block,
+    extract_impression_block,
+    extract_study_area,
+    infer_exam_type,
 )
 
 
@@ -26,50 +35,50 @@ class LabResultExtractor:
 
     The extractor exposes an ``extract(text)`` method so it can be registered
     as the NER model inside a :class:`~src.pipeline.inference.ModelBundle`.
-
-    Expected text layout::
-
-        Patient Name: <name>
-        Patient ID: <id>
-        Date of Birth: <date>
-        Exam Date: <date>
-        Clinic: <name>
-
-        Test Results:
-        - TestName: value (Ref: range)
-        - TestName: value (Ref: range)
-
-        Summary: <text>
     """
 
     def extract(self, text: str) -> Dict[str, Any]:
         """Return a dictionary that matches the ``ResultSchema`` schema."""
-        patient_name = extract_field(text, "Patient Name")
-        patient_id = extract_field(text, "Patient ID")
-        date_of_birth = extract_date(text, "Date of Birth")
-        exam_date = resolve_exam_date(text)
-        institution = resolve_institution(text)
-        professional = resolve_doctor(text)
+        patient_name = extract_patient_name(text)
+        patient_id = extract_patient_id(text)
+        date_of_birth = extract_birth_date(text)
+        exam_date = extract_exam_date(text)
+        institution = extract_institution(text)
+        professional = extract_doctor(text)
+        age = extract_age(text)
+        sex = extract_sex(text)
 
-        # ── Extract test results block ──
+        # ── Extract test results block (English and Spanish headers) ──
         results_block = extract_block(text, "Test Results")
+        if not results_block:
+            results_block = extract_block(text, "Resultados")
         test_results = extract_test_results(results_block) if results_block else []
 
+        # ── Findings ──
         findings = self._format_findings(test_results, results_block)
-        exam_type = self._infer_exam_type(test_results, text)
-        summary = extract_field(text, "Summary")
+        if findings == "No findings recorded":
+            findings = extract_findings_block(text) or findings
+
+        # ── Exam type & study area ──
+        exam_type = infer_exam_type(text, test_results or None)
+        study_area = extract_study_area(text)
+
+        # ── Summary / Impression ──
+        summary = extract_impression_block(text)
 
         return {
             "patient_name": patient_name,
             "patient_id": patient_id,
+            "age": age,
+            "sex": sex,
             "date_of_birth": date_of_birth,
             "exam_date": exam_date,
             "exam_type": exam_type,
-            "study_area": None,
+            "study_area": study_area,
             "findings": findings,
             "impression": summary,
-            "professional": professional or "Not specified",
-            "institution": institution or "Not specified",
+            "professional": professional,
+            "institution": institution,
             "notes": None,
         }
 
@@ -91,37 +100,3 @@ class LabResultExtractor:
         if raw_block:
             return raw_block.strip()
         return "No findings recorded"
-
-    @staticmethod
-    def _infer_exam_type(test_results: list, text: str) -> str:
-        """Attempt to infer the exam type from the test names or text content."""
-        if test_results:
-            names = [tr["test_name"].lower() for tr in test_results]
-            all_names = " ".join(names)
-
-            if any(kw in all_names for kw in ["glucose", "hba1c", "insulin"]):
-                return "Blood Chemistry – Glucose Panel"
-            if any(kw in all_names for kw in ["cholesterol", "ldl", "hdl", "triglyceride", "lipid"]):
-                return "Blood Chemistry – Lipid Panel"
-            if any(kw in all_names for kw in ["hemoglobin", "hematocrit", "platelet", "wbc", "rbc", "cbc"]):
-                return "Hematology – Complete Blood Count"
-            if any(kw in all_names for kw in ["creatinine", "bun", "urea", "kidney"]):
-                return "Blood Chemistry – Renal Panel"
-            if any(kw in all_names for kw in ["alt", "ast", "bilirubin", "liver"]):
-                return "Blood Chemistry – Liver Panel"
-            if any(kw in all_names for kw in ["tsh", "t3", "t4", "thyroid"]):
-                return "Blood Chemistry – Thyroid Panel"
-
-            return "Laboratory Test"
-
-        lower = text.lower()
-        if any(kw in lower for kw in ["x-ray", "xray", "radiograph"]):
-            return "Radiology – X-Ray"
-        if "mri" in lower or "magnetic resonance" in lower:
-            return "Radiology – MRI"
-        if "ct" in lower or "computed tomography" in lower:
-            return "Radiology – CT Scan"
-        if "ultrasound" in lower or "sonograph" in lower:
-            return "Radiology – Ultrasound"
-
-        return "Laboratory Test"

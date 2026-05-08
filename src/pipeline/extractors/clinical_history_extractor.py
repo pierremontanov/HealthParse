@@ -3,6 +3,9 @@
 Parses the structured text layout produced by the document generator and
 returns a dictionary compatible with the ``ClinicalHistorySchema`` Pydantic
 schema.
+
+Uses the unified bilingual helpers from ``base.py`` so that English and
+Spanish (Chile, Colombia, Mexico, etc.) documents are handled identically.
 """
 
 from __future__ import annotations
@@ -11,18 +14,18 @@ from typing import Any, Dict, List, Optional
 
 from src.pipeline.extractors.base import (
     extract_block,
-    extract_date,
     extract_dated_entries,
     extract_field,
-)
-from src.pipeline.extractors.field_aliases import (
-    resolve_assessment,
-    resolve_chief_complaint,
-    resolve_doctor,
-    resolve_institution,
-    resolve_medications,
-    resolve_physical_exam,
-    resolve_plan,
+    resolve_field_flexible,
+    # Unified bilingual helpers
+    extract_patient_name,
+    extract_patient_id,
+    extract_birth_date,
+    extract_consultation_date,
+    extract_doctor,
+    extract_institution,
+    extract_age,
+    extract_sex,
 )
 
 
@@ -31,29 +34,61 @@ class ClinicalHistoryExtractor:
 
     The extractor exposes an ``extract(text)`` method so it can be registered
     as the NER model inside a :class:`~src.pipeline.inference.ModelBundle`.
-
-    Expected text layout::
-
-        Patient Name: <name>
-        Patient ID: <id>
-        Date of Birth: <date>
-        Clinic: <name>
-
-        Annotations:
-        - YYYY-MM-DD: <note text>
-        - YYYY-MM-DD: <note text>
     """
+
+    # ── Spanish-aware field alias lists ──
+    _ASSESSMENT_ALIASES = [
+        "Assessment", "Diagnosis",
+        "Diagnostico", "Valoracion", "Evaluacion", "Impresion Diagnostica",
+    ]
+    _PLAN_ALIASES = [
+        "Plan", "Treatment Plan",
+        "Plan de Tratamiento", "Plan Terapeutico", "Conducta", "Manejo",
+    ]
+    _PHYSICAL_EXAM_ALIASES = [
+        "Physical Exam", "Examination",
+        "Examen Fisico", "Exploracion Fisica", "Examen Clinico",
+    ]
+    _CHIEF_COMPLAINT_ALIASES = [
+        "Chief Complaint", "Reason for Visit",
+        "Motivo de Consulta", "Motivo Consulta", "Motivo de Ingreso",
+        "Queja Principal", "Sintoma Principal",
+        "Enfermedad actual", "Enfermedad Actual",
+    ]
+    _MEDICATIONS_ALIASES = [
+        "Current Medications", "Medications",
+        "Medicamentos", "Medicamentos Actuales", "Tratamiento Actual",
+        "Medicacion", "Farmacoterapia",
+        "Farmacologicos", "Farmacologicas",
+    ]
+    _MEDICAL_HISTORY_ALIASES = [
+        "Medical History", "Past Medical History",
+        "Antecedentes Patologicos", "Patologicos",
+        "Antecedentes Personales", "Antecedentes",
+    ]
+    _ANNOTATIONS_HEADERS = [
+        "Annotations",
+        "Anotaciones", "Notas Clinicas", "Evoluciones", "Evolucion",
+        "Historia Clinica", "Antecedentes",
+    ]
 
     def extract(self, text: str) -> Dict[str, Any]:
         """Return a dictionary that matches the ``ClinicalHistorySchema``."""
-        patient_name = extract_field(text, "Patient Name")
-        patient_id = extract_field(text, "Patient ID")
-        date_of_birth = extract_date(text, "Date of Birth")
-        institution = resolve_institution(text)
-        doctor_name = resolve_doctor(text)
+        patient_name = extract_patient_name(text)
+        patient_id = extract_patient_id(text)
+        date_of_birth = extract_birth_date(text)
+        institution = extract_institution(text)
+        doctor_name = extract_doctor(text)
+        age = extract_age(text)
+        sex = extract_sex(text)
 
-        # ── Parse annotations ──
-        annotations_block = extract_block(text, "Annotations")
+        # ── Parse annotations (English + Spanish headers) ──
+        annotations_block = None
+        for header in self._ANNOTATIONS_HEADERS:
+            annotations_block = extract_block(text, header)
+            if annotations_block:
+                break
+
         entries = extract_dated_entries(annotations_block) if annotations_block else []
 
         consultation_date = self._derive_consultation_date(entries, text)
@@ -61,11 +96,11 @@ class ClinicalHistoryExtractor:
         chief_complaint = self._derive_chief_complaint(entries)
 
         # ── Try alternative fields for richer documents ──
-        assessment = resolve_assessment(text)
-        plan = resolve_plan(text)
-        physical_exam = resolve_physical_exam(text)
-        chief_complaint_explicit = resolve_chief_complaint(text)
-        medications_field = resolve_medications(text)
+        assessment = resolve_field_flexible(text, self._ASSESSMENT_ALIASES)
+        plan = resolve_field_flexible(text, self._PLAN_ALIASES)
+        physical_exam = resolve_field_flexible(text, self._PHYSICAL_EXAM_ALIASES)
+        chief_complaint_explicit = resolve_field_flexible(text, self._CHIEF_COMPLAINT_ALIASES)
+        medications_field = resolve_field_flexible(text, self._MEDICATIONS_ALIASES)
 
         current_medications: Optional[List[str]] = None
         if medications_field:
@@ -73,9 +108,15 @@ class ClinicalHistoryExtractor:
                 m.strip() for m in medications_field.replace(";", ",").split(",") if m.strip()
             ]
 
+        # ── Fallback: medical history from "Patologicos" / "Antecedentes" ──
+        if not medical_history:
+            medical_history = resolve_field_flexible(text, self._MEDICAL_HISTORY_ALIASES)
+
         return {
             "patient_name": patient_name,
             "patient_id": patient_id,
+            "age": age,
+            "sex": sex,
             "date_of_birth": date_of_birth,
             "consultation_date": consultation_date,
             "chief_complaint": chief_complaint_explicit or chief_complaint,
@@ -84,7 +125,7 @@ class ClinicalHistoryExtractor:
             "physical_exam": physical_exam,
             "assessment": assessment,
             "plan": plan,
-            "doctor_name": doctor_name or "Not specified",
+            "doctor_name": doctor_name,
             "institution": institution,
         }
 
@@ -95,20 +136,15 @@ class ClinicalHistoryExtractor:
         entries: list,
         text: str,
     ) -> str:
-        """Derive the consultation date from annotations or fallback fields.
-
-        Uses the most recent annotation date.  Falls back to explicit date
-        fields or today's date as a last resort.
-        """
+        """Derive the consultation date from annotations or the unified helper."""
         if entries:
             dates = [e[0] for e in entries]
             dates.sort(reverse=True)
             return dates[0]
 
-        for key in ("Consultation Date", "Visit Date", "Date"):
-            val = extract_date(text, key)
-            if val:
-                return val
+        val = extract_consultation_date(text)
+        if val:
+            return val
 
         return "Unknown"
 

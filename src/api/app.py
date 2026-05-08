@@ -15,10 +15,11 @@ import shutil
 import tempfile
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import List
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from src.api.models import (
     ErrorResponse,
@@ -53,6 +54,16 @@ app = FastAPI(
         500: {"model": ErrorResponse, "description": "Internal server error"},
     },
 )
+
+# ── Serve the single-page UI at / ────────────────────────────────
+_UI_PATH = Path(__file__).parent / "ui.html"
+
+
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+async def ui():
+    """Serve the built-in web UI."""
+    return HTMLResponse(_UI_PATH.read_text(encoding="utf-8"))
+
 
 # ── Process-level bookkeeping ────────────────────────────────────
 _STARTUP_TIME: float = time.monotonic()

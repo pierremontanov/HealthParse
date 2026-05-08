@@ -2,6 +2,9 @@
 
 Parses the structured text layout produced by the document generator and
 returns a dictionary compatible with the ``Prescription`` Pydantic schema.
+
+Uses the unified bilingual helpers from ``base.py`` so that English and
+Spanish (Chile, Colombia, Mexico, etc.) documents are handled identically.
 """
 
 from __future__ import annotations
@@ -9,10 +12,14 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional
 
-from src.pipeline.extractors.base import extract_block, extract_field
-from src.pipeline.extractors.field_aliases import (
-    resolve_institution,
-    resolve_prescription_date,
+from src.pipeline.extractors.base import (
+    extract_block,
+    # Unified bilingual helpers
+    extract_patient_name,
+    extract_patient_id,
+    extract_prescription_date,
+    extract_doctor,
+    extract_institution,
 )
 
 
@@ -21,29 +28,35 @@ class PrescriptionExtractor:
 
     The extractor exposes an ``extract(text)`` method so it can be registered
     as the NER model inside a :class:`~src.pipeline.inference.ModelBundle`.
-
-    Expected text layout::
-
-        Patient Name: <name>
-        Patient ID: <id>
-        Date of Birth: <date>
-        Date of Prescription: <date>
-        Doctor: <name>
-        Clinic: <name>
-
-        Prescription:
-        <free-text prescription body>
     """
+
+    # Spanish block headers for the prescription body
+    _PRESCRIPTION_HEADERS = [
+        "Prescription",
+        "Prescripcion",
+        "Formulacion",
+        "Receta",
+        "Medicamentos",
+        "Tratamiento",
+        "Indicaciones",
+        "Ordenes Medicas",
+    ]
 
     def extract(self, text: str) -> Dict[str, Any]:
         """Return a dictionary that matches the ``Prescription`` schema."""
-        patient_name = extract_field(text, "Patient Name")
-        patient_id = extract_field(text, "Patient ID")
-        date = resolve_prescription_date(text)
-        doctor_name = extract_field(text, "Doctor")
-        institution = resolve_institution(text)
+        patient_name = extract_patient_name(text)
+        patient_id = extract_patient_id(text)
+        date = extract_prescription_date(text)
+        doctor_name = extract_doctor(text)
+        institution = extract_institution(text)
 
-        prescription_body = extract_block(text, "Prescription")
+        # Try all known prescription block headers
+        prescription_body = None
+        for header in self._PRESCRIPTION_HEADERS:
+            prescription_body = extract_block(text, header)
+            if prescription_body:
+                break
+
         items = self._parse_items(prescription_body)
 
         return {
@@ -92,11 +105,18 @@ class PrescriptionExtractor:
 
         lower = line.lower()
 
-        # ── Medicine patterns ──
+        # ── Medicine patterns (English + Spanish) ──
         med_patterns = [
+            # English: "Ibuprofen 400mg, 3 times daily"
             r"(?i)([\w\s]+?)\s+(\d+\s*(?:mg|ml|g|mcg|iu|units?))\s*[,;]?\s*"
             r"(\d+\s*(?:times?|x)\s*(?:daily|a day|per day|weekly)?)?",
             r"(?i)([\w\s]+?)\s+(\d+\s*(?:mg|ml|g))\s+(?:every|each)\s+(\d+\s*(?:hours?|hrs?))",
+            # Spanish: "Ibuprofeno 400mg cada 8 horas"
+            r"(?i)([\w\s]+?)\s+(\d+\s*(?:mg|ml|g|mcg|ui|unidades?))\s*[,;]?\s*"
+            r"(?:cada\s+(\d+\s*(?:horas?|hrs?|dias?|semanas?)))?",
+            # Spanish: "Tomar 1 tableta cada 12 horas"
+            r"(?i)([\w\s]+?)\s+(\d+\s*(?:tabletas?|comprimidos?|capsulas?|gotas?|ampollas?|sobres?))"
+            r"\s*[,;]?\s*(?:cada\s+(\d+\s*(?:horas?|hrs?|dias?)))?",
         ]
         for pat in med_patterns:
             m = re.match(pat, line)
@@ -111,17 +131,30 @@ class PrescriptionExtractor:
                     "notes": line,
                 }
 
-        # ── Keyword-based classification ──
-        if any(kw in lower for kw in ["x-ray", "xray", "mri", "ct scan", "ultrasound", "imaging", "radiograph"]):
+        # ── Keyword-based classification (English + Spanish) ──
+        if any(kw in lower for kw in [
+            "x-ray", "xray", "mri", "ct scan", "ultrasound", "imaging", "radiograph",
+            "radiografia", "ecografia", "tomografia", "resonancia", "mamografia",
+        ]):
             return {"type": "radiology", "name": line, "modality": None, "body_part": None, "notes": None}
 
-        if any(kw in lower for kw in ["blood test", "urinalysis", "cbc", "lipid panel", "lab test", "glucose test"]):
+        if any(kw in lower for kw in [
+            "blood test", "urinalysis", "cbc", "lipid panel", "lab test", "glucose test",
+            "examen de sangre", "hemograma", "perfil lipidico", "glicemia", "urocultivo",
+            "examen de orina", "laboratorio",
+        ]):
             return {"type": "lab_test", "name": line, "test_type": None, "parameters": None, "notes": None}
 
-        if any(kw in lower for kw in ["refer to", "referral", "consult with", "specialist"]):
+        if any(kw in lower for kw in [
+            "refer to", "referral", "consult with", "specialist",
+            "remitir", "interconsulta", "derivar", "especialista", "valoracion por",
+        ]):
             return {"type": "specialist", "name": line, "specialty": None, "reason": None, "notes": None}
 
-        if any(kw in lower for kw in ["therapy", "physiotherapy", "rehabilitation", "exercise"]):
+        if any(kw in lower for kw in [
+            "therapy", "physiotherapy", "rehabilitation", "exercise",
+            "terapia", "fisioterapia", "rehabilitacion", "ejercicio", "kinesioterapia",
+        ]):
             return {
                 "type": "procedure",
                 "name": line,

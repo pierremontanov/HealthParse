@@ -19,9 +19,8 @@ class ClinicalHistorySchema(BaseModel):
         extra="forbid",
     )
 
-    patient_name: str = Field(
-        ...,
-        min_length=1,
+    patient_name: Optional[str] = Field(
+        None,
         description="Full name of the patient.",
         json_schema_extra={"example": "Maria Elena Rodriguez"},
     )
@@ -46,8 +45,8 @@ class ClinicalHistorySchema(BaseModel):
         json_schema_extra={"example": "1985-03-15"},
     )
 
-    consultation_date: str = Field(
-        ...,
+    consultation_date: Optional[str] = Field(
+        None,
         description="Date of the consultation in ISO 8601 format (yyyy-mm-dd).",
         json_schema_extra={"example": "2025-02-22"},
     )
@@ -76,9 +75,8 @@ class ClinicalHistorySchema(BaseModel):
         description="Treatment plan, follow-up actions, or referrals.",
     )
 
-    doctor_name: str = Field(
-        ...,
-        min_length=1,
+    doctor_name: Optional[str] = Field(
+        None,
         description="Name of the attending physician.",
         json_schema_extra={"example": "Dr. Carlos Rodriguez"},
     )

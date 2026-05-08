@@ -38,6 +38,16 @@ class ReadinessResponse(BaseModel):
 
 # ── Processing ────────────────────────────────────────────────────
 
+class PageResult(BaseModel):
+    """Per-page processing result for multi-page PDFs."""
+    page: int = Field(..., description="1-based page number.")
+    status: str = Field("ok", description="ok | skipped | inference_error")
+    document_type: Optional[str] = Field(None, description="Classified document type for this page.")
+    extracted_data: Optional[Dict[str, Any]] = Field(None, description="Structured NER output.")
+    validated: bool = Field(False, description="Whether the data passed schema validation.")
+    error: Optional[str] = Field(None, description="Error message if processing failed.")
+
+
 class ProcessingResult(BaseModel):
     """Single-document processing result."""
     file: str = Field(..., description="Original filename.")
@@ -49,6 +59,8 @@ class ProcessingResult(BaseModel):
     validated: bool = Field(False, description="Whether the data passed schema validation.")
     error: Optional[str] = Field(None, description="Error message if processing failed.")
     elapsed_ms: int = Field(0, description="Processing time in milliseconds.")
+    page_count: Optional[int] = Field(None, description="Number of pages (multi-page PDFs).")
+    pages: Optional[List[PageResult]] = Field(None, description="Per-page results (multi-page PDFs).")
 
 
 class ProcessingResponse(BaseModel):

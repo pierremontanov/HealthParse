@@ -80,8 +80,32 @@ def _extract_pdf(file_path: str, filename: str) -> Dict[str, Any]:
         text = extract_text_directly(file_path)
         method = "direct"
     else:
-        text = extract_text_from_pdf_ocr(file_path)
-        method = "ocr"
+        try:
+            text = extract_text_from_pdf_ocr(file_path)
+            method = "ocr"
+        except Exception as exc:
+            exc_msg = str(exc).lower()
+            if "poppler" in exc_msg or "unable to get page count" in exc_msg:
+                # Poppler not installed — try direct extraction as last resort
+                logger.warning(
+                    "OCR failed for '%s' (poppler not found). "
+                    "Attempting direct text extraction as fallback.",
+                    filename,
+                )
+                text = extract_text_directly(file_path)
+                if text.strip():
+                    method = "direct"
+                else:
+                    raise RuntimeError(
+                        f"This is a scanned PDF that requires OCR, but poppler "
+                        f"is not installed. Install it:\n"
+                        f"  Windows: download from https://github.com/osber/poppler-windows/releases "
+                        f"and set POPPLER_PATH or poppler_path in config\n"
+                        f"  Mac: brew install poppler\n"
+                        f"  Linux: sudo apt install poppler-utils"
+                    ) from exc
+            else:
+                raise
 
     language = _finalise_language(text, language_hint)
 

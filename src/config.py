@@ -203,6 +203,30 @@ class DocIQSettings(BaseSettings):
         description="Path to the Poppler bin directory (for pdf2image on Windows).",
     )
 
+    @model_validator(mode="after")
+    def _auto_detect_poppler(self) -> "DocIQSettings":
+        """Auto-detect a bundled ``poppler/`` folder in the project root.
+
+        Looks for ``<repo_root>/poppler/Library/bin/`` (standard layout from
+        conda-forge / GitHub releases) and ``<repo_root>/poppler/bin/``.
+        Only applies when ``poppler_path`` was not explicitly set.
+        """
+        if self.poppler_path is not None:
+            return self
+        import pathlib
+        repo_root = pathlib.Path(__file__).resolve().parent.parent
+        candidates = [
+            repo_root / "poppler" / "Library" / "bin",
+            repo_root / "poppler" / "bin",
+            repo_root / "poppler",
+        ]
+        for candidate in candidates:
+            if (candidate / "pdftoppm.exe").exists() or (candidate / "pdftoppm").exists():
+                object.__setattr__(self, "poppler_path", str(candidate))
+                logger.info("Auto-detected bundled poppler at %s", candidate)
+                break
+        return self
+
     # ── Validators ───────────────────────────────────────────────
 
     @field_validator("log_level", mode="before")
