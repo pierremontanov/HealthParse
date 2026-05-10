@@ -128,12 +128,8 @@ class DocIQSettings(BaseSettings):
 
     # ── Pipeline – OCR / Extraction ──────────────────────────────
     ocr_dpi: int = Field(300, ge=72, le=1200, description="DPI for PDF-to-image conversion.")
-    ocr_lang: str = Field("eng+spa", description="Tesseract language pack string.")
     min_char_threshold: int = Field(
         10, ge=0, description="Minimum characters for a PDF to be considered text-based."
-    )
-    preprocessing_threshold: int = Field(
-        120, ge=0, le=255, description="Binary threshold for image preprocessing."
     )
 
     # ── Pipeline – Language detection ────────────────────────────

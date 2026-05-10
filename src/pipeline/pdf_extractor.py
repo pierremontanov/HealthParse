@@ -1,13 +1,20 @@
-"""PDF text extraction with per-page threading.
+"""PDF text extraction with PaddleOCR.
 
 Provides two extraction strategies:
 
 - **Direct extraction** for text-based PDFs (via PyMuPDF)
-- **OCR extraction** for scanned/image PDFs (via pdf2image + Tesseract)
+- **OCR extraction** for scanned/image PDFs (via pdf2image + PaddleOCR)
 
-Both strategies parallelise work across pages using a
-:class:`~concurrent.futures.ThreadPoolExecutor`.  Configuration values
-(DPI, thread-pool size) are read from :mod:`src.config` at call-time.
+The OCR path processes pages sequentially using a singleton PaddleOCR
+instance (see :mod:`src.pipeline.ocr_paddle`).  PaddleOCR handles its
+own image preprocessing internally, so no manual grayscale / threshold
+step is needed.
+
+Direct extraction still uses a thread pool for page-level parallelism
+since PyMuPDF is thread-safe and lightweight.
+
+Configuration values (DPI, thread-pool size) are read from
+:mod:`src.config` at call-time.
 """
 from __future__ import annotations
 
@@ -16,14 +23,11 @@ import os
 from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 
-import cv2
 import fitz  # PyMuPDF
-import numpy as np
-import pytesseract
 from pdf2image import convert_from_path
 
+from src.pipeline.ocr import ocr_pil_image
 from src.pipeline.pdf_type_detector import is_pdf_text_based
-from src.pipeline.preprocess import preprocess_image
 
 logger = logging.getLogger(__name__)
 
@@ -66,14 +70,16 @@ def _get_ocr_dpi() -> int:
 
 
 def _get_ocr_lang() -> str:
-    """Return the configured Tesseract language pack (default ``eng+spa``)."""
+    """Return the configured OCR language (default ``es``).
+
+    PaddleOCR uses ISO language codes (``es``, ``en``) rather than
+    Tesseract-style packs (``eng+spa``).
+    """
     try:
         from src.config import settings
-        if settings.tesseract_cmd:
-            pytesseract.pytesseract.tesseract_cmd = settings.tesseract_cmd
-        return settings.ocr_lang
+        return getattr(settings, "paddle_lang", "es")
     except Exception:
-        return "eng+spa"
+        return "es"
 
 
 def _get_poppler_path() -> Optional[str]:
@@ -119,16 +125,14 @@ def _process_ocr_page(
     page_index: int,
     page_image: Any,
     classifier: PageClassifier,
-    ocr_lang: str = "eng+spa",
+    ocr_lang: str = "es",
 ) -> Tuple[int, str, Any]:
-    """OCR a single page image and optionally classify it."""
-    from PIL import Image as PILImage
+    """OCR a single page image via PaddleOCR and optionally classify it.
 
-    img = page_image.convert("RGB")
-    open_cv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    preprocessed = preprocess_image(open_cv_image)
-    pil_preprocessed = PILImage.fromarray(preprocessed)
-    text = pytesseract.image_to_string(pil_preprocessed, lang=ocr_lang)
+    PaddleOCR handles preprocessing internally (binarisation, deskew,
+    orientation correction), so we pass the PIL image directly.
+    """
+    text = ocr_pil_image(page_image, lang=ocr_lang)
     classification = _run_classifier(text, page_index, classifier)
     return page_index, text, classification
 
@@ -155,9 +159,10 @@ def extract_text_from_pdf_ocr(
 ):
     """Convert each page of a scanned PDF to an image, then OCR.
 
-    Pages are processed in parallel via a thread pool.  Per-page
-    failures are isolated — a failing page contributes empty text
-    rather than crashing the entire document.
+    Pages are processed **sequentially** using the singleton PaddleOCR
+    instance.  PaddleOCR is not thread-safe, so parallelism is avoided
+    in the OCR path.  Per-page failures are isolated — a failing page
+    contributes empty text rather than crashing the entire document.
 
     Parameters
     ----------
@@ -182,26 +187,21 @@ def extract_text_from_pdf_ocr(
     if not pages:
         return ("", []) if return_page_results else ""
 
-    max_workers = _get_page_workers(len(pages))
     results: List[Tuple[int, str, Any]] = []
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_page: Dict[Future, int] = {}
-        for index, page in enumerate(pages):
-            fut = executor.submit(
-                _process_ocr_page, index, page, page_classifier, ocr_lang,
+    for index, page in enumerate(pages):
+        try:
+            result = _process_ocr_page(index, page, page_classifier, ocr_lang)
+            results.append(result)
+            logger.info(
+                "OCR page %d/%d of '%s' complete (%d chars)",
+                index + 1, len(pages), pdf_path, len(result[1]),
             )
-            future_to_page[fut] = index
-
-        for future in as_completed(future_to_page):
-            page_idx = future_to_page[future]
-            try:
-                results.append(future.result(timeout=_get_page_timeout()))
-            except Exception as exc:
-                logger.error(
-                    "OCR failed for page %d of '%s': %s", page_idx + 1, pdf_path, exc,
-                )
-                results.append((page_idx, "", None))
+        except Exception as exc:
+            logger.error(
+                "OCR failed for page %d of '%s': %s", index + 1, pdf_path, exc,
+            )
+            results.append((index, "", None))
 
     ordered = _sorted_page_results(results)
     full_text = _assemble_text(ordered)
