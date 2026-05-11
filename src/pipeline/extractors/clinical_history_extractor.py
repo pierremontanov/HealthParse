@@ -37,39 +37,63 @@ class ClinicalHistoryExtractor:
     """
 
     # ── Spanish-aware field alias lists ──
+    # Only unaccented forms needed: accent-flex matching in base.py
+    # handles both "Diagnóstico" and "Diagnostico" automatically.
     _ASSESSMENT_ALIASES = [
         "Assessment", "Diagnosis",
-        "Diagnostico", "Valoracion", "Evaluacion", "Impresion Diagnostica",
+        "Impresion Diagnostica",
+        "Diagnostico Principal",
+        "Diagnostico",
+        "Valoracion",
+        "Evaluacion",
+        "Dx",
+        "DX",
     ]
     _PLAN_ALIASES = [
         "Plan", "Treatment Plan",
-        "Plan de Tratamiento", "Plan Terapeutico", "Conducta", "Manejo",
+        "Plan de Tratamiento", "Plan Terapeutico",
+        "Conducta", "Manejo",
+        "Ordenes Medicas",
+        "Recomendaciones",
     ]
     _PHYSICAL_EXAM_ALIASES = [
         "Physical Exam", "Examination",
         "Examen Fisico", "Exploracion Fisica", "Examen Clinico",
+        "Revision por Sistemas",
+        "Signos Vitales",
     ]
     _CHIEF_COMPLAINT_ALIASES = [
         "Chief Complaint", "Reason for Visit",
         "Motivo de Consulta", "Motivo Consulta", "Motivo de Ingreso",
         "Queja Principal", "Sintoma Principal",
-        "Enfermedad actual", "Enfermedad Actual",
+        "Enfermedad Actual",
+        "Enfermedad actual",
+        "Causa Externa",
     ]
     _MEDICATIONS_ALIASES = [
         "Current Medications", "Medications",
         "Medicamentos", "Medicamentos Actuales", "Tratamiento Actual",
         "Medicacion", "Farmacoterapia",
         "Farmacologicos", "Farmacologicas",
+        "Tratamiento Farmacologico",
     ]
     _MEDICAL_HISTORY_ALIASES = [
         "Medical History", "Past Medical History",
         "Antecedentes Patologicos", "Patologicos",
         "Antecedentes Personales", "Antecedentes",
+        "Antecedentes Familiares",
+        "Quirurgicos",
+        "Antecedentes Quirurgicos",
+        "Alergicos",
+        "Antecedentes Alergicos",
+        "Toxicologicos",
     ]
     _ANNOTATIONS_HEADERS = [
         "Annotations",
         "Anotaciones", "Notas Clinicas", "Evoluciones", "Evolucion",
         "Historia Clinica", "Antecedentes",
+        "Subjetivo",                    # SOAP format
+        "Objetivo",
     ]
 
     def extract(self, text: str) -> Dict[str, Any]:

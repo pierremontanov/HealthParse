@@ -2,12 +2,55 @@
 
 Supports both English and Spanish medical document formats from
 across Latin America (Chile, Colombia, Mexico, etc.).
+
+Accent flexibility
+------------------
+PaddleOCR with ``lang="en"`` strips accents from Spanish text
+(e.g. ``"años"`` → ``"anos"``, ``"Cédula"`` → ``"Cedula"``).
+PyMuPDF direct extraction preserves accents.  All alias matching
+goes through :func:`_accent_flex` so that both paths are covered
+by a single set of aliases.
 """
 
 from __future__ import annotations
 
 import re
 from typing import Any, Dict, List, Optional, Tuple
+
+
+# =====================================================================
+#  Accent-flexible regex builder
+# =====================================================================
+
+_ACCENT_MAP = {
+    "a": "[aáàâã]", "A": "[AÁÀÂÃ]",
+    "e": "[eéèê]",  "E": "[EÉÈÊ]",
+    "i": "[iíìî]",  "I": "[IÍÌÎ]",
+    "o": "[oóòôõ]", "O": "[OÓÒÔÕ]",
+    "u": "[uúùû]",  "U": "[UÚÙÛ]",
+    "n": "[nñ]",    "N": "[NÑ]",
+}
+
+
+def _accent_flex(key: str) -> str:
+    """Convert a literal field label to an accent-flexible regex pattern.
+
+    Each Latin vowel and ``n``/``ñ`` is replaced with a character class
+    so that both accented (PyMuPDF) and unaccented (PaddleOCR) text is
+    matched.  Non-alpha characters are regex-escaped normally.
+
+    Example::
+
+        >>> _accent_flex("Identificación")
+        'Id[eéèê]nt[iíìî]f[iíìî]c[aáàâã]c[iíìî][oóòôõ][nñ]'
+    """
+    parts: list[str] = []
+    for ch in key:
+        if ch in _ACCENT_MAP:
+            parts.append(_ACCENT_MAP[ch])
+        else:
+            parts.append(re.escape(ch))
+    return "".join(parts)
 
 
 # =====================================================================
@@ -20,10 +63,16 @@ def extract_field(text: str, key: str) -> Optional[str]:
     Matches lines of the form ``Key: <value>`` and returns the stripped
     value.  Also handles OCR'd form layouts where the colon may be
     missing (``Key  Value``).  Returns ``None`` when the key is not found.
+
+    Uses accent-flexible matching so that a single alias like
+    ``"Identificacion"`` matches both ``"Identificación"`` (PyMuPDF)
+    and ``"Identificacion"`` (PaddleOCR).
     """
+    flex_key = _accent_flex(key)
+
     # Try with colon first (most reliable)
     pattern = re.compile(
-        rf"^{re.escape(key)}\s*:\s*(.+)$", re.MULTILINE | re.IGNORECASE,
+        rf"^{flex_key}\s*:\s*(.+)$", re.MULTILINE | re.IGNORECASE,
     )
     match = pattern.search(text)
     if match:
@@ -31,10 +80,10 @@ def extract_field(text: str, key: str) -> Optional[str]:
         return value if value else None
 
     # Fallback: no colon — common in OCR'd tabular forms
-    # Require at least 2 spaces or a tab between key and value to avoid
-    # false positives from normal prose.
+    # Require at least 1 space (relaxed from 2 for PaddleOCR output
+    # where spacing is tighter) between key and value.
     pattern_nocolon = re.compile(
-        rf"(?:^|\n)\s*{re.escape(key)}\s{{2,}}(.+?)(?:\s{{2,}}|\n|$)",
+        rf"(?:^|\n)\s*{flex_key}\s{{1,}}(.+?)(?:\s{{2,}}|\n|$)",
         re.IGNORECASE,
     )
     match = pattern_nocolon.search(text)
@@ -51,12 +100,15 @@ def extract_date(text: str, key: str) -> Optional[str]:
     Supports ISO-8601 (``yyyy-mm-dd``), European (``dd-mm-yyyy``),
     slash-separated variants, and Spanish month names.
     Handles OCR'd forms where the colon may be missing.
+    Uses accent-flexible matching for the key.
     """
+    flex_key = _accent_flex(key)
+
     # ── With colon ──
     # Try numeric date first: yyyy-mm-dd, dd-mm-yyyy, dd/mm/yyyy
     # Also handles dates with time suffix: "17/12/2024 8:10.00 a m"
     pattern = re.compile(
-        rf"^{re.escape(key)}\s*:\s*(\d{{2,4}}[\-/]\d{{2}}[\-/]\d{{2,4}})"
+        rf"^{flex_key}\s*:\s*(\d{{2,4}}[\-/]\d{{2}}[\-/]\d{{2,4}})"
         rf"(?:\s+\d{{1,2}}[:.]\d{{2}})?",
         re.MULTILINE | re.IGNORECASE,
     )
@@ -66,7 +118,7 @@ def extract_date(text: str, key: str) -> Optional[str]:
 
     # Try Spanish month name: "13-ene-2025", "13 de enero de 2025"
     pattern2 = re.compile(
-        rf"^{re.escape(key)}\s*:\s*(.+)$", re.MULTILINE | re.IGNORECASE,
+        rf"^{flex_key}\s*:\s*(.+)$", re.MULTILINE | re.IGNORECASE,
     )
     match2 = pattern2.search(text)
     if match2:
@@ -80,7 +132,7 @@ def extract_date(text: str, key: str) -> Optional[str]:
     # so we drop the line-start anchor.  Dates are unambiguous enough to avoid
     # false positives even without it.
     pattern_nocolon = re.compile(
-        rf"{re.escape(key)}\s+"
+        rf"{flex_key}\s+"
         rf"(\d{{2,4}}[\-/]\d{{2}}[\-/]\d{{2,4}})"
         rf"(?:\s+\d{{1,2}}[:.]\d{{2}})?",  # optional time suffix
         re.IGNORECASE,
@@ -91,7 +143,7 @@ def extract_date(text: str, key: str) -> Optional[str]:
 
     # ── Bare digits (OCR'd date without separators): "Fecha nac. 27041953" ──
     pattern_bare = re.compile(
-        rf"{re.escape(key)}\s+(\d{{8}})\b",
+        rf"{flex_key}\s+(\d{{8}})\b",
         re.IGNORECASE,
     )
     match4 = pattern_bare.search(text)
@@ -108,9 +160,11 @@ def extract_block(text: str, header: str) -> Optional[str]:
 
     Returns all lines after the header until either the next header-style
     line (``SomeTitle:``) or the end of the text.
+    Uses accent-flexible matching for the header.
     """
+    flex_header = _accent_flex(header)
     pattern = re.compile(
-        rf"^{re.escape(header)}\s*:\s*\n((?:.+(?:\n|$))*)",
+        rf"^{flex_header}\s*:?\s*\n((?:.+(?:\n|$))*)",
         re.MULTILINE | re.IGNORECASE,
     )
     match = pattern.search(text)
@@ -269,37 +323,57 @@ def extract_spanish_date(text: str) -> Optional[str]:
 #  Flexible patient name extraction
 # =====================================================================
 
-# Comprehensive aliases for patient name across Latin American documents
+# Comprehensive aliases for patient name across Latin American documents.
+# Accent-flex matching is applied automatically by extract_field(), so only
+# one spelling per alias is needed (unaccented form preferred).
 _PATIENT_NAME_ALIASES = [
     "Patient Name",
-    "NOMBRE",
-    "Nombre",
-    "Nombre del Paciente",
+    "NOMBRE COMPLETO",
     "Nombre Completo",
+    "Nombre del Paciente",
     "Nombre del paciente",
-    "Paciente",
-    "Nombre y Apellido",
     "Nombre y Apellidos",
     "Nombres y Apellidos",
+    "Nombre y Apellido",
+    "NOMBRE",
+    "Nombre",
+    "Paciente",
     "Nombres",
+    "Primer Apellido",          # Colombian EPS forms
+    "Usuario",                  # some EPS/IPS forms
 ]
 
 
 def extract_patient_name(text: str) -> Optional[str]:
     """Extract patient name using all known field aliases and patterns.
 
-    Tries structured ``Key: Value`` fields first, then falls back to
-    narrative sentence patterns common in Chilean and Colombian documents.
+    Tries structured ``Key: Value`` fields first, then inline patterns
+    common in Colombian/Chilean documents, then narrative sentence patterns.
     """
     # 1. Structured field aliases
     for alias in _PATIENT_NAME_ALIASES:
         val = extract_field(text, alias)
         if val:
             # Strip trailing age like ", 40 a" or ", 43 ANOS"
-            val = re.sub(r"\s*,\s*\d+\s*(?:a|anos|ANOS|ANOS)?\s*$", "", val)
+            val = re.sub(
+                r"\s*,\s*\d+\s*(?:a[nñ]os?|ANOS|afios|a)\s*$", "", val,
+            )
+            # Strip trailing ID like "(24314628)" or "CC 24314628"
+            val = re.sub(r"\s*\(?\d{5,12}\)?\s*$", "", val)
             return val.strip() if val.strip() else None
 
-    # 2. Narrative pattern: "paciente , NAME ha dado"
+    # 2. Inline pattern: "NOMBRE GLORIA INES MONTANO" (no colon, single space)
+    m = re.search(
+        r"(?:NOMBRE|Nombre)\s+([A-Z][A-Z\s]{4,}?)(?:\s{2,}|\n|$)",
+        text,
+    )
+    if m:
+        name = m.group(1).strip()
+        # Avoid matching labels like "NOMBRE COMPLETO"
+        if name.upper() not in ("COMPLETO", "DEL PACIENTE", "Y APELLIDOS"):
+            return name
+
+    # 3. Narrative patterns: "paciente , NAME ha dado"
     val = extract_patient_name_from_sentence(text)
     if val:
         return val
@@ -308,7 +382,11 @@ def extract_patient_name(text: str) -> Optional[str]:
 
 
 def extract_patient_name_from_sentence(text: str) -> Optional[str]:
-    """Extract a patient name from Spanish narrative sentence patterns."""
+    """Extract a patient name from Spanish narrative sentence patterns.
+
+    Uses broad character classes ``[A-Z\\w]`` to handle both accented
+    (PyMuPDF) and unaccented (PaddleOCR) text.
+    """
     patterns = [
         # "paciente , NAME ha dado" / "paciente, NAME ha"
         re.compile(
@@ -325,7 +403,8 @@ def extract_patient_name_from_sentence(text: str) -> Optional[str]:
         # "se atiende a NAME" / "se examina a NAME"
         re.compile(
             r"se\s+(?:atiende|examina|presenta|recibe)\s+a\s+"
-            r"([A-ZÀ-Ü][A-ZÀ-Ü\s]{3,}?)(?:\s*[,.]|\s+de\s+\d)",
+            r"([A-ZÀ-Ü][A-ZÀ-Ü\s]{3,}?)"
+            r"(?:\s*[,.]|\s+de\s+\d)",
             re.IGNORECASE | re.MULTILINE,
         ),
     ]
@@ -345,9 +424,11 @@ def extract_patient_name_from_sentence(text: str) -> Optional[str]:
 _PATIENT_ID_ALIASES = [
     "Patient ID",
     "ID Paciente",
-    "No. Identificacion",
-    "Identificacion",
     "Tipo y No. de Identificacion",
+    "Tipo y No de Identificacion",   # OCR without period
+    "No. Identificacion",
+    "No Identificacion",
+    "Identificacion",
     "No Historia o Afiliacion",
     "No Historia",
     "No. Historia",
@@ -358,17 +439,19 @@ _PATIENT_ID_ALIASES = [
     "Numero de Historia",
     "Patologia No",
     "Patologia No.",
-    "No. Identificacion",
-    "Identificacion",
     "Cedula",
+    "Cedula de Ciudadania",
     "RUT",
     "RUN",
     "DNI",
     "Documento",
     "No. Documento",
+    "No Documento",
     "Afiliacion",
     "No. Afiliacion",
+    "No Afiliacion",
     "Num. Afiliacion",
+    "Num Afiliacion",
 ]
 
 
@@ -376,11 +459,26 @@ def extract_patient_id(text: str) -> Optional[str]:
     """Extract patient ID using all known aliases and Colombian patterns."""
     val = resolve_field_flexible(text, _PATIENT_ID_ALIASES)
     if val:
+        # Often the value contains the doc-type prefix: "CC 24314628"
+        m = re.search(r"(\d{5,12})", val)
+        if m:
+            return m.group(1)
         return val
 
-    # Colombian CC / TI / CE patterns: "CC 24314628", "C.C. 24314628"
+    # Colombian CC / TI / CE / RC patterns: "CC 24314628", "C.C. 24314628"
+    # Also handle "CC:24314628" or "CC. 24314628"
     m = re.search(
-        r"(?:C\.?C\.?|T\.?I\.?|C\.?E\.?|Cedula)\s*[:\s]\s*(\d{5,12})",
+        r"(?:C\.?\s*C\.?|T\.?\s*I\.?|C\.?\s*E\.?|R\.?\s*C\.?|"
+        r"C[eé]dula)\s*[.:\s]\s*(\d{5,12})",
+        text, re.IGNORECASE,
+    )
+    if m:
+        return m.group(1).strip()
+
+    # Bare long number near ID-related words (PaddleOCR may split across lines)
+    m = re.search(
+        r"(?:identificaci[oó]n|documento|cedula|afiliaci[oó]n)"
+        r"[\s\S]{0,30}?(\d{5,12})",
         text, re.IGNORECASE,
     )
     if m:
@@ -428,6 +526,8 @@ _CONSULTATION_DATE_ALIASES = [
     "Fecha de Ingreso",
     "Fecha de Admision",
     "Fecha Admision",
+    "Fecha Hora",                   # Colombian EPS: "Fecha Hora: 17/12/2024"
+    "Fecha y Hora",
     "Fecha",
 ]
 
@@ -495,11 +595,12 @@ _DOCTOR_ALIASES = [
     "Doctor",
     "Physician",
     "Professional",
-    "Medico",
-    "Profesional",
     "Medico Tratante",
     "Medico Responsable",
     "Medico Solicitante",
+    "Medico",
+    "Profesional",
+    "Profesional de la Salud",
     "Dr",
     "Dra",
     "Validado por",
@@ -508,6 +609,9 @@ _DOCTOR_ALIASES = [
     "Responsable",
     "Patologo",
     "Radiologo",
+    "Nombre del Medico",
+    "Nombre Medico",
+    "Atendido por",
 ]
 
 
@@ -523,19 +627,32 @@ def extract_doctor(text: str) -> Optional[str]:
 
 
 def extract_professional_spanish(text: str) -> Optional[str]:
-    """Extract the professional name from Spanish-format signatures."""
+    """Extract the professional name from Spanish-format signatures.
+
+    Handles both accented (PyMuPDF) and unaccented (PaddleOCR) text,
+    and OCR artefacts like missing periods after ``Dr`` / ``Dra``.
+    """
     patterns = [
         # "Informe Validado por: Dra. Fatima Mota"
         re.compile(
-            r"(?:Informe\s+)?[Vv]alidado\s+por\s*:\s*(.+?)$",
+            r"(?:Informe\s+)?[Vv]alidado\s+por\s*:?\s*(.+?)$",
             re.MULTILINE,
         ),
         # "Firmado por: ..."
-        re.compile(r"[Ff]irmado\s+por\s*:\s*(.+?)$", re.MULTILINE),
+        re.compile(r"[Ff]irmado\s+por\s*:?\s*(.+?)$", re.MULTILINE),
         # "Informado por: ..."
-        re.compile(r"[Ii]nformado\s+por\s*:\s*(.+?)$", re.MULTILINE),
-        # Standalone "Dr./Dra. Name" on its own line (not inside a sentence)
-        re.compile(r"^(Dra?\.\s*[A-ZÀ-Ü][a-zA-ZÀ-ÿ\s]+?)$", re.MULTILINE),
+        re.compile(r"[Ii]nformado\s+por\s*:?\s*(.+?)$", re.MULTILINE),
+        # "Medico Tratante: ..." / "Medico: ..."
+        re.compile(
+            r"[Mm][eé]dico\s*(?:[Tt]ratante|[Rr]esponsable)?\s*:?\s*"
+            r"([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ.\s]+?)$",
+            re.MULTILINE,
+        ),
+        # Standalone "Dr./Dra. Name" or "Dr Name" on its own line
+        re.compile(
+            r"^(Dra?\.?\s+[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ.\s]+?)$",
+            re.MULTILINE,
+        ),
     ]
     for pat in patterns:
         m = pat.search(text)
@@ -559,35 +676,51 @@ _INSTITUTION_ALIASES = [
     "Clinica",
     "Laboratorio",
     "Entidad",
-    "EPS",
-    "IPS",
     "Establecimiento",
     "Sede",
     "Unidad",
+    "Prestador",
+    "Nombre IPS",
+    "Nombre EPS",
 ]
 
 
 def extract_institution(text: str) -> Optional[str]:
-    """Extract institution from structured fields or Spanish patterns."""
-    val = resolve_field_flexible(text, _INSTITUTION_ALIASES)
+    """Extract institution from structured fields or Spanish patterns.
+
+    Tries the narrative/corporate-name detector first (catches ``SAS``,
+    ``S.A.``, ``I.P.S.``, ``E.S.E.`` suffixes) then falls back to
+    structured ``Key: Value`` aliases.
+    """
+    # Narrative / corporate names first — more specific
+    val = extract_institution_spanish(text)
     if val:
         return val
-    return extract_institution_spanish(text)
+    return resolve_field_flexible(text, _INSTITUTION_ALIASES)
 
 
 def extract_institution_spanish(text: str) -> Optional[str]:
-    """Detect institution names from narrative text."""
+    """Detect institution names from narrative text.
+
+    Patterns use character classes for accented/unaccented chars so that
+    both PyMuPDF and PaddleOCR output are matched.
+    """
     patterns = [
-        # Standard institution names
+        # Standard institution names (accent-flex inline)
         re.compile(
             r"((?:Centro\s+(?:M[eé]dico|de\s+Salud)|Hospital|Cl[ií]nica|"
             r"Laboratorio|Instituto|Fundaci[oó]n|Sanatorio|Consultorio)"
-            r"\s+[A-ZÀ-Ü][a-zA-ZÀ-ÿ\s]+?)(?:\n|$)",
+            r"\s+[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s]+?)(?:\s{2,}|\n|$)",
             re.IGNORECASE,
         ),
         # Colombian corporate names: "MEIDE SAS", "COLSANITAS S.A."
         re.compile(
-            r"([A-ZÀ-Ü]{3,}(?:\s+[A-ZÀ-Ü]+)*\s+(?:S\.?A\.?S\.?|S\.?A\.?|LTDA|E\.?S\.?E\.?|I\.?P\.?S\.?))\b",
+            r"([A-Z]{3,}(?:\s+[A-Z]+)*\s+"
+            r"(?:S\.?A\.?S\.?|S\.?A\.?|LTDA|E\.?S\.?E\.?|I\.?P\.?S\.?))\b",
+        ),
+        # EPS/IPS names: "EPS FAMISANAR", "IPS MEIDE"
+        re.compile(
+            r"((?:EPS|IPS)\s+[A-Z][A-Za-zÀ-ÿ\s]+?)(?:\s{2,}|\n|$)",
         ),
     ]
     for pat in patterns:
@@ -650,19 +783,16 @@ def extract_sex(text: str) -> Optional[str]:
     Handles OCR artefacts like ``Sexoalnacer Mur`` (mangled from
     "Sexo al nacer Mujer").
     """
-    raw = extract_field(text, "Sexo")
-    if not raw:
-        raw = extract_field(text, "Sex")
-    if not raw:
-        raw = extract_field(text, "Genero")
-    if not raw:
-        raw = extract_field(text, "Sexo al nacer")
-    if raw:
-        return _normalize_sex(raw)
+    # Structured fields (accent-flex applied by extract_field)
+    for key in ("Sexo al nacer", "Sexo", "Sex", "Genero"):
+        raw = extract_field(text, key)
+        if raw:
+            return _normalize_sex(raw)
 
     # Inline OCR pattern: "Sexo Mujer", "Sexo M", "Sexo al nacer Femenino"
+    # Also handles PaddleOCR where "Género" → "Genero"
     m = re.search(
-        r"(?:Sexo(?:\s*al\s*nacer)?|Sex|Genero)\s*[:\s]\s*"
+        r"(?:Sexo(?:\s*al\s*nacer)?|Sex|G[eé]nero)\s*[:\s]\s*"
         r"(Masculino|Femenino|Mujer|Hombre|Male|Female|[MF])\b",
         text, re.IGNORECASE,
     )
@@ -670,8 +800,9 @@ def extract_sex(text: str) -> Optional[str]:
         return _normalize_sex(m.group(1))
 
     # OCR-mangled pattern: "Sexoalnacer Mur" / "Sexoalnacer Fem"
+    # PaddleOCR may join words or truncate them
     m = re.search(
-        r"Sexo\s*al\s*nacer\s+(Mu[a-z]*|Fe[a-z]*|Ho[a-z]*|Ma[a-z]*|[MF])\b",
+        r"Sexo\s*(?:al\s*nacer)?\s*(Mu[a-z]*|Fe[a-z]*|Ho[a-z]*|Ma[a-z]*|[MF])\b",
         text, re.IGNORECASE,
     )
     if m:
@@ -728,10 +859,10 @@ _IMPRESSION_HEADERS = [
     "Impression",
 ]
 
-# Boundaries that should stop block capture
+# Boundaries that should stop block capture (accent-flex inline)
 _SECTION_BOUNDARY = re.compile(
-    r"\n\s*(?:IMPRESION|DIAGNOSTICO|CONCLUSION|CONCEPTO|INTERPRETACION|"
-    r"Atentamente|Cordialmente|Saludos|Powered\s+by)\s*[,:]?",
+    r"\n\s*(?:IMPRESI[OÓ]N|DIAGN[OÓ]STICO|CONCLUSI[OÓ]N|CONCEPTO|"
+    r"INTERPRETACI[OÓ]N|Atentamente|Cordialmente|Saludos|Powered\s+by)\s*[,:]?",
     re.IGNORECASE,
 )
 
@@ -787,9 +918,11 @@ def extract_study_area(text: str) -> Optional[str]:
             return val
 
     # Radiology exam title: "Resonancia Magnetica Columna Lumbar"
+    # Accent-flexible: Magnética/Magnetica, Radiografía/Radiografia, etc.
     m = re.search(
         r"(?:Resonancia\s+Magn[eé]tica|Radiograf[ií]a|Ecograf[ií]a|"
-        r"Tomograf[ií]a|TAC|Electrocardiograma|MRI|CT|X-Ray|Ultrasound)"
+        r"Tomograf[ií]a|TAC|Electrocardiograma|Densitometr[ií]a|"
+        r"Mamograf[ií]a|MRI|CT|X-Ray|Ultrasound)"
         r"\s+(?:de\s+)?(.+?)$",
         text, re.MULTILINE | re.IGNORECASE,
     )

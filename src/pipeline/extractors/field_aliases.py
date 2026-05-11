@@ -29,7 +29,9 @@ def resolve_assessment(text: str) -> Optional[str]:
     """Resolve assessment from ``Assessment`` / ``Diagnosis`` / Spanish equivalents."""
     return resolve_field_flexible(text, [
         "Assessment", "Diagnosis",
-        "Diagnostico", "Valoracion", "Evaluacion", "Impresion Diagnostica",
+        "Impresion Diagnostica", "Diagnostico Principal",
+        "Diagnostico", "Valoracion", "Evaluacion",
+        "Dx", "DX",
     ])
 
 
@@ -37,7 +39,8 @@ def resolve_plan(text: str) -> Optional[str]:
     """Resolve plan from ``Plan`` / ``Treatment Plan`` / Spanish equivalents."""
     return resolve_field_flexible(text, [
         "Plan", "Treatment Plan",
-        "Plan de Tratamiento", "Plan Terapeutico", "Conducta", "Manejo",
+        "Plan de Tratamiento", "Plan Terapeutico",
+        "Conducta", "Manejo", "Ordenes Medicas", "Recomendaciones",
     ])
 
 
@@ -46,6 +49,7 @@ def resolve_physical_exam(text: str) -> Optional[str]:
     return resolve_field_flexible(text, [
         "Physical Exam", "Examination",
         "Examen Fisico", "Exploracion Fisica", "Examen Clinico",
+        "Revision por Sistemas", "Signos Vitales",
     ])
 
 
@@ -54,6 +58,7 @@ def resolve_chief_complaint(text: str) -> Optional[str]:
     return resolve_field_flexible(text, [
         "Chief Complaint", "Reason for Visit",
         "Motivo de Consulta", "Motivo Consulta", "Motivo de Ingreso",
+        "Enfermedad Actual", "Causa Externa",
     ])
 
 
@@ -62,4 +67,5 @@ def resolve_medications(text: str) -> Optional[str]:
     return resolve_field_flexible(text, [
         "Current Medications", "Medications",
         "Medicamentos", "Medicamentos Actuales", "Tratamiento Actual",
+        "Farmacologicos", "Tratamiento Farmacologico",
     ])

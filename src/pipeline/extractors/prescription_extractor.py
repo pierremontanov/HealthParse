@@ -30,7 +30,8 @@ class PrescriptionExtractor:
     as the NER model inside a :class:`~src.pipeline.inference.ModelBundle`.
     """
 
-    # Spanish block headers for the prescription body
+    # Spanish block headers for the prescription body.
+    # Accent-flex matching in extract_block() handles accented variants.
     _PRESCRIPTION_HEADERS = [
         "Prescription",
         "Prescripcion",
@@ -40,6 +41,9 @@ class PrescriptionExtractor:
         "Tratamiento",
         "Indicaciones",
         "Ordenes Medicas",
+        "Formula Medica",
+        "Medicacion",
+        "Farmacoterapia",
     ]
 
     def extract(self, text: str) -> Dict[str, Any]:
