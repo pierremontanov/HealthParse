@@ -45,13 +45,13 @@ The `InferenceEngine` in `src/pipeline/inference.py` is the inference orchestrat
 
 1. **File intake** -- `DocIQEngine.process_file()` checks the file extension, then calls `_extract_pdf()` or `_extract_image()` from `process_folder.py`.
 
-2. **PDF extraction** -- `_extract_pdf()` samples the first pages for language detection, checks if the PDF is text-based (`pdf_type_detector.py`), and routes to `extract_text_directly()` (PyMuPDF) or `extract_text_from_pdf_ocr()` (pdf2image + Tesseract).
+2. **PDF extraction** -- `_extract_pdf()` samples the first pages for language detection, checks if the PDF is text-based (`pdf_type_detector.py`), and routes to `extract_text_directly()` (PyMuPDF, thread-pooled) or `extract_text_from_pdf_ocr()` (pdf2image + PaddleOCR, sequential since PaddleOCR is not thread-safe).
 
-3. **Image extraction** -- `_extract_image()` calls `extract_text_from_image()` in `ocr.py`, which loads the image, converts colour modes, and runs Tesseract.
+3. **Image extraction** -- `_extract_image()` calls `extract_text_from_image()` in `ocr.py`, which delegates to the PaddleOCR singleton in `ocr_paddle.py`. PaddleOCR handles its own image preprocessing (binarisation, deskew, orientation correction) internally.
 
 4. **Classification** -- The `DocumentClassifier` scores the text against keyword sets for each document type. It returns the highest-scoring type above a configurable threshold, or `None` for unclassifiable text.
 
-5. **NER extraction** -- The `InferenceEngine` retrieves the `ModelBundle` for the classified type and runs the NER model on the raw text (preserving casing for proper nouns and dates). The classifier model runs on preprocessed (lowercased) text.
+5. **NER extraction** -- The `InferenceEngine` retrieves the `ModelBundle` for the classified type and runs the NER model on the raw text (preserving casing for proper nouns and dates). The classifier model runs on preprocessed (lowercased) text. Rule-based extractors use accent-flexible regex patterns (see below) so that both accented text from PyMuPDF and unaccented text from PaddleOCR are matched by the same alias lists. Each extractor also includes the full page text in a `raw_text` field to preserve information that falls outside the structured schema.
 
 6. **Relation mapping** -- If the NER output contains a flat `"entities"` list (from an ML model rather than a rule-based extractor), the engine applies `RelationMapper` with domain-specific configs to wire entities into structured relations.
 
@@ -62,6 +62,30 @@ The `InferenceEngine` in `src/pipeline/inference.py` is the inference orchestrat
 ### Model dispatch
 
 The `InferenceEngine._apply_model()` method supports multiple model interfaces. It checks in order: `model.predict()`, `model.extract()`, `model.extract_entities()`, or `model()` (callable). This allows both rule-based extractors (which use `extract()`) and ML models (which typically use `predict()`) to plug in without adapter code.
+
+### OCR engine
+
+DocIQ uses PaddleOCR 3.4+ (PP-OCRv4 models) for all OCR tasks. The engine is managed as a thread-safe singleton in `src/pipeline/ocr_paddle.py` with double-checked locking. Key design decisions:
+
+- **`enable_mkldnn=False`** -- Critical fix that bypasses the broken oneDNN/PIR code path in PaddlePaddle 3.x. This flows through PaddleX's config chain to force `run_mode="paddle"`.
+- **`lang="en"`** -- The English/Latin model handles all Latin-script languages including Spanish. PP-OCRv4 has no dedicated Spanish model.
+- **Sequential page processing** -- PaddleOCR is not thread-safe, so pages are processed one at a time (unlike PyMuPDF direct extraction which uses a thread pool).
+- **Accent stripping** -- PaddleOCR with the Latin model strips accents from Spanish text (e.g. "años" → "anos", "Cédula" → "Cedula"). The accent-flexible regex system compensates for this.
+
+### Accent-flexible regex
+
+The `_accent_flex()` function in `src/pipeline/extractors/base.py` converts literal field alias strings into regex patterns where each Latin vowel and `ñ` is replaced with a character class:
+
+```python
+_accent_flex("Identificacion")
+# → '[Iíìî]d[eéèê][nñ]t[iíìî]f[iíìî]c[aáàâã]c[iíìî][oóòôõ][nñ]'
+```
+
+This is applied automatically inside `extract_field()`, `extract_date()`, and `extract_block()`, so all alias lists work transparently with both text sources. Developers only need to add one spelling per alias (unaccented preferred).
+
+### Raw text preservation
+
+All extractors include a `raw_text` field in their output containing the full page text. This ensures that information not captured by the structured regex patterns is still available for downstream processing (e.g. future LLM enrichment layer). The corresponding Pydantic schemas accept `raw_text` as an optional field.
 
 ## Adding a New Document Type
 
@@ -207,7 +231,7 @@ All pipeline exceptions inherit from `DocIQError` for blanket catching. The hier
 DocIQError
 +-- ConfigurationError (ConfigFileNotFoundError, ConfigParseError)
 +-- DocumentExtractionError (PDFOpenError, PDFExtractionError, PageTimeoutError)
-+-- OCRError (ImageLoadError, TesseractError)
++-- OCRError (ImageLoadError, PaddleOCRError)
 +-- ClassificationError
 +-- NERExtractionError
 +-- ModelError (ModelLoadError, ModelExecutionError)
@@ -256,7 +280,7 @@ DocIQ supports two log formats configured via `DOCIQ_LOG_FORMAT`:
 
 ### Health checks
 
-The `/ready` endpoint checks five dependencies and reports timing for each. It returns 503 if any check fails, making it compatible with Kubernetes readiness probes.
+The `/ready` endpoint checks dependencies (Poppler, PaddleOCR, inference engine, config, disk space) and reports timing for each. It returns 503 if any check fails, making it compatible with Kubernetes readiness probes.
 
 ## Testing Guide
 

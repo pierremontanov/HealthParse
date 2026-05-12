@@ -18,16 +18,20 @@ DocIQ is an AI-powered medical document classification and extraction engine. It
 
 ## Key Capabilities
 
-- **Mixed-mode PDF handling** -- auto-detects text-based vs scanned PDFs and selects direct extraction or OCR accordingly.
+- **Mixed-mode PDF handling** -- auto-detects text-based vs scanned PDFs and selects direct extraction (PyMuPDF) or OCR (PaddleOCR) accordingly.
+- **PaddleOCR integration** -- uses PaddleOCR 3.4+ (PP-OCRv4) for high-quality OCR on scanned documents. Runs entirely locally on CPU — no data leaves the machine.
 - **Bilingual language detection** -- samples PDF text with deterministic `langdetect` seeding to flag English and Spanish content for downstream routing.
-- **Image preprocessing and OCR** -- normalises images with OpenCV binary thresholding before passing to Tesseract, improving quality on noisy scans.
-- **Document classification** -- keyword-based scoring classifies documents as `prescription`, `result` (lab/imaging), or `clinical_history`.
-- **Rule-based NER** -- purpose-built extractors pull structured fields (patient info, medications, test results, diagnoses) from each document type.
+- **Accent-flexible regex extraction** -- all field matching automatically handles both accented text (PyMuPDF direct extraction) and unaccented text (PaddleOCR output) through character-class expansion.
+- **Document classification** -- keyword-based scoring classifies documents as `prescription`, `result` (lab/imaging), `clinical_history`, or `receipt`.
+- **Rule-based NER** -- purpose-built extractors pull structured fields (patient info, medications, test results, diagnoses) from each document type using bilingual (English/Spanish) alias lists.
+- **Raw text preservation** -- full OCR output is stored in a `raw_text` field alongside structured fields, ensuring no information is lost for downstream LLM enrichment.
 - **Pydantic validation** -- every extraction result is validated against a typed schema before export.
 - **FHIR R4 mapping** -- validated entities convert to loose FHIR resources: `DiagnosticReport`, `MedicationRequest`, and `Encounter`.
 - **Entity relation mapping** -- flat NER entity lists from ML models are automatically wired into structured relations via configurable anchor-dependent configs.
+- **Web UI** -- built-in browser interface for uploading files and viewing extraction results.
 - **Multi-threaded batch processing** -- concurrent extraction and export with configurable worker pools.
 - **Three export formats** -- JSON (one file per document), CSV (flat table), and FHIR (individual resources plus a Bundle).
+- **Fully local / private** -- the entire pipeline (OCR, classification, extraction, validation) runs offline with no external API calls, suitable for sensitive medical data.
 - **Production-ready deployment** -- Dockerfile, Compose overlays, Nginx reverse proxy, health/readiness probes, structured JSON logging.
 
 ## Pipeline Architecture
@@ -39,20 +43,19 @@ graph TD
     C -- Yes --> D[Sample & Detect PDF Language]
     D --> E{Text-based?}
     E -- Yes --> F[Direct Text Extraction - PyMuPDF]
-    E -- No --> G[OCR Pipeline - pdf2image + Tesseract]
+    E -- No --> G[OCR Pipeline - pdf2image + PaddleOCR]
     F --> H[Language Finalisation]
     G --> H
-    C -- No --> I[Image OCR - Tesseract]
+    C -- No --> I[Image OCR - PaddleOCR]
     I --> H
-    H --> J[Preprocess & Normalise Text]
-    J --> K[Document Classification]
-    K --> L[NER Extraction]
-    L --> M[Relation Mapping - if ML entities]
-    M --> N[Pydantic Validation]
-    N --> O{Export Format}
-    O -- json --> P[JSON Files]
-    O -- csv --> Q[CSV Table]
-    O -- fhir --> R[FHIR Resources + Bundle]
+    H --> J[Document Classification]
+    J --> K[NER Extraction - accent-flexible regex]
+    K --> L[Relation Mapping - if ML entities]
+    L --> M[Pydantic Validation]
+    M --> N{Export Format}
+    N -- json --> O[JSON Files]
+    N -- csv --> P[CSV Table]
+    N -- fhir --> Q[FHIR Resources + Bundle]
 ```
 
 Each stage records timing metrics to a thread-safe collector. The engine catches errors per-file so a single failure never blocks the rest of a batch.
@@ -91,22 +94,7 @@ pip install -r requirements-dev.txt  # adds pytest + httpx
 
 ### System dependencies
 
-DocIQ requires two external binaries that are not installable via pip:
-
-**Tesseract OCR** (with English and Spanish language packs):
-
-```bash
-# Linux
-sudo apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-spa
-
-# macOS
-brew install tesseract
-
-# Windows -- download installer from https://github.com/UB-Mannheim/tesseract/wiki
-# and add the install directory to PATH
-```
-
-**Poppler** (provides `pdftoppm` for pdf2image):
+**Poppler** (provides `pdftoppm` for pdf2image, used in the OCR path):
 
 ```bash
 # Linux
@@ -116,14 +104,14 @@ sudo apt-get install poppler-utils
 brew install poppler
 
 # Windows -- download from https://github.com/oschwartz10612/poppler-windows/releases
-# and add the bin/ directory to PATH
+# and add the bin/ directory to PATH, or place in a poppler/ folder at the project root
+# (auto-detected by DocIQ)
 ```
 
-Verify both are available:
+PaddleOCR models are downloaded automatically on first use. To pre-download them (useful for Docker builds or air-gapped servers):
 
 ```bash
-tesseract --version
-pdftoppm -h
+python -m src.pipeline.ocr_paddle --download
 ```
 
 ## Usage
@@ -209,7 +197,7 @@ Start the server with `uvicorn src.api.app:app --reload` and visit `/docs` for i
 
 **GET /health** -- Liveness probe. Returns status, version, uptime, and UTC timestamp.
 
-**GET /ready** -- Readiness probe. Checks Tesseract, Poppler, inference engine, config, and disk space. Returns 200 when all pass, 503 otherwise. Compatible with Kubernetes readiness probes.
+**GET /ready** -- Readiness probe. Checks Poppler, PaddleOCR, inference engine, config, and disk space. Returns 200 when all pass, 503 otherwise. Compatible with Kubernetes readiness probes.
 
 **POST /process** -- Upload one or more PDF/image files for processing. Accepts `format` query parameter (`json` or `fhir`). Each file goes through extraction, classification, NER, and validation. Returns a list of results with structured `extracted_data`.
 
@@ -264,7 +252,7 @@ Deploy script commands:
 
 ### Image details
 
-The Dockerfile uses a multi-stage build (builder for wheel compilation, runtime with Python 3.11-slim) and installs Tesseract, Poppler, and OpenCV system dependencies. The final image includes a `HEALTHCHECK` that curls `/health` every 30 seconds.
+The Dockerfile uses a multi-stage build (builder for wheel compilation, runtime with Python 3.11-slim) and installs Poppler and OpenCV system dependencies. PaddleOCR models are downloaded during the build step. The final image includes a `HEALTHCHECK` that curls `/health` every 30 seconds.
 
 ## Configuration
 
@@ -287,16 +275,13 @@ DocIQ resolves settings from multiple sources in this priority order (highest wi
 | `export_format` | `DOCIQ_EXPORT_FORMAT` | `json` | `json`, `csv`, or `fhir` |
 | `run_inference` | `DOCIQ_RUN_INFERENCE` | `true` | Enable classification + NER |
 | `ocr_dpi` | `DOCIQ_OCR_DPI` | `300` | DPI for PDF-to-image conversion |
-| `ocr_lang` | `DOCIQ_OCR_LANG` | `eng+spa` | Tesseract language packs |
 | `max_workers` | `DOCIQ_MAX_WORKERS` | auto | Thread pool size |
 | `page_timeout` | `DOCIQ_PAGE_TIMEOUT` | `300` | Per-page timeout in seconds |
-| `preprocessing_threshold` | `DOCIQ_PREPROCESSING_THRESHOLD` | `120` | Binary threshold (0-255) |
 | `fhir_bundle` | `DOCIQ_FHIR_BUNDLE` | `true` | Generate FHIR Bundle |
 | `api_host` | `DOCIQ_API_HOST` | `0.0.0.0` | FastAPI bind address |
 | `api_port` | `DOCIQ_API_PORT` | `8000` | FastAPI port |
 | `api_workers` | `DOCIQ_API_WORKERS` | `1` | Uvicorn worker count |
-| `tesseract_cmd` | `DOCIQ_TESSERACT_CMD` | -- | Custom Tesseract binary path |
-| `poppler_path` | `DOCIQ_POPPLER_PATH` | -- | Custom Poppler bin directory |
+| `poppler_path` | `DOCIQ_POPPLER_PATH` | -- | Custom Poppler bin directory (auto-detected if placed at project root) |
 
 ### YAML config example
 
@@ -349,7 +334,8 @@ The test suite contains 1100+ tests covering extraction, classification, NER, va
 │       ├── process_folder.py        # Batch file ingestion with threading
 │       ├── pdf_extractor.py         # Direct text extraction + OCR for PDFs
 │       ├── pdf_type_detector.py     # Text-based vs scanned PDF detection
-│       ├── ocr.py                   # Image OCR via Tesseract
+│       ├── ocr.py                   # OCR module (delegates to PaddleOCR)
+│       ├── ocr_paddle.py            # PaddleOCR 3.4+ singleton engine (PP-OCRv4, CPU)
 │       ├── language.py              # Language detection (langdetect)
 │       ├── preprocess.py            # Image binarisation + text normalisation
 │       ├── metrics.py               # Thread-safe timing and metrics
@@ -396,12 +382,16 @@ The test suite contains 1100+ tests covering extraction, classification, NER, va
 
 **`fitz` import errors** -- Ensure PyMuPDF installed successfully. Reinstall with `pip install --upgrade pymupdf`.
 
-**`pdf2image` cannot find Poppler** -- Add the Poppler binary directory to your `PATH`. On Windows, download Poppler for Windows and set the `DOCIQ_POPPLER_PATH` environment variable to point to the `bin/` folder.
+**`pdf2image` cannot find Poppler** -- Add the Poppler binary directory to your `PATH`. On Windows, download Poppler for Windows and either set `DOCIQ_POPPLER_PATH` or place the Poppler folder at the project root (auto-detected).
 
-**OCR output is noisy** -- Confirm Tesseract is installed with the appropriate language packs (`tesseract --list-langs`). Adjust the binarisation threshold via `DOCIQ_PREPROCESSING_THRESHOLD` (default 120, lower values produce more white).
+**PaddleOCR `fused_conv2d` or oneDNN crash** -- This is caused by the broken MKL-DNN/PIR code path in PaddlePaddle 3.x on Windows. The fix is already applied in `ocr_paddle.py` (`enable_mkldnn=False`). Ensure you are using PaddleOCR >= 3.4.0 and PaddlePaddle >= 3.2.
 
-**API returns 503 on /ready** -- The readiness probe checks Tesseract, Poppler, disk space (>100 MB), config loading, and inference engine initialisation. Check `detail` in each failing check's response to identify the issue.
+**PaddleOCR slow on first run** -- Model weights are downloaded on first use (~100 MB). Subsequent runs use the cached models. To pre-download: `python -m src.pipeline.ocr_paddle --download`.
 
-**Classification returns "unknown"** -- The classifier uses keyword scoring with a configurable minimum threshold. If your documents use non-standard headings, the classifier may not match. Check the document text and ensure it contains recognisable medical keywords.
+**OCR output missing accents** -- This is expected. PaddleOCR with `lang="en"` (Latin model) strips accents from Spanish text. The accent-flexible regex system in `base.py` handles this automatically — both accented and unaccented text are matched by the same patterns.
 
-**Docker build fails on system deps** -- The Dockerfile installs `tesseract-ocr`, `poppler-utils`, and OpenCV system libraries. If building behind a corporate proxy, set `http_proxy`/`https_proxy` build args.
+**API returns 503 on /ready** -- The readiness probe checks Poppler, disk space (>100 MB), config loading, and inference engine initialisation. Check `detail` in each failing check's response to identify the issue.
+
+**Classification returns "unknown"** -- The classifier uses keyword scoring with a configurable minimum threshold. If your documents use non-standard headings, the classifier may not match. Check the document text and ensure it contains recognisable medical keywords in English or Spanish.
+
+**Docker build fails on system deps** -- The Dockerfile installs `poppler-utils` and OpenCV system libraries. If building behind a corporate proxy, set `http_proxy`/`https_proxy` build args.
