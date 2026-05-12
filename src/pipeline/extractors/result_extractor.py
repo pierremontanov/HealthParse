@@ -80,6 +80,7 @@ class LabResultExtractor:
             "professional": professional,
             "institution": institution,
             "notes": None,
+            "raw_text": text.strip(),
         }
 
     # ── Helpers ──────────────────────────────────────────────────────

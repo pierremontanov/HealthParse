@@ -71,6 +71,7 @@ class PrescriptionExtractor:
             "institution": institution,
             "additional_notes": None,
             "items": items,
+            "raw_text": text.strip(),
         }
 
     # ── Item parsing ────────────────────────────────────────────────

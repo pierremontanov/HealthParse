@@ -85,3 +85,9 @@ class ClinicalHistorySchema(BaseModel):
         description="Clinic or hospital where the consultation took place.",
         json_schema_extra={"example": "Central Medical Center"},
     )
+
+    raw_text: Optional[str] = Field(
+        None,
+        description="Full OCR / extracted text for the page.  Preserves all "
+        "information that may not fit into the structured fields above.",
+    )

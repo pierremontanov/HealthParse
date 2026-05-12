@@ -83,6 +83,12 @@ class ResultSchema(BaseModel):
         description="Additional observations or free-text notes.",
     )
 
+    raw_text: Optional[str] = Field(
+        None,
+        description="Full OCR / extracted text for the page.  Preserves all "
+        "information that may not fit into the structured fields above.",
+    )
+
     @field_validator("sex")
     @classmethod
     def validate_sex(cls, v: Optional[str]) -> Optional[str]:

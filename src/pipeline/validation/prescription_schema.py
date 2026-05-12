@@ -134,3 +134,9 @@ class Prescription(BaseModel):
         min_length=1,
         description="List of prescribed items (medications, tests, referrals, etc.).",
     )
+
+    raw_text: Optional[str] = Field(
+        None,
+        description="Full OCR / extracted text for the page.  Preserves all "
+        "information that may not fit into the structured fields above.",
+    )

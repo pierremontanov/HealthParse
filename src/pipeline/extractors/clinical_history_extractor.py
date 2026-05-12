@@ -151,6 +151,7 @@ class ClinicalHistoryExtractor:
             "plan": plan,
             "doctor_name": doctor_name,
             "institution": institution,
+            "raw_text": text.strip(),
         }
 
     # ── Helpers ──────────────────────────────────────────────────────
