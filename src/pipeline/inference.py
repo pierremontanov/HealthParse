@@ -30,6 +30,20 @@ from src.pipeline.validation.validator import (
 
 logger = logging.getLogger(__name__)
 
+# Fields that should never be overwritten by LLM output
+_LLM_SKIP_FIELDS = {"raw_text", "document_type"}
+
+
+def _is_empty(value: Any) -> bool:
+    """Check if a value is considered empty for merge purposes."""
+    if value is None:
+        return True
+    if isinstance(value, str) and not value.strip():
+        return True
+    if isinstance(value, list) and not value:
+        return True
+    return False
+
 @dataclass
 class ModelBundle:
     """Container with the models required for a document type.
@@ -104,6 +118,8 @@ class InferenceResult:
     combined_output: Dict[str, Any]
     validated_data: Optional[BaseModel]
     relation_mapping: Optional[RelationMappingResult] = None
+    llm_output: Optional[Dict[str, Any]] = None
+    llm_fields_used: Optional[List[str]] = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the validated data as a dictionary when available."""
@@ -146,14 +162,15 @@ class InferenceEngine:
 
         The pipeline steps are:
 
-        1. **Preprocessing** – normalise the raw text.
-        2. **Classification** – extract global attributes.
-        3. **NER** – extract entities (structured dict *or* flat entity list).
-        4. **Relation mapping** – if NER output contains a flat ``"entities"``
+        1. **Preprocessing** -- normalise the raw text.
+        2. **Classification** -- extract global attributes.
+        3. **NER** -- extract entities (structured dict *or* flat entity list).
+        4. **Relation mapping** -- if NER output contains a flat ``"entities"``
            list, run :class:`RelationMapper` to wire entities into structured
            relations that match the validation schema.
-        5. **Merge** – combine classifier, NER, and relation outputs.
-        6. **Validation** – validate the merged dict against the Pydantic schema.
+        5. **Merge** -- combine classifier, NER, and relation outputs.
+        6. **Validation** -- validate the merged dict against the Pydantic schema.
+        7. **LLM enhancement** -- optionally call the LLM to fill gaps.
         """
         bundle = self._registry.get_bundle(document_type)
         preprocessed_text = self._text_preprocessor(raw_text)
@@ -176,6 +193,24 @@ class InferenceEngine:
 
         validated = self._validate(document_type, combined_output)
 
+        # -- LLM enhancement (opt-in) --
+        llm_output = None
+        llm_fields_used = None
+
+        try:
+            from src.config import settings as _cfg
+
+            if _cfg.llm_enabled:
+                llm_output, llm_fields_used = self._enhance_with_llm(
+                    document_type, raw_text, combined_output,
+                )
+                if llm_fields_used:
+                    # Re-validate with the enhanced output
+                    validated = self._validate(document_type, combined_output)
+        except Exception as exc:
+            # Graceful fallback: LLM failure never blocks the pipeline
+            logger.warning("LLM enhancement failed, using rule-based results: %s", exc)
+
         return InferenceResult(
             document_type=document_type,
             raw_text=raw_text,
@@ -185,6 +220,8 @@ class InferenceEngine:
             combined_output=combined_output,
             validated_data=validated,
             relation_mapping=relation_result,
+            llm_output=llm_output,
+            llm_fields_used=llm_fields_used,
         )
 
     def _apply_model(self, model: Optional[Any], text: str) -> Dict[str, Any]:
@@ -251,7 +288,145 @@ class InferenceEngine:
             )
             raise
 
-    # ── Relation mapping ───────────────────────────────────────────
+    # -- LLM enhancement ---------------------------------------------------
+
+    def _enhance_with_llm(
+        self,
+        document_type: str,
+        raw_text: str,
+        combined_output: Dict[str, Any],
+    ) -> tuple[Optional[Dict[str, Any]], Optional[List[str]]]:
+        """Call the LLM and merge its output into rule-based results.
+
+        The "middle" approach: both rule-based and LLM run on every
+        document.  For each field, the system picks the best value:
+
+        - If rule-based has a non-empty value, keep it (deterministic wins).
+        - If rule-based is None/empty but LLM has a value, use the LLM's.
+        - Special case for ``items`` (prescriptions): if LLM has more items
+          or richer sub-fields, prefer the LLM list.
+
+        Parameters
+        ----------
+        document_type : str
+            Classified document type.
+        raw_text : str
+            Full text from extraction (for the LLM prompt).
+        combined_output : dict
+            Current rule-based extraction output (mutated in place).
+
+        Returns
+        -------
+        tuple[dict | None, list[str] | None]
+            The raw LLM output and list of field names where LLM values
+            were used, or ``(None, None)`` on failure.
+        """
+        from src.pipeline.llm_client import OllamaClient
+        from src.pipeline.metrics import Timer, get_collector
+
+        collector = get_collector()
+        client = OllamaClient()
+
+        if not client.is_available():
+            logger.info("LLM server not available, skipping enhancement.")
+            return None, None
+
+        with Timer("llm_extract") as t:
+            llm_data = client.extract(document_type, raw_text)
+        collector.record("llm_extract", t.elapsed_ms)
+
+        if not llm_data:
+            return None, None
+
+        fields_used = self._merge_llm_fields(combined_output, llm_data)
+
+        if fields_used:
+            logger.info(
+                "LLM enhanced %d field(s): %s",
+                len(fields_used),
+                ", ".join(fields_used),
+            )
+        else:
+            logger.debug("LLM produced no additional fields beyond rule-based.")
+
+        return llm_data, fields_used
+
+    @staticmethod
+    def _merge_llm_fields(
+        rule_based: Dict[str, Any],
+        llm_data: Dict[str, Any],
+    ) -> List[str]:
+        """Merge LLM output into rule-based results, filling gaps.
+
+        Rule-based values always take precedence when they are non-empty.
+        The LLM fills in fields that are ``None``, empty strings, or
+        missing entirely.
+
+        For the ``items`` list (prescriptions), the LLM list replaces the
+        rule-based list only if it contains more items or if each item
+        has richer sub-fields (more non-null values).
+
+        Parameters
+        ----------
+        rule_based : dict
+            Mutated in place with LLM values where appropriate.
+        llm_data : dict
+            Raw LLM extraction output.
+
+        Returns
+        -------
+        list[str]
+            Field names where LLM values were used.
+        """
+        fields_used: List[str] = []
+
+        for key, llm_value in llm_data.items():
+            if key in _LLM_SKIP_FIELDS:
+                continue
+
+            # Only merge into fields that the rule-based extractor
+            # already created — adding unknown keys would break
+            # Pydantic validation (extra="forbid" schemas).
+            if key not in rule_based:
+                continue
+
+            rule_value = rule_based.get(key)
+
+            # Special handling for prescription items list
+            if key == "items" and isinstance(llm_value, list):
+                rule_items = rule_based.get("items")
+                if not isinstance(rule_items, list) or not rule_items:
+                    # Rule-based found nothing, use LLM
+                    rule_based["items"] = llm_value
+                    fields_used.append("items")
+                elif len(llm_value) > len(rule_items):
+                    # LLM found more items
+                    rule_based["items"] = llm_value
+                    fields_used.append("items")
+                else:
+                    # Same count -- check if LLM items are richer
+                    def _richness(items: list) -> int:
+                        return sum(
+                            1
+                            for item in items
+                            if isinstance(item, dict)
+                            for v in item.values()
+                            if v is not None
+                        )
+
+                    if _richness(llm_value) > _richness(rule_items):
+                        rule_based["items"] = llm_value
+                        fields_used.append("items")
+                continue
+
+            # Standard field: LLM fills gaps only
+            if _is_empty(rule_value) and not _is_empty(llm_value):
+                rule_based[key] = llm_value
+                fields_used.append(key)
+
+        return fields_used
+
+    # -- Relation mapping --------------------------------------------------
 
     def _apply_relation_mapping(
         self, document_type: str, ner_output: Dict[str, Any]
@@ -316,7 +491,7 @@ class InferenceEngine:
         ]
         return output
 
-    # ── Introspection helpers ─────────────────────────────────────
+    # -- Introspection helpers ---------------------------------------------
 
     @property
     def registered_types(self) -> List[str]:
@@ -340,9 +515,9 @@ class InferenceEngine:
         return None
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ==================================================================
 # Factory: default engine with built-in rule-based extractors
-# ═══════════════════════════════════════════════════════════════════
+# ==================================================================
 
 def create_default_engine(
     model_path: str | None = None,

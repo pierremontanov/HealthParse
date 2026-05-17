@@ -24,14 +24,15 @@ DocIQ is an AI-powered medical document classification and extraction engine. It
 - **Accent-flexible regex extraction** -- all field matching automatically handles both accented text (PyMuPDF direct extraction) and unaccented text (PaddleOCR output) through character-class expansion.
 - **Document classification** -- keyword-based scoring classifies documents as `prescription`, `result` (lab/imaging), `clinical_history`, or `receipt`.
 - **Rule-based NER** -- purpose-built extractors pull structured fields (patient info, medications, test results, diagnoses) from each document type using bilingual (English/Spanish) alias lists.
-- **Raw text preservation** -- full OCR output is stored in a `raw_text` field alongside structured fields, ensuring no information is lost for downstream LLM enrichment.
+- **LLM enhancement (opt-in)** -- when enabled, an Ollama-hosted language model runs alongside rule-based extraction. The merge layer keeps rule-based values when present and lets the LLM fill gaps (empty fields, missing items). If the LLM is unreachable the pipeline falls back silently to rule-based results.
+- **Raw text preservation** -- full OCR output is stored in a `raw_text` field alongside structured fields, ensuring no information is lost.
 - **Pydantic validation** -- every extraction result is validated against a typed schema before export.
 - **FHIR R4 mapping** -- validated entities convert to loose FHIR resources: `DiagnosticReport`, `MedicationRequest`, and `Encounter`.
 - **Entity relation mapping** -- flat NER entity lists from ML models are automatically wired into structured relations via configurable anchor-dependent configs.
 - **Web UI** -- built-in browser interface for uploading files and viewing extraction results.
 - **Multi-threaded batch processing** -- concurrent extraction and export with configurable worker pools.
 - **Three export formats** -- JSON (one file per document), CSV (flat table), and FHIR (individual resources plus a Bundle).
-- **Fully local / private** -- the entire pipeline (OCR, classification, extraction, validation) runs offline with no external API calls, suitable for sensitive medical data.
+- **Fully local / private** -- the entire pipeline (OCR, classification, extraction, validation, and optional LLM enhancement) runs on local infrastructure with no external API calls, suitable for sensitive medical data.
 - **Production-ready deployment** -- Dockerfile, Compose overlays, Nginx reverse proxy, health/readiness probes, structured JSON logging.
 
 ## Pipeline Architecture
@@ -50,7 +51,11 @@ graph TD
     I --> H
     H --> J[Document Classification]
     J --> K[NER Extraction - accent-flexible regex]
-    K --> L[Relation Mapping - if ML entities]
+    K --> K2{LLM enabled?}
+    K2 -- Yes --> K3[LLM Enhancement - Ollama]
+    K3 --> K4[Merge: rule-based wins, LLM fills gaps]
+    K2 -- No --> L[Relation Mapping - if ML entities]
+    K4 --> L
     L --> M[Pydantic Validation]
     M --> N{Export Format}
     N -- json --> O[JSON Files]
@@ -282,6 +287,12 @@ DocIQ resolves settings from multiple sources in this priority order (highest wi
 | `api_port` | `DOCIQ_API_PORT` | `8000` | FastAPI port |
 | `api_workers` | `DOCIQ_API_WORKERS` | `1` | Uvicorn worker count |
 | `poppler_path` | `DOCIQ_POPPLER_PATH` | -- | Custom Poppler bin directory (auto-detected if placed at project root) |
+| `llm_enabled` | `DOCIQ_LLM_ENABLED` | `false` | Enable LLM enhancement (opt-in) |
+| `llm_endpoint` | `DOCIQ_LLM_ENDPOINT` | `http://192.168.137.100:11434` | Ollama server URL |
+| `llm_model` | `DOCIQ_LLM_MODEL` | `dociq-medical` | Ollama model name |
+| `llm_timeout` | `DOCIQ_LLM_TIMEOUT` | `120` | Per-request timeout in seconds |
+| `llm_retries` | `DOCIQ_LLM_RETRIES` | `1` | Retry count on failure |
+| `llm_keep_alive` | `DOCIQ_LLM_KEEP_ALIVE` | `30m` | How long Ollama keeps the model in memory |
 
 ### YAML config example
 
@@ -294,6 +305,12 @@ ocr_dpi: 300
 max_workers: 4
 run_inference: true
 fhir_bundle: true
+
+# LLM enhancement (optional)
+llm_enabled: true
+llm_endpoint: http://192.168.137.100:11434
+llm_model: dociq-medical
+llm_timeout: 120
 ```
 
 ## Testing
@@ -345,6 +362,7 @@ The test suite contains 1100+ tests covering extraction, classification, NER, va
 │       ├── fhir_output_saver.py     # FHIR file persistence
 │       ├── relation_mapper.py       # Entity relation wiring
 │       ├── relation_configs.py      # Domain-specific relation configs
+│       ├── llm_client.py            # Ollama LLM client (classify + extract)
 │       ├── model_manager.py         # Model persistence and loading
 │       ├── train_ner.py             # NER model training
 │       ├── exceptions.py            # Custom exception hierarchy
@@ -393,5 +411,11 @@ The test suite contains 1100+ tests covering extraction, classification, NER, va
 **API returns 503 on /ready** -- The readiness probe checks Poppler, disk space (>100 MB), config loading, and inference engine initialisation. Check `detail` in each failing check's response to identify the issue.
 
 **Classification returns "unknown"** -- The classifier uses keyword scoring with a configurable minimum threshold. If your documents use non-standard headings, the classifier may not match. Check the document text and ensure it contains recognisable medical keywords in English or Spanish.
+
+**LLM enhancement not activating** -- LLM is opt-in. Set `DOCIQ_LLM_ENABLED=true` (env var) or `llm_enabled: true` (YAML) before starting the server. Check the logs for `LLM enhanced N field(s)` entries.
+
+**LLM server unreachable** -- Verify Ollama is running on the configured endpoint (`curl http://<host>:11434/`). The pipeline falls back silently to rule-based results when the LLM is unavailable — check logs at DEBUG level for `LLM server not available, skipping enhancement`.
+
+**LLM returns wrong field names** -- The merge layer only fills fields that already exist in the rule-based output. If the LLM returns a field name that doesn't match the Pydantic schema (e.g. `doctor_name` instead of `professional`), it is safely ignored. Adjust the Ollama model's system prompt to use the correct field names.
 
 **Docker build fails on system deps** -- The Dockerfile installs `poppler-utils` and OpenCV system libraries. If building behind a corporate proxy, set `http_proxy`/`https_proxy` build args.

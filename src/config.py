@@ -168,6 +168,41 @@ class DocIQSettings(BaseSettings):
         description="File extensions the pipeline will accept.",
     )
 
+    # ── LLM Enhancement ──────────────────────────────────────────
+    llm_enabled: bool = Field(
+        False,
+        description="Enable LLM enhancement layer. When True, raw text is sent "
+        "to the LLM after rule-based extraction and results are merged.",
+    )
+    llm_provider: Literal["ollama"] = Field(
+        "ollama",
+        description="LLM provider. Currently only 'ollama' is supported.",
+    )
+    llm_endpoint: str = Field(
+        "http://192.168.137.100:11434",
+        description="Base URL of the Ollama API server.",
+    )
+    llm_model: str = Field(
+        "dociq-medical",
+        description="Ollama model name for classification and extraction.",
+    )
+    llm_timeout: int = Field(
+        120,
+        ge=5,
+        le=600,
+        description="Timeout in seconds for a single LLM request.",
+    )
+    llm_retries: int = Field(
+        1,
+        ge=0,
+        le=5,
+        description="Number of retry attempts on LLM failure before falling back.",
+    )
+    llm_keep_alive: str = Field(
+        "30m",
+        description="How long Ollama keeps the model loaded in VRAM after a request.",
+    )
+
     # ── Export ────────────────────────────────────────────────────
     export_format: Literal["json", "csv", "fhir"] = Field(
         "json", description="Default export format."
@@ -190,10 +225,6 @@ class DocIQSettings(BaseSettings):
     api_reload: bool = Field(False, description="Enable Uvicorn auto-reload.")
 
     # ── Secrets / external paths (typically from .env) ────────────
-    tesseract_cmd: Optional[str] = Field(
-        None,
-        description="Explicit path to the Tesseract binary. Overrides PATH lookup.",
-    )
     poppler_path: Optional[str] = Field(
         None,
         description="Path to the Poppler bin directory (for pdf2image on Windows).",

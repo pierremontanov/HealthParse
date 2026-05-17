@@ -228,6 +228,39 @@ class FHIRMappingError(ExportError):
         super().__init__("fhir", f"'{filename}': {reason}")
 
 
+# ── LLM ────────────────────────────────────────────────────────
+
+class LLMError(DocIQError):
+    """Base class for LLM-related errors."""
+
+    def __init__(self, reason: str) -> None:
+        self.reason = reason
+        super().__init__(f"LLM error: {reason}")
+
+
+class LLMConnectionError(LLMError):
+    """Raised when the LLM endpoint is unreachable."""
+
+    def __init__(self, endpoint: str, reason: str = "connection refused") -> None:
+        self.endpoint = endpoint
+        super().__init__(f"cannot reach {endpoint}: {reason}")
+
+
+class LLMTimeoutError(LLMError):
+    """Raised when an LLM request exceeds the configured timeout."""
+
+    def __init__(self, timeout: int) -> None:
+        self.timeout = timeout
+        super().__init__(f"request timed out after {timeout}s")
+
+
+class LLMResponseError(LLMError):
+    """Raised when the LLM returns invalid or unparseable output."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(f"invalid response: {reason}")
+
+
 # ── File handling ───────────────────────────────────────────────
 
 class UnsupportedFileError(DocIQError):

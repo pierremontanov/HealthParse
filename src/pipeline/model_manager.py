@@ -342,9 +342,7 @@ class ModelManager:
 
             self._ocr_config = {
                 "ocr_dpi": settings.ocr_dpi,
-                "ocr_lang": settings.ocr_lang,
-                "preprocessing_threshold": settings.preprocessing_threshold,
-                "tesseract_cmd": settings.tesseract_cmd,
+                "ocr_engine": "paddleocr",
             }
         except Exception:
             logger.warning("Could not capture OCR config.")

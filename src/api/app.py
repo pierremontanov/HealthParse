@@ -94,13 +94,14 @@ def _timed_check(name: str, fn) -> ReadinessCheck:
     return ReadinessCheck(name=name, available=available, detail=detail, elapsed_ms=round(elapsed, 2))
 
 
-def _check_tesseract():
-    path = settings.tesseract_cmd or shutil.which("tesseract")
-    if path and os.path.isfile(path):
-        return True, path
-    if shutil.which("tesseract"):
-        return True, shutil.which("tesseract")
-    return False, "not found on PATH"
+def _check_paddleocr():
+    """Verify that PaddleOCR is importable and initialised."""
+    try:
+        from src.pipeline.ocr_paddle import get_ocr_engine
+        engine = get_ocr_engine()
+        return True, "PaddleOCR engine available"
+    except Exception as exc:
+        return False, str(exc)
 
 
 def _check_poppler():
@@ -189,7 +190,7 @@ async def ready():
     t0 = time.monotonic()
 
     checks: List[ReadinessCheck] = [
-        _timed_check("tesseract", _check_tesseract),
+        _timed_check("paddleocr", _check_paddleocr),
         _timed_check("poppler", _check_poppler),
         _timed_check("inference_engine", _check_inference),
         _timed_check("config", _check_config),
