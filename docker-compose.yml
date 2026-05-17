@@ -24,6 +24,13 @@ services:
       - DOCIQ_LOG_LEVEL=${DOCIQ_LOG_LEVEL:-INFO}
       - DOCIQ_LOG_FORMAT=${DOCIQ_LOG_FORMAT:-json}
       - DOCIQ_API_WORKERS=${DOCIQ_API_WORKERS:-1}
+      # LLM enhancement (opt-in)
+      - DOCIQ_LLM_ENABLED=${DOCIQ_LLM_ENABLED:-false}
+      - DOCIQ_LLM_ENDPOINT=${DOCIQ_LLM_ENDPOINT:-http://192.168.137.100:11434}
+      - DOCIQ_LLM_MODEL=${DOCIQ_LLM_MODEL:-dociq-medical}
+      - DOCIQ_LLM_TIMEOUT=${DOCIQ_LLM_TIMEOUT:-120}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -45,6 +52,11 @@ services:
     environment:
       - DOCIQ_LOG_LEVEL=${DOCIQ_LOG_LEVEL:-INFO}
       - DOCIQ_LOG_FORMAT=${DOCIQ_LOG_FORMAT:-text}
+      - DOCIQ_LLM_ENABLED=${DOCIQ_LLM_ENABLED:-false}
+      - DOCIQ_LLM_ENDPOINT=${DOCIQ_LLM_ENDPOINT:-http://192.168.137.100:11434}
+      - DOCIQ_LLM_MODEL=${DOCIQ_LLM_MODEL:-dociq-medical}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     entrypoint: ["python", "-m", "src.main"]
     command: ["--input", "/data", "--output-dir", "/app/output"]
     profiles:

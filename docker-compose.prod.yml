@@ -44,6 +44,10 @@ services:
       - DOCIQ_LOG_LEVEL=${DOCIQ_LOG_LEVEL:-INFO}
       - DOCIQ_LOG_FORMAT=json
       - DOCIQ_API_WORKERS=${DOCIQ_API_WORKERS:-2}
+      - DOCIQ_LLM_ENABLED=${DOCIQ_LLM_ENABLED:-false}
+      - DOCIQ_LLM_ENDPOINT=${DOCIQ_LLM_ENDPOINT:-http://192.168.137.100:11434}
+      - DOCIQ_LLM_MODEL=${DOCIQ_LLM_MODEL:-dociq-medical}
+      - DOCIQ_LLM_TIMEOUT=${DOCIQ_LLM_TIMEOUT:-120}
     volumes:
       - dociq_output:/app/output
       - ./data:/data:ro

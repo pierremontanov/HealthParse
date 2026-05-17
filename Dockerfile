@@ -1,7 +1,7 @@
 # ══════════════════════════════════════════════════════════════════
 # DocIQ – Multi-stage Dockerfile
 # ══════════════════════════════════════════════════════════════════
-# Produces a lean production image with Tesseract, Poppler, and
+# Produces a lean production image with PaddleOCR, Poppler, and
 # the Python runtime.  Two entrypoints:
 #   API  (default):  uvicorn src.api.app:app
 #   CLI:             python -m src.main --input /data ...
@@ -28,11 +28,10 @@ LABEL maintainer="Pierre Montanov <pierremontanov@gmail.com>"
 LABEL org.opencontainers.image.title="DocIQ"
 LABEL org.opencontainers.image.description="AI-powered medical document classification and extraction"
 
-# System dependencies: Tesseract OCR + language packs, Poppler (pdf2image)
+# System dependencies: Poppler (pdf2image), OpenCV runtime libs
+# PaddleOCR and PaddlePaddle are installed via pip in requirements.txt;
+# OCR models are downloaded on first use (or pre-cached during build).
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        tesseract-ocr \
-        tesseract-ocr-eng \
-        tesseract-ocr-spa \
         poppler-utils \
         libgl1 \
         libglib2.0-0 \
@@ -45,6 +44,7 @@ COPY --from=builder /install /usr/local
 # Application code
 WORKDIR /app
 COPY src/ src/
+COPY models/ models/
 COPY config.yaml .
 
 # Runtime directories
@@ -58,7 +58,9 @@ ENV PYTHONUNBUFFERED=1 \
     DOCIQ_OUTPUT_DIR=/app/output \
     DOCIQ_API_HOST=0.0.0.0 \
     DOCIQ_API_PORT=8000 \
-    DOCIQ_API_WORKERS=1
+    DOCIQ_API_WORKERS=1 \
+    DOCIQ_LLM_ENABLED=false \
+    PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=1
 
 EXPOSE 8000
 
