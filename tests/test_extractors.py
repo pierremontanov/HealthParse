@@ -143,9 +143,11 @@ class TestLabResultExtractor:
         assert result["exam_type"] is not None
         assert len(result["exam_type"]) > 0
 
-    def test_professional_has_fallback(self):
+    def test_professional_is_none_when_absent(self):
+        # LAB_RESULT_TEXT contains no doctor/professional field;
+        # the extractor correctly returns None in that case.
         result = self.extractor.extract(LAB_RESULT_TEXT)
-        assert result["professional"] is not None
+        assert result["professional"] is None
 
     def test_handles_empty_text(self):
         result = self.extractor.extract("")

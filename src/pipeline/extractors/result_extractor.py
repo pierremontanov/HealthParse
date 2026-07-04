@@ -64,7 +64,15 @@ class LabResultExtractor:
         study_area = extract_study_area(text)
 
         # ── Summary / Impression ──
+        # First try block extraction (multi-line), then fall back to inline
+        # key:value format (e.g. "Summary: Cholesterol slightly elevated.")
         summary = extract_impression_block(text)
+        if not summary:
+            from src.pipeline.extractors.base import resolve_field_flexible
+            summary = resolve_field_flexible(text, [
+                "Summary", "Impression", "Conclusion", "Concepto",
+                "Interpretacion", "Diagnostico", "Impresion",
+            ])
 
         return {
             "patient_name": patient_name,

@@ -159,6 +159,7 @@ class TestDocIQEngineProcessFile:
     def test_processes_pdf_with_inference(self, fake_pdf, _mock_extraction):
         mock_ie = MagicMock()
         mock_ie.classify.return_value = "prescription"
+        mock_ie.registered_types = ["prescription"]  # needed for registered_types check
         mock_ir = MagicMock()
         mock_ir.as_dict.return_value = {"patient_name": "Test"}
         mock_ir.validated_data = True

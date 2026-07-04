@@ -148,6 +148,9 @@ class InferenceEngine:
         self._validators = validators or self.DEFAULT_VALIDATORS
         self._text_preprocessor = text_preprocessor
         self._proximity_window = proximity_window
+        # Cached LLM client — created once on first use, reused for all documents.
+        self._llm_client: Optional[Any] = None
+        self._llm_available: Optional[bool] = None  # None = not yet checked
 
     def process_document(self, document_type: str, raw_text: str) -> InferenceResult:
         """Run the full inference pipeline for a document.
@@ -325,11 +328,20 @@ class InferenceEngine:
         from src.pipeline.metrics import Timer, get_collector
 
         collector = get_collector()
-        client = OllamaClient()
 
-        if not client.is_available():
+        # Reuse the cached client; create it once on first LLM call.
+        if self._llm_client is None:
+            self._llm_client = OllamaClient()
+
+        # Re-check availability only when previously unavailable (lazy re-check).
+        if self._llm_available is None or self._llm_available is False:
+            self._llm_available = self._llm_client.is_available()
+
+        if not self._llm_available:
             logger.info("LLM server not available, skipping enhancement.")
             return None, None
+
+        client = self._llm_client
 
         with Timer("llm_extract") as t:
             llm_data = client.extract(document_type, raw_text)
@@ -560,6 +572,7 @@ def create_default_engine(
         ClinicalHistoryExtractor,
         LabResultExtractor,
         PrescriptionExtractor,
+        ReceiptExtractor,
     )
     from src.pipeline.extractors.document_classifier import DocumentClassifier
 
@@ -577,6 +590,10 @@ def create_default_engine(
         "clinical_history": ModelBundle(
             classifier=classifier,
             ner=ClinicalHistoryExtractor(),
+        ),
+        "receipt": ModelBundle(
+            classifier=classifier,
+            ner=ReceiptExtractor(),
         ),
     })
 

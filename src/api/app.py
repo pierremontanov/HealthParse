@@ -9,6 +9,7 @@ OpenAPI docs available at ``/docs`` (Swagger) and ``/redoc``.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 import shutil
@@ -97,9 +98,11 @@ def _timed_check(name: str, fn) -> ReadinessCheck:
 def _check_paddleocr():
     """Verify that PaddleOCR is importable and initialised."""
     try:
-        from src.pipeline.ocr_paddle import get_ocr_engine
-        engine = get_ocr_engine()
-        return True, "PaddleOCR engine available"
+        from src.pipeline.ocr_paddle import warmup
+        ok = warmup()
+        if ok:
+            return True, "PaddleOCR engine available"
+        return False, "PaddleOCR warmup returned False"
     except Exception as exc:
         return False, str(exc)
 
@@ -245,12 +248,15 @@ async def process_documents(
         raise HTTPException(status_code=400, detail="No files uploaded.")
 
     engine = _get_engine()
-    results: List[dict] = []
+
+    # ── Phase 1: reject unsupported types & write supported files to temp paths ──
+    rejected: List[dict] = []
+    pending: List[tuple] = []  # (original_filename, tmp_path)
 
     for upload in files:
         suffix = os.path.splitext(upload.filename or "")[1].lower()
         if suffix not in {".pdf", ".png", ".jpg", ".jpeg"}:
-            results.append(
+            rejected.append(
                 {
                     "file": upload.filename or "unknown",
                     "status": "unsupported_type",
@@ -265,58 +271,60 @@ async def process_documents(
             )
             continue
 
-        # Write upload to a temp file so the extraction pipeline can read it.
         tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+        content = await upload.read()
+        tmp.write(content)
+        tmp.flush()
+        tmp.close()
+        pending.append((upload.filename or "unknown", tmp.name))
+
+    # ── Phase 2: process all files concurrently in a thread pool ──
+    # engine.process_file() is CPU-bound and synchronous. asyncio.to_thread()
+    # offloads each call to the default ThreadPoolExecutor so the event loop
+    # stays free. PaddleOCR processes pages sequentially within each file,
+    # so file-level parallelism is safe.
+    async def _process_one(original_name: str, tmp_path: str) -> dict:
         try:
-            content = await upload.read()
-            tmp.write(content)
-            tmp.flush()
-            tmp.close()
+            result = await asyncio.to_thread(engine.process_file, tmp_path)
+            result["file"] = original_name
 
-            result = engine.process_file(tmp.name)
-            result["file"] = upload.filename or result["file"]
-
-            # FHIR mapping pass
             if format == "fhir" and result.get("extracted_data") and result.get("document_type"):
                 try:
                     from src.pipeline.fhir_mapper import map_to_fhir_loose
-                    from src.pipeline.validation import (
-                        ClinicalHistorySchema,
-                        Prescription,
-                        ResultSchema,
-                        SCHEMA_REGISTRY,
-                    )
+                    from src.pipeline.validation import SCHEMA_REGISTRY
 
-                    _SCHEMA_MAP = SCHEMA_REGISTRY
                     doc_type = result["document_type"]
-                    if doc_type in _SCHEMA_MAP:
-                        model = _SCHEMA_MAP[doc_type](**result["extracted_data"])
+                    if doc_type in SCHEMA_REGISTRY:
+                        model = SCHEMA_REGISTRY[doc_type](**result["extracted_data"])
                         result["extracted_data"] = map_to_fhir_loose(model)
                 except Exception as exc:
-                    logger.warning("FHIR mapping failed for %s: %s", upload.filename, exc)
+                    logger.warning("FHIR mapping failed for %s: %s", original_name, exc)
 
-            results.append(result)
-
+            return result
         except Exception as exc:
-            logger.error("Processing failed for %s: %s", upload.filename, exc)
-            results.append(
-                {
-                    "file": upload.filename or "unknown",
-                    "status": "extraction_error",
-                    "language": "unknown",
-                    "method": "",
-                    "document_type": None,
-                    "extracted_data": None,
-                    "validated": False,
-                    "error": str(exc),
-                    "elapsed_ms": 0,
-                }
-            )
+            logger.error("Processing failed for %s: %s", original_name, exc)
+            return {
+                "file": original_name,
+                "status": "extraction_error",
+                "language": "unknown",
+                "method": "",
+                "document_type": None,
+                "extracted_data": None,
+                "validated": False,
+                "error": str(exc),
+                "elapsed_ms": 0,
+            }
         finally:
             try:
-                os.unlink(tmp.name)
+                os.unlink(tmp_path)
             except OSError:
                 pass
+
+    processed: List[dict] = list(
+        await asyncio.gather(*[_process_one(name, path) for name, path in pending])
+    )
+
+    results: List[dict] = rejected + processed
 
     # Build summary
     summary: dict = {}

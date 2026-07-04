@@ -202,6 +202,16 @@ class DocIQSettings(BaseSettings):
         "30m",
         description="How long Ollama keeps the model loaded in VRAM after a request.",
     )
+    llm_context_chars: int = Field(
+        3000,
+        ge=500,
+        le=32000,
+        description=(
+            "Maximum characters sent to the LLM per request. "
+            "Increase for longer clinical histories; decrease to reduce latency. "
+            "Roughly 750-1000 tokens at 3-4 chars/token."
+        ),
+    )
 
     # ── Export ────────────────────────────────────────────────────
     export_format: Literal["json", "csv", "fhir"] = Field(

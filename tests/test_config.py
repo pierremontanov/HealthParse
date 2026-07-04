@@ -74,9 +74,9 @@ class TestOverrides:
         cfg = DocIQSettings(api_port=9000)
         assert cfg.api_port == 9000
 
-    def test_override_tesseract_cmd(self):
-        cfg = DocIQSettings(tesseract_cmd="/usr/local/bin/tesseract")
-        assert cfg.tesseract_cmd == "/usr/local/bin/tesseract"
+    def test_override_llm_context_chars(self):
+        cfg = DocIQSettings(llm_context_chars=6000)
+        assert cfg.llm_context_chars == 6000
 
 
 # ── Environment variable loading ─────────────────────────────────

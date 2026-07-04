@@ -1,11 +1,15 @@
 import json
 import os
+from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from PIL import Image, ImageDraw, ImageFont
 
-DATA_PATH = "C:/Users/PIERRE/Aivora/Projects/DocIQ/data/aivora_sample_documents.json"
-OUTPUT_DIR = "C:/Users/PIERRE/Aivora/Projects/DocIQ/data/generated"
+# Paths are resolved relative to the project root so the generator works in
+# any environment (Docker, CI, other developer machines).
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = str(_PROJECT_ROOT / "data" / "sample_documents.json")
+OUTPUT_DIR = str(_PROJECT_ROOT / "data" / "generated")
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

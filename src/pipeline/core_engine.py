@@ -257,6 +257,11 @@ class DocIQEngine:
                     logger.warning("Could not classify %s.", filename)
                 elif doc_type not in self._engine.registered_types:
                     doc.document_type = doc_type
+                    doc.status = "unsupported_document_type"
+                    doc.error = (
+                        f"Document classified as '{doc_type}' but no extractor is "
+                        f"registered for this type. Extraction was skipped."
+                    )
                     logger.info(
                         "Classified %s as '%s' but no extractor registered.",
                         filename, doc_type,
@@ -312,8 +317,12 @@ class DocIQEngine:
                     entry["document_type"] = "unknown"
                     logger.debug("Could not classify %s.", page_label)
                 elif doc_type not in self._engine.registered_types:
-                    # Classified (e.g. "receipt") but no extractor registered
                     entry["document_type"] = doc_type
+                    entry["status"] = "unsupported_document_type"
+                    entry["error"] = (
+                        f"Document classified as '{doc_type}' but no extractor is "
+                        f"registered for this type. Extraction was skipped."
+                    )
                     logger.debug(
                         "Classified %s as '%s' but no extractor registered.",
                         page_label, doc_type,

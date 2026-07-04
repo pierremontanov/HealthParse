@@ -2,7 +2,9 @@
 
 Image preprocessing converts BGR images to grayscale and applies binary
 thresholding (configurable via ``settings.preprocessing_threshold``) to
-produce clean input for Tesseract OCR.
+produce clean input for PaddleOCR (PP-OCRv4).  PaddleOCR also runs its
+own internal preprocessing (deskew, orientation correction, binarisation),
+so this step is mainly used for legacy or direct-image paths.
 
 Text preprocessing applies Unicode normalisation, whitespace collapsing,
 special-character removal, and lowercasing for downstream NER and

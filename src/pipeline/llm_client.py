@@ -225,8 +225,9 @@ class OllamaClient:
         ------
         LLMConnectionError, LLMTimeoutError, LLMResponseError
         """
-        # Truncate to avoid exceeding context window
-        truncated = text[:3000] if len(text) > 3000 else text
+        # Truncate to configured context window size
+        max_chars = settings.llm_context_chars
+        truncated = text[:max_chars] if len(text) > max_chars else text
         prompt = f"classify: {truncated}"
 
         response_text = self._request(prompt)
@@ -267,7 +268,8 @@ class OllamaClient:
         ------
         LLMConnectionError, LLMTimeoutError, LLMResponseError
         """
-        truncated = text[:3000] if len(text) > 3000 else text
+        max_chars = settings.llm_context_chars
+        truncated = text[:max_chars] if len(text) > max_chars else text
         prompt = f"extract {document_type}: {truncated}"
 
         response_text = self._request(prompt)

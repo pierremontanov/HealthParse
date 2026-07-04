@@ -17,12 +17,14 @@ from src.pipeline.extractors.field_aliases import (
     resolve_prescription_date,
 )
 from src.pipeline.extractors.prescription_extractor import PrescriptionExtractor
+from src.pipeline.extractors.receipt_extractor import ReceiptExtractor
 from src.pipeline.extractors.result_extractor import LabResultExtractor
 
 __all__ = [
     "PrescriptionExtractor",
     "LabResultExtractor",
     "ClinicalHistoryExtractor",
+    "ReceiptExtractor",
     # Field alias resolvers
     "resolve_assessment",
     "resolve_chief_complaint",
