@@ -1,0 +1,24 @@
+{
+ "patient_id": 62058,
+ "patient_name": "Aura Vera Cases Martínez",
+ "patient_dob": "2015-03-25",
+ "clinic": "Bayo, Gil and Sainz",
+ "annotations": [
+  {
+   "date": "2025-04-14",
+   "note": "Excepturi doloremque suscipit praesentium corrupti assumenda. Itaque temporibus voluptate nisi necessitatibus."
+  },
+  {
+   "date": "2025-03-17",
+   "note": "Ea earum a iusto iure blanditiis adipisci fugiat."
+  },
+  {
+   "date": "2025-02-28",
+   "note": "Iure vel provident aliquid."
+  },
+  {
+   "date": "2025-01-21",
+   "note": "Aspernatur cupiditate tenetur a labore sapiente atque dolorum. Cum totam fuga molestiae quaerat."
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+Patient Name: Daniel Boyd
+Patient ID: 64627
+Date of Birth: 1968-03-04
+Exam Date: 2025-03-20
+Clinic: Hobbs, Krause and Smith
+
+Test Results:
+- Big Test: 58.03 (Ref: 29-48)
+- Main Test: 12.23 (Ref: 25-60)
+- Of Test: 35.21 (Ref: 14-60)
+- Cold Test: 50.04 (Ref: 27-40)
+- Position Test: 37.68 (Ref: 21-51)
+
+Summary: Night tell always economic her cut always occur.

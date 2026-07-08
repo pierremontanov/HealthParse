@@ -128,6 +128,20 @@ class DocIQSettings(BaseSettings):
 
     # ── Pipeline – OCR / Extraction ──────────────────────────────
     ocr_dpi: int = Field(300, ge=72, le=1200, description="DPI for PDF-to-image conversion.")
+    ocr_model: Literal[
+        "pp-ocrv4", "pp-ocrv6_tiny", "pp-ocrv6_small", "pp-ocrv6_medium"
+    ] = Field(
+        "pp-ocrv4",
+        description="OCR engine variant. 'pp-ocrv4' uses the legacy PP-OCRv4 "
+        "English model (requires paddleocr>=3.4). The 'pp-ocrv6_*' tiers use "
+        "the multilingual PP-OCRv6 models (50 languages incl. Spanish; "
+        "requires paddleocr>=3.6). Set via DOCIQ_OCR_MODEL.",
+    )
+    ocr_det_model: Optional[str] = Field(
+        None,
+        description="Optional explicit detection model name override "
+        "(e.g. 'PP-OCRv6_small_det'). When None, derived from ocr_model.",
+    )
     min_char_threshold: int = Field(
         10, ge=0, description="Minimum characters for a PDF to be considered text-based."
     )

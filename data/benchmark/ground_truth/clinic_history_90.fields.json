@@ -1,0 +1,24 @@
+{
+ "patient_id": 36892,
+ "patient_name": "Salomón Hidalgo Mendizábal",
+ "patient_dob": "1914-06-24",
+ "clinic": "Vila, Granados and Costa",
+ "annotations": [
+  {
+   "date": "2025-03-20",
+   "note": "Libero repellendus soluta exercitationem."
+  },
+  {
+   "date": "2025-04-03",
+   "note": "Voluptatum accusamus vero."
+  },
+  {
+   "date": "2025-03-22",
+   "note": "Libero veritatis corrupti illo nisi."
+  },
+  {
+   "date": "2025-02-22",
+   "note": "Ipsam repellendus praesentium quos. Voluptates earum architecto porro unde ipsa."
+  }
+ ]
+}

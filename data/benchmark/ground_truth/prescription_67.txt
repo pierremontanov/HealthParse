@@ -1,0 +1,9 @@
+Patient Name: Gema Girona Cid
+Patient ID: 13937
+Date of Birth: 1952-02-11
+Date of Prescription: 2025-01-29
+Doctor: Alba Simó-Lledó
+Clinic: Arcos-Terrón
+
+Prescription:
+Ut possimus nemo quos consequuntur vero hic delectus.

@@ -1,0 +1,13 @@
+Patient Name: Ashley Green
+Patient ID: 58828
+Date of Birth: 1937-07-26
+Exam Date: 2025-01-24
+Clinic: Wagner, Adams and Odonnell
+
+Test Results:
+- Base Test: 25.54 (Ref: 24-40)
+- Visit Test: 34.47 (Ref: 21-36)
+- Cold Test: 22.06 (Ref: 22-43)
+- Want Test: 25.01 (Ref: 10-39)
+
+Summary: Note where street television large past show together cause investment.

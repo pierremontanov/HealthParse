@@ -1,0 +1,30 @@
+{
+ "patient_id": 82354,
+ "patient_name": "Maura Catalá",
+ "patient_dob": "1929-09-14",
+ "exam_date": "2025-03-05",
+ "clinic": "Roda-Ugarte",
+ "tests": [
+  {
+   "test_name": "Vel Test",
+   "reference_range": "26-56",
+   "patient_result": "56.92"
+  },
+  {
+   "test_name": "Laborum Test",
+   "reference_range": "12-45",
+   "patient_result": "23.76"
+  },
+  {
+   "test_name": "Et Test",
+   "reference_range": "28-53",
+   "patient_result": "48.42"
+  },
+  {
+   "test_name": "Mollitia Test",
+   "reference_range": "21-33",
+   "patient_result": "20.51"
+  }
+ ],
+ "summary": "Ut illum culpa excepturi similique quia cum id alias delectus veniam dolores quas perferendis veniam."
+}

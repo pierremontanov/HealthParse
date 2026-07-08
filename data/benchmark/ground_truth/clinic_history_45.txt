@@ -1,0 +1,8 @@
+Patient Name: Lawrence Jones
+Patient ID: 58880
+Date of Birth: 1927-10-27
+Clinic: Carter and Sons
+
+Annotations:
+- 2025-03-25: Against law bank song.
+- 2025-04-04: Rate hundred law wrong former while perhaps.

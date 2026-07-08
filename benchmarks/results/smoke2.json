@@ -1,0 +1,104 @@
+{
+ "run_name": "smoke2",
+ "timestamp": "2026-07-08T09:56:59",
+ "ocr_model": "pp-ocrv4",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "python": "3.12.10",
+ "tiers": [
+  "clean"
+ ],
+ "summary": {
+  "overall": {
+   "model_load_s": 10.1,
+   "peak_rss_mb": 727.8
+  },
+  "per_tier": {
+   "clean": {
+    "files": 4,
+    "cer_median": 0.0455,
+    "wer_median": 0.3755,
+    "accent_acc_median": null,
+    "field_recall_median": 0.8571,
+    "cls_accuracy": 1.0,
+    "validated_rate": 1.0,
+    "latency_p50_s": 12.6875,
+    "latency_p95_s": 20.344,
+    "errors": 0
+   }
+  }
+ },
+ "results": [
+  {
+   "id": "prescription_1_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "prescription",
+   "language": "en",
+   "latency_s": 11.922,
+   "status": "ok",
+   "predicted_type": "prescription",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.0286,
+   "wer": 0.3448,
+   "accent_acc": null,
+   "field_recall": 0.8571,
+   "fields_found": 6,
+   "fields_total": 7
+  },
+  {
+   "id": "lab_result_2_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "result",
+   "language": "en",
+   "latency_s": 11.218,
+   "status": "ok",
+   "predicted_type": "result",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.2351,
+   "wer": 0.6491,
+   "accent_acc": null,
+   "field_recall": 0.9524,
+   "fields_found": 20,
+   "fields_total": 21
+  },
+  {
+   "id": "clinic_history_3_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "clinical_history",
+   "language": "en",
+   "latency_s": 20.344,
+   "status": "ok",
+   "predicted_type": "clinical_history",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.0472,
+   "wer": 0.2576,
+   "accent_acc": null,
+   "field_recall": 0.6667,
+   "fields_found": 8,
+   "fields_total": 12
+  },
+  {
+   "id": "prescription_4_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "prescription",
+   "language": "en",
+   "latency_s": 13.453,
+   "status": "ok",
+   "predicted_type": "prescription",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.0437,
+   "wer": 0.4062,
+   "accent_acc": null,
+   "field_recall": 0.8571,
+   "fields_found": 6,
+   "fields_total": 7
+  }
+ ]
+}

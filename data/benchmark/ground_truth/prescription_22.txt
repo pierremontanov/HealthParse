@@ -1,0 +1,9 @@
+Patient Name: Janet Hill
+Patient ID: 24643
+Date of Birth: 1975-10-04
+Date of Prescription: 2025-02-09
+Doctor: Jeremiah Rogers
+Clinic: Davila, Ferrell and Martin
+
+Prescription:
+Glass mouth hand suffer media he.

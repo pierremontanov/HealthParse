@@ -1,0 +1,12 @@
+Patient Name: Taylor Dixon
+Patient ID: 43583
+Date of Birth: 1989-04-07
+Exam Date: 2025-02-19
+Clinic: Reed, Taylor and Gonzales
+
+Test Results:
+- Follow Test: 17.95 (Ref: 28-44)
+- Hour Test: 37.58 (Ref: 25-33)
+- They Test: 55.91 (Ref: 24-33)
+
+Summary: News politics rate yes ten foot statement agency.

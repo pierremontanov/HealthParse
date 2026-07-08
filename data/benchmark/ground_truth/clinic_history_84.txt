@@ -1,0 +1,10 @@
+Patient Name: Aura Vera Cases Martínez
+Patient ID: 62058
+Date of Birth: 2015-03-25
+Clinic: Bayo, Gil and Sainz
+
+Annotations:
+- 2025-04-14: Excepturi doloremque suscipit praesentium corrupti assumenda. Itaque temporibus voluptate nisi necessitatibus.
+- 2025-03-17: Ea earum a iusto iure blanditiis adipisci fugiat.
+- 2025-02-28: Iure vel provident aliquid.
+- 2025-01-21: Aspernatur cupiditate tenetur a labore sapiente atque dolorum. Cum totam fuga molestiae quaerat.

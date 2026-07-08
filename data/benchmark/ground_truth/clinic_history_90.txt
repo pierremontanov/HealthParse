@@ -1,0 +1,10 @@
+Patient Name: Salomón Hidalgo Mendizábal
+Patient ID: 36892
+Date of Birth: 1914-06-24
+Clinic: Vila, Granados and Costa
+
+Annotations:
+- 2025-03-20: Libero repellendus soluta exercitationem.
+- 2025-04-03: Voluptatum accusamus vero.
+- 2025-03-22: Libero veritatis corrupti illo nisi.
+- 2025-02-22: Ipsam repellendus praesentium quos. Voluptates earum architecto porro unde ipsa.

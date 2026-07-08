@@ -1,0 +1,20 @@
+{
+ "patient_id": 24133,
+ "patient_name": "Isaías Alcaraz Luís",
+ "patient_dob": "1924-04-25",
+ "exam_date": "2025-02-26",
+ "clinic": "Aguirre, Andreu and Zabaleta",
+ "tests": [
+  {
+   "test_name": "Occaecati Test",
+   "reference_range": "18-33",
+   "patient_result": "47.74"
+  },
+  {
+   "test_name": "Voluptatem Test",
+   "reference_range": "23-48",
+   "patient_result": "47.66"
+  }
+ ],
+ "summary": "Tempore libero quo quae sapiente possimus quaerat et voluptate."
+}

@@ -1,0 +1,9 @@
+Patient Name: Belen Huertas Barrena
+Patient ID: 82413
+Date of Birth: 1920-05-06
+Date of Prescription: 2025-04-06
+Doctor: Tristán Ortega Anaya
+Clinic: Mariño Group
+
+Prescription:
+Aliquid fuga pariatur expedita tenetur.

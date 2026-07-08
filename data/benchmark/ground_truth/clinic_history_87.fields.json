@@ -1,0 +1,20 @@
+{
+ "patient_id": 42333,
+ "patient_name": "Amarilis Clarisa Valverde Barrena",
+ "patient_dob": "2008-04-06",
+ "clinic": "Aguirre-Blanca",
+ "annotations": [
+  {
+   "date": "2025-04-19",
+   "note": "Voluptate ullam facilis laborum enim eum minus. Inventore dolorem aperiam tenetur reprehenderit ducimus earum."
+  },
+  {
+   "date": "2025-04-12",
+   "note": "Autem error quasi vitae itaque debitis."
+  },
+  {
+   "date": "2025-04-01",
+   "note": "Quam repudiandae illo exercitationem vel laudantium deserunt."
+  }
+ ]
+}

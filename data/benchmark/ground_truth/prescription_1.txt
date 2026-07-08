@@ -1,0 +1,9 @@
+Patient Name: Robert Hodge
+Patient ID: 13091
+Date of Birth: 2012-05-02
+Date of Prescription: 2025-04-08
+Doctor: Richard Drake
+Clinic: Bullock-Wilson
+
+Prescription:
+Mother race eat citizen body meeting clear dog.

@@ -1,8 +1,20 @@
-"""PaddleOCR-based text extraction module (PaddleOCR 3.4.0+).
+"""PaddleOCR-based text extraction module (PaddleOCR 3.4+ / 3.6+).
 
 Drop-in replacement for the Tesseract-based :mod:`src.pipeline.ocr` module.
-Uses a singleton :class:`PaddleOCR` instance (CPU, PP-OCRv4, Spanish
-language) so that model weights are loaded only once.
+Uses a singleton :class:`PaddleOCR` instance (CPU) so that model weights
+are loaded only once.
+
+The engine variant is selected via ``settings.ocr_model`` (env var
+``DOCIQ_OCR_MODEL``):
+
+- ``pp-ocrv4``       — legacy PP-OCRv4 mobile models, English dictionary
+                       (strips Spanish accents; kept as escape hatch).
+- ``pp-ocrv6_tiny``  — PP-OCRv6 tiny tier (~smallest/fastest).
+- ``pp-ocrv6_small`` — PP-OCRv6 small tier.
+- ``pp-ocrv6_medium``— PP-OCRv6 medium tier (highest accuracy).
+
+PP-OCRv6 uses a single multilingual model covering 50 languages including
+Spanish with native accent support (requires ``paddleocr>=3.6``).
 
 PaddleOCR 3.4.0 uses PaddleX as its inference backend.  The critical
 fix for CPU inference is ``enable_mkldnn=False``, which forces
@@ -45,35 +57,60 @@ logger = logging.getLogger(__name__)
 
 # ── Singleton management ──────────────────────────────────────────
 
-_ocr_instance = None
+_ocr_instances: dict = {}
 _ocr_lock = threading.Lock()
 
 
-def _get_ocr_instance():
-    """Return the singleton PaddleOCR instance, creating it on first call.
+def _build_ocr_kwargs() -> dict:
+    """Translate ``settings.ocr_model`` into PaddleOCR constructor kwargs."""
+    from src.config import settings
 
-    Thread-safe via a lock.  The instance is reused for all subsequent
-    calls to avoid reloading model weights each time.
+    model = settings.ocr_model.lower()
+    if model == "pp-ocrv4":
+        return {
+            "ocr_version": "PP-OCRv4",   # legacy PP-OCRv4 models
+            "lang": "en",                # English/Latin dictionary
+            "enable_mkldnn": False,      # CRITICAL: bypass broken oneDNN/PIR path
+        }
+    if model.startswith("pp-ocrv6_"):
+        tier = model.split("_", 1)[1]    # tiny / small / medium
+        det_model = settings.ocr_det_model or f"PP-OCRv6_{tier}_det"
+        return {
+            "text_detection_model_name": det_model,
+            "text_recognition_model_name": f"PP-OCRv6_{tier}_rec",
+            # Keep oneDNN disabled for parity with the v4 configuration.
+            # Revisit after benchmarking: v6 may not need this workaround.
+            "enable_mkldnn": False,
+        }
+    raise ValueError(f"Unsupported ocr_model: {settings.ocr_model!r}")
+
+
+def _get_ocr_instance():
+    """Return the singleton PaddleOCR instance for the configured model.
+
+    Thread-safe via a lock.  Instances are cached per model name so the
+    weights are loaded only once per process.
     """
-    global _ocr_instance
-    if _ocr_instance is not None:
-        return _ocr_instance
+    from src.config import settings
+
+    key = settings.ocr_model
+    inst = _ocr_instances.get(key)
+    if inst is not None:
+        return inst
 
     with _ocr_lock:
-        # Double-check after acquiring the lock.
-        if _ocr_instance is not None:
-            return _ocr_instance
+        inst = _ocr_instances.get(key)
+        if inst is not None:
+            return inst
 
         from paddleocr import PaddleOCR
 
-        logger.info("Initialising PaddleOCR 3.4 (CPU, PP-OCRv4, lang=en) …")
-        _ocr_instance = PaddleOCR(
-            ocr_version="PP-OCRv4",     # PP-OCRv4 models
-            lang="en",                   # English/Latin — handles Spanish text
-            enable_mkldnn=False,         # CRITICAL: bypass broken oneDNN/PIR path
-        )
-        logger.info("PaddleOCR initialised successfully.")
-        return _ocr_instance
+        kwargs = _build_ocr_kwargs()
+        logger.info("Initialising PaddleOCR (CPU, model=%s) …", key)
+        inst = PaddleOCR(**kwargs)
+        _ocr_instances[key] = inst
+        logger.info("PaddleOCR initialised successfully (%s).", key)
+        return inst
 
 
 # ── Internal helpers ──────────────────────────────────────────────
@@ -195,11 +232,12 @@ def ocr_pil_image(
 # ── Model download / warm-up ─────────────────────────────────────
 
 def download_models(lang: str = "en") -> None:
-    """Pre-download PaddleOCR model weights.
+    """Pre-download PaddleOCR model weights for the configured model.
 
     Instantiating :class:`PaddleOCR` automatically downloads the
-    detection, recognition, and angle-classification models if they
-    are not already cached locally.
+    detection, recognition, and preprocessing models if they are not
+    already cached locally.  The model variant follows
+    ``settings.ocr_model`` (env var ``DOCIQ_OCR_MODEL``).
 
     Call this during Docker build, CI setup, or first-time install
     so the first real OCR request doesn't block on a download.
@@ -207,17 +245,19 @@ def download_models(lang: str = "en") -> None:
     Parameters
     ----------
     lang : str
-        PaddleOCR language code (default ``"es"``).
+        Language override for the legacy pp-ocrv4 path (ignored by
+        PP-OCRv6, which is multilingual).
     """
     from paddleocr import PaddleOCR
+    from src.config import settings
 
-    print(f"Downloading PaddleOCR models (lang={lang}) …")
+    kwargs = _build_ocr_kwargs()
+    if settings.ocr_model == "pp-ocrv4" and lang:
+        kwargs["lang"] = lang
+
+    print(f"Downloading PaddleOCR models (model={settings.ocr_model}) …")
     t0 = time.time()
-    PaddleOCR(
-        ocr_version="PP-OCRv4",
-        lang=lang,
-        enable_mkldnn=False,
-    )
+    PaddleOCR(**kwargs)
     elapsed = time.time() - t0
     print(f"PaddleOCR models ready ({elapsed:.1f}s).")
 

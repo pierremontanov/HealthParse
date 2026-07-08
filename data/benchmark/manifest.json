@@ -1,0 +1,5708 @@
+[
+ {
+  "id": "prescription_1_clean",
+  "file": "clean/prescription_1.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "lab_result_2_clean",
+  "file": "clean/lab_result_2.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "clinic_history_3_clean",
+  "file": "clean/clinic_history_3.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "prescription_4_clean",
+  "file": "clean/prescription_4.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "lab_result_5_clean",
+  "file": "clean/lab_result_5.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "clinic_history_6_clean",
+  "file": "clean/clinic_history_6.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "prescription_7_clean",
+  "file": "clean/prescription_7.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "lab_result_8_clean",
+  "file": "clean/lab_result_8.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "clinic_history_9_clean",
+  "file": "clean/clinic_history_9.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "prescription_10_clean",
+  "file": "clean/prescription_10.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "lab_result_11_clean",
+  "file": "clean/lab_result_11.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "clinic_history_12_clean",
+  "file": "clean/clinic_history_12.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "prescription_13_clean",
+  "file": "clean/prescription_13.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "lab_result_14_clean",
+  "file": "clean/lab_result_14.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "clinic_history_15_clean",
+  "file": "clean/clinic_history_15.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "prescription_16_clean",
+  "file": "clean/prescription_16.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "lab_result_17_clean",
+  "file": "clean/lab_result_17.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "clinic_history_18_clean",
+  "file": "clean/clinic_history_18.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "prescription_19_clean",
+  "file": "clean/prescription_19.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "lab_result_20_clean",
+  "file": "clean/lab_result_20.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "clinic_history_21_clean",
+  "file": "clean/clinic_history_21.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "prescription_22_clean",
+  "file": "clean/prescription_22.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "lab_result_23_clean",
+  "file": "clean/lab_result_23.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "clinic_history_24_clean",
+  "file": "clean/clinic_history_24.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "prescription_25_clean",
+  "file": "clean/prescription_25.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "lab_result_26_clean",
+  "file": "clean/lab_result_26.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "clinic_history_27_clean",
+  "file": "clean/clinic_history_27.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "prescription_28_clean",
+  "file": "clean/prescription_28.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "lab_result_29_clean",
+  "file": "clean/lab_result_29.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "clinic_history_30_clean",
+  "file": "clean/clinic_history_30.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "prescription_31_clean",
+  "file": "clean/prescription_31.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "lab_result_32_clean",
+  "file": "clean/lab_result_32.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "clinic_history_33_clean",
+  "file": "clean/clinic_history_33.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "prescription_34_clean",
+  "file": "clean/prescription_34.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "lab_result_35_clean",
+  "file": "clean/lab_result_35.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "clinic_history_36_clean",
+  "file": "clean/clinic_history_36.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "prescription_37_clean",
+  "file": "clean/prescription_37.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "lab_result_38_clean",
+  "file": "clean/lab_result_38.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "clinic_history_39_clean",
+  "file": "clean/clinic_history_39.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "prescription_40_clean",
+  "file": "clean/prescription_40.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "lab_result_41_clean",
+  "file": "clean/lab_result_41.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "clinic_history_42_clean",
+  "file": "clean/clinic_history_42.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "prescription_43_clean",
+  "file": "clean/prescription_43.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "lab_result_44_clean",
+  "file": "clean/lab_result_44.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "clinic_history_45_clean",
+  "file": "clean/clinic_history_45.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "prescription_46_clean",
+  "file": "clean/prescription_46.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "lab_result_47_clean",
+  "file": "clean/lab_result_47.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "clinic_history_48_clean",
+  "file": "clean/clinic_history_48.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "prescription_49_clean",
+  "file": "clean/prescription_49.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "lab_result_50_clean",
+  "file": "clean/lab_result_50.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "clinic_history_51_clean",
+  "file": "clean/clinic_history_51.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "prescription_52_clean",
+  "file": "clean/prescription_52.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "lab_result_53_clean",
+  "file": "clean/lab_result_53.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "clinic_history_54_clean",
+  "file": "clean/clinic_history_54.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "prescription_55_clean",
+  "file": "clean/prescription_55.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "lab_result_56_clean",
+  "file": "clean/lab_result_56.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "clinic_history_57_clean",
+  "file": "clean/clinic_history_57.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "prescription_58_clean",
+  "file": "clean/prescription_58.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "lab_result_59_clean",
+  "file": "clean/lab_result_59.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "clinic_history_60_clean",
+  "file": "clean/clinic_history_60.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "prescription_61_clean",
+  "file": "clean/prescription_61.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "lab_result_62_clean",
+  "file": "clean/lab_result_62.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "clinic_history_63_clean",
+  "file": "clean/clinic_history_63.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "prescription_64_clean",
+  "file": "clean/prescription_64.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "lab_result_65_clean",
+  "file": "clean/lab_result_65.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "clinic_history_66_clean",
+  "file": "clean/clinic_history_66.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "prescription_67_clean",
+  "file": "clean/prescription_67.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "lab_result_68_clean",
+  "file": "clean/lab_result_68.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "clinic_history_69_clean",
+  "file": "clean/clinic_history_69.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "prescription_70_clean",
+  "file": "clean/prescription_70.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "lab_result_71_clean",
+  "file": "clean/lab_result_71.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "clinic_history_72_clean",
+  "file": "clean/clinic_history_72.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "prescription_73_clean",
+  "file": "clean/prescription_73.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "lab_result_74_clean",
+  "file": "clean/lab_result_74.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "clinic_history_75_clean",
+  "file": "clean/clinic_history_75.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "prescription_76_clean",
+  "file": "clean/prescription_76.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "lab_result_77_clean",
+  "file": "clean/lab_result_77.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "clinic_history_78_clean",
+  "file": "clean/clinic_history_78.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "prescription_79_clean",
+  "file": "clean/prescription_79.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "lab_result_80_clean",
+  "file": "clean/lab_result_80.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "clinic_history_81_clean",
+  "file": "clean/clinic_history_81.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "prescription_82_clean",
+  "file": "clean/prescription_82.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "lab_result_83_clean",
+  "file": "clean/lab_result_83.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "clinic_history_84_clean",
+  "file": "clean/clinic_history_84.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "prescription_85_clean",
+  "file": "clean/prescription_85.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "lab_result_86_clean",
+  "file": "clean/lab_result_86.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "clinic_history_87_clean",
+  "file": "clean/clinic_history_87.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "prescription_88_clean",
+  "file": "clean/prescription_88.png",
+  "tier": "clean",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "lab_result_89_clean",
+  "file": "clean/lab_result_89.png",
+  "tier": "clean",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "clinic_history_90_clean",
+  "file": "clean/clinic_history_90.png",
+  "tier": "clean",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ },
+ {
+  "id": "pruebas-1",
+  "file": "real/PRUEBAS-1.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-1.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-2",
+  "file": "real/PRUEBAS-2.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-2.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-3",
+  "file": "real/PRUEBAS-3.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-3.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-4",
+  "file": "real/PRUEBAS-4.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-4.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-5",
+  "file": "real/PRUEBAS-5.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-5.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-6",
+  "file": "real/PRUEBAS-6.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-6.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-7",
+  "file": "real/PRUEBAS-7.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-7.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-8",
+  "file": "real/PRUEBAS-8.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-8.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-9",
+  "file": "real/PRUEBAS-9.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-9.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-10",
+  "file": "real/PRUEBAS-10.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-10.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-11",
+  "file": "real/PRUEBAS-11.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-11.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-12",
+  "file": "real/PRUEBAS-12.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-12.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-13",
+  "file": "real/PRUEBAS-13.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-13.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-14",
+  "file": "real/PRUEBAS-14.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-14.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-15",
+  "file": "real/PRUEBAS-15.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-15.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-16",
+  "file": "real/PRUEBAS-16.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-16.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-17",
+  "file": "real/PRUEBAS-17.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-17.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-18",
+  "file": "real/PRUEBAS-18.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-18.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-19",
+  "file": "real/PRUEBAS-19.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-19.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-20",
+  "file": "real/PRUEBAS-20.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-20.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-21",
+  "file": "real/PRUEBAS-21.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-21.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-22",
+  "file": "real/PRUEBAS-22.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-22.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-23",
+  "file": "real/PRUEBAS-23.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-23.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-24",
+  "file": "real/PRUEBAS-24.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-24.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-25",
+  "file": "real/PRUEBAS-25.pdf",
+  "tier": "real",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-25.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-26",
+  "file": "real/PRUEBAS-26.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-26.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-27",
+  "file": "real/PRUEBAS-27.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-27.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-28",
+  "file": "real/PRUEBAS-28.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-28.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-29",
+  "file": "real/PRUEBAS-29.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-29.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-30",
+  "file": "real/PRUEBAS-30.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-30.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-31",
+  "file": "real/PRUEBAS-31.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-31.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-32",
+  "file": "real/PRUEBAS-32.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-32.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-33",
+  "file": "real/PRUEBAS-33.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-33.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-34",
+  "file": "real/PRUEBAS-34.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-34.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-35",
+  "file": "real/PRUEBAS-35.pdf",
+  "tier": "real",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-35.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-36",
+  "file": "real/PRUEBAS-36.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-36.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-37",
+  "file": "real/PRUEBAS-37.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-37.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-38",
+  "file": "real/PRUEBAS-38.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-38.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-39",
+  "file": "real/PRUEBAS-39.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-39.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-40",
+  "file": "real/PRUEBAS-40.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-40.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-41",
+  "file": "real/PRUEBAS-41.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-41.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-42",
+  "file": "real/PRUEBAS-42.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-42.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-43",
+  "file": "real/PRUEBAS-43.pdf",
+  "tier": "real",
+  "doc_type": "receipt",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-43.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "pruebas-44",
+  "file": "real/PRUEBAS-44.pdf",
+  "tier": "real",
+  "doc_type": "unknown",
+  "language": "es",
+  "gt_text": "ground_truth/pruebas-44.txt",
+  "gt_fields": null
+ },
+ {
+  "id": "prescription_1_rot",
+  "file": "degraded/prescription_1__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "prescription_1_noise",
+  "file": "degraded/prescription_1__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "prescription_1_jpeg40",
+  "file": "degraded/prescription_1__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "prescription_1_lowres",
+  "file": "degraded/prescription_1__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "prescription_1_blur",
+  "file": "degraded/prescription_1__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_1.txt",
+  "gt_fields": "ground_truth/prescription_1.fields.json"
+ },
+ {
+  "id": "lab_result_2_rot",
+  "file": "degraded/lab_result_2__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "lab_result_2_noise",
+  "file": "degraded/lab_result_2__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "lab_result_2_jpeg40",
+  "file": "degraded/lab_result_2__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "lab_result_2_lowres",
+  "file": "degraded/lab_result_2__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "lab_result_2_blur",
+  "file": "degraded/lab_result_2__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_2.txt",
+  "gt_fields": "ground_truth/lab_result_2.fields.json"
+ },
+ {
+  "id": "clinic_history_3_rot",
+  "file": "degraded/clinic_history_3__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "clinic_history_3_noise",
+  "file": "degraded/clinic_history_3__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "clinic_history_3_jpeg40",
+  "file": "degraded/clinic_history_3__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "clinic_history_3_lowres",
+  "file": "degraded/clinic_history_3__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "clinic_history_3_blur",
+  "file": "degraded/clinic_history_3__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_3.txt",
+  "gt_fields": "ground_truth/clinic_history_3.fields.json"
+ },
+ {
+  "id": "prescription_4_rot",
+  "file": "degraded/prescription_4__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "prescription_4_noise",
+  "file": "degraded/prescription_4__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "prescription_4_jpeg40",
+  "file": "degraded/prescription_4__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "prescription_4_lowres",
+  "file": "degraded/prescription_4__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "prescription_4_blur",
+  "file": "degraded/prescription_4__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_4.txt",
+  "gt_fields": "ground_truth/prescription_4.fields.json"
+ },
+ {
+  "id": "lab_result_5_rot",
+  "file": "degraded/lab_result_5__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "lab_result_5_noise",
+  "file": "degraded/lab_result_5__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "lab_result_5_jpeg40",
+  "file": "degraded/lab_result_5__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "lab_result_5_lowres",
+  "file": "degraded/lab_result_5__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "lab_result_5_blur",
+  "file": "degraded/lab_result_5__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_5.txt",
+  "gt_fields": "ground_truth/lab_result_5.fields.json"
+ },
+ {
+  "id": "clinic_history_6_rot",
+  "file": "degraded/clinic_history_6__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "clinic_history_6_noise",
+  "file": "degraded/clinic_history_6__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "clinic_history_6_jpeg40",
+  "file": "degraded/clinic_history_6__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "clinic_history_6_lowres",
+  "file": "degraded/clinic_history_6__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "clinic_history_6_blur",
+  "file": "degraded/clinic_history_6__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_6.txt",
+  "gt_fields": "ground_truth/clinic_history_6.fields.json"
+ },
+ {
+  "id": "prescription_7_rot",
+  "file": "degraded/prescription_7__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "prescription_7_noise",
+  "file": "degraded/prescription_7__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "prescription_7_jpeg40",
+  "file": "degraded/prescription_7__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "prescription_7_lowres",
+  "file": "degraded/prescription_7__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "prescription_7_blur",
+  "file": "degraded/prescription_7__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_7.txt",
+  "gt_fields": "ground_truth/prescription_7.fields.json"
+ },
+ {
+  "id": "lab_result_8_rot",
+  "file": "degraded/lab_result_8__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "lab_result_8_noise",
+  "file": "degraded/lab_result_8__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "lab_result_8_jpeg40",
+  "file": "degraded/lab_result_8__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "lab_result_8_lowres",
+  "file": "degraded/lab_result_8__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "lab_result_8_blur",
+  "file": "degraded/lab_result_8__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_8.txt",
+  "gt_fields": "ground_truth/lab_result_8.fields.json"
+ },
+ {
+  "id": "clinic_history_9_rot",
+  "file": "degraded/clinic_history_9__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "clinic_history_9_noise",
+  "file": "degraded/clinic_history_9__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "clinic_history_9_jpeg40",
+  "file": "degraded/clinic_history_9__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "clinic_history_9_lowres",
+  "file": "degraded/clinic_history_9__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "clinic_history_9_blur",
+  "file": "degraded/clinic_history_9__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_9.txt",
+  "gt_fields": "ground_truth/clinic_history_9.fields.json"
+ },
+ {
+  "id": "prescription_10_rot",
+  "file": "degraded/prescription_10__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "prescription_10_noise",
+  "file": "degraded/prescription_10__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "prescription_10_jpeg40",
+  "file": "degraded/prescription_10__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "prescription_10_lowres",
+  "file": "degraded/prescription_10__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "prescription_10_blur",
+  "file": "degraded/prescription_10__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_10.txt",
+  "gt_fields": "ground_truth/prescription_10.fields.json"
+ },
+ {
+  "id": "lab_result_11_rot",
+  "file": "degraded/lab_result_11__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "lab_result_11_noise",
+  "file": "degraded/lab_result_11__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "lab_result_11_jpeg40",
+  "file": "degraded/lab_result_11__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "lab_result_11_lowres",
+  "file": "degraded/lab_result_11__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "lab_result_11_blur",
+  "file": "degraded/lab_result_11__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_11.txt",
+  "gt_fields": "ground_truth/lab_result_11.fields.json"
+ },
+ {
+  "id": "clinic_history_12_rot",
+  "file": "degraded/clinic_history_12__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "clinic_history_12_noise",
+  "file": "degraded/clinic_history_12__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "clinic_history_12_jpeg40",
+  "file": "degraded/clinic_history_12__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "clinic_history_12_lowres",
+  "file": "degraded/clinic_history_12__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "clinic_history_12_blur",
+  "file": "degraded/clinic_history_12__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_12.txt",
+  "gt_fields": "ground_truth/clinic_history_12.fields.json"
+ },
+ {
+  "id": "prescription_13_rot",
+  "file": "degraded/prescription_13__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "prescription_13_noise",
+  "file": "degraded/prescription_13__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "prescription_13_jpeg40",
+  "file": "degraded/prescription_13__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "prescription_13_lowres",
+  "file": "degraded/prescription_13__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "prescription_13_blur",
+  "file": "degraded/prescription_13__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_13.txt",
+  "gt_fields": "ground_truth/prescription_13.fields.json"
+ },
+ {
+  "id": "lab_result_14_rot",
+  "file": "degraded/lab_result_14__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "lab_result_14_noise",
+  "file": "degraded/lab_result_14__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "lab_result_14_jpeg40",
+  "file": "degraded/lab_result_14__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "lab_result_14_lowres",
+  "file": "degraded/lab_result_14__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "lab_result_14_blur",
+  "file": "degraded/lab_result_14__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_14.txt",
+  "gt_fields": "ground_truth/lab_result_14.fields.json"
+ },
+ {
+  "id": "clinic_history_15_rot",
+  "file": "degraded/clinic_history_15__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "clinic_history_15_noise",
+  "file": "degraded/clinic_history_15__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "clinic_history_15_jpeg40",
+  "file": "degraded/clinic_history_15__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "clinic_history_15_lowres",
+  "file": "degraded/clinic_history_15__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "clinic_history_15_blur",
+  "file": "degraded/clinic_history_15__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_15.txt",
+  "gt_fields": "ground_truth/clinic_history_15.fields.json"
+ },
+ {
+  "id": "prescription_16_rot",
+  "file": "degraded/prescription_16__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "prescription_16_noise",
+  "file": "degraded/prescription_16__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "prescription_16_jpeg40",
+  "file": "degraded/prescription_16__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "prescription_16_lowres",
+  "file": "degraded/prescription_16__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "prescription_16_blur",
+  "file": "degraded/prescription_16__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_16.txt",
+  "gt_fields": "ground_truth/prescription_16.fields.json"
+ },
+ {
+  "id": "lab_result_17_rot",
+  "file": "degraded/lab_result_17__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "lab_result_17_noise",
+  "file": "degraded/lab_result_17__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "lab_result_17_jpeg40",
+  "file": "degraded/lab_result_17__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "lab_result_17_lowres",
+  "file": "degraded/lab_result_17__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "lab_result_17_blur",
+  "file": "degraded/lab_result_17__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_17.txt",
+  "gt_fields": "ground_truth/lab_result_17.fields.json"
+ },
+ {
+  "id": "clinic_history_18_rot",
+  "file": "degraded/clinic_history_18__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "clinic_history_18_noise",
+  "file": "degraded/clinic_history_18__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "clinic_history_18_jpeg40",
+  "file": "degraded/clinic_history_18__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "clinic_history_18_lowres",
+  "file": "degraded/clinic_history_18__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "clinic_history_18_blur",
+  "file": "degraded/clinic_history_18__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_18.txt",
+  "gt_fields": "ground_truth/clinic_history_18.fields.json"
+ },
+ {
+  "id": "prescription_19_rot",
+  "file": "degraded/prescription_19__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "prescription_19_noise",
+  "file": "degraded/prescription_19__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "prescription_19_jpeg40",
+  "file": "degraded/prescription_19__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "prescription_19_lowres",
+  "file": "degraded/prescription_19__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "prescription_19_blur",
+  "file": "degraded/prescription_19__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_19.txt",
+  "gt_fields": "ground_truth/prescription_19.fields.json"
+ },
+ {
+  "id": "lab_result_20_rot",
+  "file": "degraded/lab_result_20__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "lab_result_20_noise",
+  "file": "degraded/lab_result_20__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "lab_result_20_jpeg40",
+  "file": "degraded/lab_result_20__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "lab_result_20_lowres",
+  "file": "degraded/lab_result_20__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "lab_result_20_blur",
+  "file": "degraded/lab_result_20__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_20.txt",
+  "gt_fields": "ground_truth/lab_result_20.fields.json"
+ },
+ {
+  "id": "clinic_history_21_rot",
+  "file": "degraded/clinic_history_21__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "clinic_history_21_noise",
+  "file": "degraded/clinic_history_21__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "clinic_history_21_jpeg40",
+  "file": "degraded/clinic_history_21__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "clinic_history_21_lowres",
+  "file": "degraded/clinic_history_21__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "clinic_history_21_blur",
+  "file": "degraded/clinic_history_21__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_21.txt",
+  "gt_fields": "ground_truth/clinic_history_21.fields.json"
+ },
+ {
+  "id": "prescription_22_rot",
+  "file": "degraded/prescription_22__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "prescription_22_noise",
+  "file": "degraded/prescription_22__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "prescription_22_jpeg40",
+  "file": "degraded/prescription_22__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "prescription_22_lowres",
+  "file": "degraded/prescription_22__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "prescription_22_blur",
+  "file": "degraded/prescription_22__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_22.txt",
+  "gt_fields": "ground_truth/prescription_22.fields.json"
+ },
+ {
+  "id": "lab_result_23_rot",
+  "file": "degraded/lab_result_23__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "lab_result_23_noise",
+  "file": "degraded/lab_result_23__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "lab_result_23_jpeg40",
+  "file": "degraded/lab_result_23__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "lab_result_23_lowres",
+  "file": "degraded/lab_result_23__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "lab_result_23_blur",
+  "file": "degraded/lab_result_23__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_23.txt",
+  "gt_fields": "ground_truth/lab_result_23.fields.json"
+ },
+ {
+  "id": "clinic_history_24_rot",
+  "file": "degraded/clinic_history_24__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "clinic_history_24_noise",
+  "file": "degraded/clinic_history_24__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "clinic_history_24_jpeg40",
+  "file": "degraded/clinic_history_24__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "clinic_history_24_lowres",
+  "file": "degraded/clinic_history_24__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "clinic_history_24_blur",
+  "file": "degraded/clinic_history_24__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_24.txt",
+  "gt_fields": "ground_truth/clinic_history_24.fields.json"
+ },
+ {
+  "id": "prescription_25_rot",
+  "file": "degraded/prescription_25__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "prescription_25_noise",
+  "file": "degraded/prescription_25__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "prescription_25_jpeg40",
+  "file": "degraded/prescription_25__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "prescription_25_lowres",
+  "file": "degraded/prescription_25__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "prescription_25_blur",
+  "file": "degraded/prescription_25__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_25.txt",
+  "gt_fields": "ground_truth/prescription_25.fields.json"
+ },
+ {
+  "id": "lab_result_26_rot",
+  "file": "degraded/lab_result_26__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "lab_result_26_noise",
+  "file": "degraded/lab_result_26__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "lab_result_26_jpeg40",
+  "file": "degraded/lab_result_26__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "lab_result_26_lowres",
+  "file": "degraded/lab_result_26__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "lab_result_26_blur",
+  "file": "degraded/lab_result_26__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_26.txt",
+  "gt_fields": "ground_truth/lab_result_26.fields.json"
+ },
+ {
+  "id": "clinic_history_27_rot",
+  "file": "degraded/clinic_history_27__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "clinic_history_27_noise",
+  "file": "degraded/clinic_history_27__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "clinic_history_27_jpeg40",
+  "file": "degraded/clinic_history_27__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "clinic_history_27_lowres",
+  "file": "degraded/clinic_history_27__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "clinic_history_27_blur",
+  "file": "degraded/clinic_history_27__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_27.txt",
+  "gt_fields": "ground_truth/clinic_history_27.fields.json"
+ },
+ {
+  "id": "prescription_28_rot",
+  "file": "degraded/prescription_28__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "prescription_28_noise",
+  "file": "degraded/prescription_28__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "prescription_28_jpeg40",
+  "file": "degraded/prescription_28__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "prescription_28_lowres",
+  "file": "degraded/prescription_28__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "prescription_28_blur",
+  "file": "degraded/prescription_28__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_28.txt",
+  "gt_fields": "ground_truth/prescription_28.fields.json"
+ },
+ {
+  "id": "lab_result_29_rot",
+  "file": "degraded/lab_result_29__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "lab_result_29_noise",
+  "file": "degraded/lab_result_29__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "lab_result_29_jpeg40",
+  "file": "degraded/lab_result_29__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "lab_result_29_lowres",
+  "file": "degraded/lab_result_29__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "lab_result_29_blur",
+  "file": "degraded/lab_result_29__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_29.txt",
+  "gt_fields": "ground_truth/lab_result_29.fields.json"
+ },
+ {
+  "id": "clinic_history_30_rot",
+  "file": "degraded/clinic_history_30__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "clinic_history_30_noise",
+  "file": "degraded/clinic_history_30__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "clinic_history_30_jpeg40",
+  "file": "degraded/clinic_history_30__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "clinic_history_30_lowres",
+  "file": "degraded/clinic_history_30__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "clinic_history_30_blur",
+  "file": "degraded/clinic_history_30__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_30.txt",
+  "gt_fields": "ground_truth/clinic_history_30.fields.json"
+ },
+ {
+  "id": "prescription_31_rot",
+  "file": "degraded/prescription_31__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "prescription_31_noise",
+  "file": "degraded/prescription_31__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "prescription_31_jpeg40",
+  "file": "degraded/prescription_31__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "prescription_31_lowres",
+  "file": "degraded/prescription_31__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "prescription_31_blur",
+  "file": "degraded/prescription_31__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_31.txt",
+  "gt_fields": "ground_truth/prescription_31.fields.json"
+ },
+ {
+  "id": "lab_result_32_rot",
+  "file": "degraded/lab_result_32__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "lab_result_32_noise",
+  "file": "degraded/lab_result_32__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "lab_result_32_jpeg40",
+  "file": "degraded/lab_result_32__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "lab_result_32_lowres",
+  "file": "degraded/lab_result_32__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "lab_result_32_blur",
+  "file": "degraded/lab_result_32__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_32.txt",
+  "gt_fields": "ground_truth/lab_result_32.fields.json"
+ },
+ {
+  "id": "clinic_history_33_rot",
+  "file": "degraded/clinic_history_33__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "clinic_history_33_noise",
+  "file": "degraded/clinic_history_33__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "clinic_history_33_jpeg40",
+  "file": "degraded/clinic_history_33__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "clinic_history_33_lowres",
+  "file": "degraded/clinic_history_33__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "clinic_history_33_blur",
+  "file": "degraded/clinic_history_33__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_33.txt",
+  "gt_fields": "ground_truth/clinic_history_33.fields.json"
+ },
+ {
+  "id": "prescription_34_rot",
+  "file": "degraded/prescription_34__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "prescription_34_noise",
+  "file": "degraded/prescription_34__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "prescription_34_jpeg40",
+  "file": "degraded/prescription_34__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "prescription_34_lowres",
+  "file": "degraded/prescription_34__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "prescription_34_blur",
+  "file": "degraded/prescription_34__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_34.txt",
+  "gt_fields": "ground_truth/prescription_34.fields.json"
+ },
+ {
+  "id": "lab_result_35_rot",
+  "file": "degraded/lab_result_35__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "lab_result_35_noise",
+  "file": "degraded/lab_result_35__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "lab_result_35_jpeg40",
+  "file": "degraded/lab_result_35__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "lab_result_35_lowres",
+  "file": "degraded/lab_result_35__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "lab_result_35_blur",
+  "file": "degraded/lab_result_35__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_35.txt",
+  "gt_fields": "ground_truth/lab_result_35.fields.json"
+ },
+ {
+  "id": "clinic_history_36_rot",
+  "file": "degraded/clinic_history_36__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "clinic_history_36_noise",
+  "file": "degraded/clinic_history_36__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "clinic_history_36_jpeg40",
+  "file": "degraded/clinic_history_36__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "clinic_history_36_lowres",
+  "file": "degraded/clinic_history_36__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "clinic_history_36_blur",
+  "file": "degraded/clinic_history_36__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_36.txt",
+  "gt_fields": "ground_truth/clinic_history_36.fields.json"
+ },
+ {
+  "id": "prescription_37_rot",
+  "file": "degraded/prescription_37__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "prescription_37_noise",
+  "file": "degraded/prescription_37__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "prescription_37_jpeg40",
+  "file": "degraded/prescription_37__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "prescription_37_lowres",
+  "file": "degraded/prescription_37__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "prescription_37_blur",
+  "file": "degraded/prescription_37__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_37.txt",
+  "gt_fields": "ground_truth/prescription_37.fields.json"
+ },
+ {
+  "id": "lab_result_38_rot",
+  "file": "degraded/lab_result_38__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "lab_result_38_noise",
+  "file": "degraded/lab_result_38__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "lab_result_38_jpeg40",
+  "file": "degraded/lab_result_38__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "lab_result_38_lowres",
+  "file": "degraded/lab_result_38__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "lab_result_38_blur",
+  "file": "degraded/lab_result_38__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_38.txt",
+  "gt_fields": "ground_truth/lab_result_38.fields.json"
+ },
+ {
+  "id": "clinic_history_39_rot",
+  "file": "degraded/clinic_history_39__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "clinic_history_39_noise",
+  "file": "degraded/clinic_history_39__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "clinic_history_39_jpeg40",
+  "file": "degraded/clinic_history_39__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "clinic_history_39_lowres",
+  "file": "degraded/clinic_history_39__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "clinic_history_39_blur",
+  "file": "degraded/clinic_history_39__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_39.txt",
+  "gt_fields": "ground_truth/clinic_history_39.fields.json"
+ },
+ {
+  "id": "prescription_40_rot",
+  "file": "degraded/prescription_40__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "prescription_40_noise",
+  "file": "degraded/prescription_40__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "prescription_40_jpeg40",
+  "file": "degraded/prescription_40__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "prescription_40_lowres",
+  "file": "degraded/prescription_40__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "prescription_40_blur",
+  "file": "degraded/prescription_40__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_40.txt",
+  "gt_fields": "ground_truth/prescription_40.fields.json"
+ },
+ {
+  "id": "lab_result_41_rot",
+  "file": "degraded/lab_result_41__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "lab_result_41_noise",
+  "file": "degraded/lab_result_41__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "lab_result_41_jpeg40",
+  "file": "degraded/lab_result_41__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "lab_result_41_lowres",
+  "file": "degraded/lab_result_41__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "lab_result_41_blur",
+  "file": "degraded/lab_result_41__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_41.txt",
+  "gt_fields": "ground_truth/lab_result_41.fields.json"
+ },
+ {
+  "id": "clinic_history_42_rot",
+  "file": "degraded/clinic_history_42__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "clinic_history_42_noise",
+  "file": "degraded/clinic_history_42__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "clinic_history_42_jpeg40",
+  "file": "degraded/clinic_history_42__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "clinic_history_42_lowres",
+  "file": "degraded/clinic_history_42__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "clinic_history_42_blur",
+  "file": "degraded/clinic_history_42__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_42.txt",
+  "gt_fields": "ground_truth/clinic_history_42.fields.json"
+ },
+ {
+  "id": "prescription_43_rot",
+  "file": "degraded/prescription_43__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "prescription_43_noise",
+  "file": "degraded/prescription_43__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "prescription_43_jpeg40",
+  "file": "degraded/prescription_43__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "prescription_43_lowres",
+  "file": "degraded/prescription_43__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "prescription_43_blur",
+  "file": "degraded/prescription_43__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "en",
+  "gt_text": "ground_truth/prescription_43.txt",
+  "gt_fields": "ground_truth/prescription_43.fields.json"
+ },
+ {
+  "id": "lab_result_44_rot",
+  "file": "degraded/lab_result_44__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "lab_result_44_noise",
+  "file": "degraded/lab_result_44__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "lab_result_44_jpeg40",
+  "file": "degraded/lab_result_44__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "lab_result_44_lowres",
+  "file": "degraded/lab_result_44__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "lab_result_44_blur",
+  "file": "degraded/lab_result_44__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "en",
+  "gt_text": "ground_truth/lab_result_44.txt",
+  "gt_fields": "ground_truth/lab_result_44.fields.json"
+ },
+ {
+  "id": "clinic_history_45_rot",
+  "file": "degraded/clinic_history_45__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "clinic_history_45_noise",
+  "file": "degraded/clinic_history_45__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "clinic_history_45_jpeg40",
+  "file": "degraded/clinic_history_45__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "clinic_history_45_lowres",
+  "file": "degraded/clinic_history_45__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "clinic_history_45_blur",
+  "file": "degraded/clinic_history_45__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "en",
+  "gt_text": "ground_truth/clinic_history_45.txt",
+  "gt_fields": "ground_truth/clinic_history_45.fields.json"
+ },
+ {
+  "id": "prescription_46_rot",
+  "file": "degraded/prescription_46__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "prescription_46_noise",
+  "file": "degraded/prescription_46__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "prescription_46_jpeg40",
+  "file": "degraded/prescription_46__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "prescription_46_lowres",
+  "file": "degraded/prescription_46__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "prescription_46_blur",
+  "file": "degraded/prescription_46__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_46.txt",
+  "gt_fields": "ground_truth/prescription_46.fields.json"
+ },
+ {
+  "id": "lab_result_47_rot",
+  "file": "degraded/lab_result_47__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "lab_result_47_noise",
+  "file": "degraded/lab_result_47__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "lab_result_47_jpeg40",
+  "file": "degraded/lab_result_47__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "lab_result_47_lowres",
+  "file": "degraded/lab_result_47__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "lab_result_47_blur",
+  "file": "degraded/lab_result_47__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_47.txt",
+  "gt_fields": "ground_truth/lab_result_47.fields.json"
+ },
+ {
+  "id": "clinic_history_48_rot",
+  "file": "degraded/clinic_history_48__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "clinic_history_48_noise",
+  "file": "degraded/clinic_history_48__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "clinic_history_48_jpeg40",
+  "file": "degraded/clinic_history_48__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "clinic_history_48_lowres",
+  "file": "degraded/clinic_history_48__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "clinic_history_48_blur",
+  "file": "degraded/clinic_history_48__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_48.txt",
+  "gt_fields": "ground_truth/clinic_history_48.fields.json"
+ },
+ {
+  "id": "prescription_49_rot",
+  "file": "degraded/prescription_49__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "prescription_49_noise",
+  "file": "degraded/prescription_49__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "prescription_49_jpeg40",
+  "file": "degraded/prescription_49__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "prescription_49_lowres",
+  "file": "degraded/prescription_49__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "prescription_49_blur",
+  "file": "degraded/prescription_49__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_49.txt",
+  "gt_fields": "ground_truth/prescription_49.fields.json"
+ },
+ {
+  "id": "lab_result_50_rot",
+  "file": "degraded/lab_result_50__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "lab_result_50_noise",
+  "file": "degraded/lab_result_50__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "lab_result_50_jpeg40",
+  "file": "degraded/lab_result_50__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "lab_result_50_lowres",
+  "file": "degraded/lab_result_50__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "lab_result_50_blur",
+  "file": "degraded/lab_result_50__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_50.txt",
+  "gt_fields": "ground_truth/lab_result_50.fields.json"
+ },
+ {
+  "id": "clinic_history_51_rot",
+  "file": "degraded/clinic_history_51__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "clinic_history_51_noise",
+  "file": "degraded/clinic_history_51__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "clinic_history_51_jpeg40",
+  "file": "degraded/clinic_history_51__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "clinic_history_51_lowres",
+  "file": "degraded/clinic_history_51__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "clinic_history_51_blur",
+  "file": "degraded/clinic_history_51__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_51.txt",
+  "gt_fields": "ground_truth/clinic_history_51.fields.json"
+ },
+ {
+  "id": "prescription_52_rot",
+  "file": "degraded/prescription_52__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "prescription_52_noise",
+  "file": "degraded/prescription_52__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "prescription_52_jpeg40",
+  "file": "degraded/prescription_52__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "prescription_52_lowres",
+  "file": "degraded/prescription_52__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "prescription_52_blur",
+  "file": "degraded/prescription_52__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_52.txt",
+  "gt_fields": "ground_truth/prescription_52.fields.json"
+ },
+ {
+  "id": "lab_result_53_rot",
+  "file": "degraded/lab_result_53__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "lab_result_53_noise",
+  "file": "degraded/lab_result_53__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "lab_result_53_jpeg40",
+  "file": "degraded/lab_result_53__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "lab_result_53_lowres",
+  "file": "degraded/lab_result_53__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "lab_result_53_blur",
+  "file": "degraded/lab_result_53__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_53.txt",
+  "gt_fields": "ground_truth/lab_result_53.fields.json"
+ },
+ {
+  "id": "clinic_history_54_rot",
+  "file": "degraded/clinic_history_54__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "clinic_history_54_noise",
+  "file": "degraded/clinic_history_54__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "clinic_history_54_jpeg40",
+  "file": "degraded/clinic_history_54__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "clinic_history_54_lowres",
+  "file": "degraded/clinic_history_54__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "clinic_history_54_blur",
+  "file": "degraded/clinic_history_54__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_54.txt",
+  "gt_fields": "ground_truth/clinic_history_54.fields.json"
+ },
+ {
+  "id": "prescription_55_rot",
+  "file": "degraded/prescription_55__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "prescription_55_noise",
+  "file": "degraded/prescription_55__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "prescription_55_jpeg40",
+  "file": "degraded/prescription_55__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "prescription_55_lowres",
+  "file": "degraded/prescription_55__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "prescription_55_blur",
+  "file": "degraded/prescription_55__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_55.txt",
+  "gt_fields": "ground_truth/prescription_55.fields.json"
+ },
+ {
+  "id": "lab_result_56_rot",
+  "file": "degraded/lab_result_56__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "lab_result_56_noise",
+  "file": "degraded/lab_result_56__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "lab_result_56_jpeg40",
+  "file": "degraded/lab_result_56__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "lab_result_56_lowres",
+  "file": "degraded/lab_result_56__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "lab_result_56_blur",
+  "file": "degraded/lab_result_56__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_56.txt",
+  "gt_fields": "ground_truth/lab_result_56.fields.json"
+ },
+ {
+  "id": "clinic_history_57_rot",
+  "file": "degraded/clinic_history_57__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "clinic_history_57_noise",
+  "file": "degraded/clinic_history_57__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "clinic_history_57_jpeg40",
+  "file": "degraded/clinic_history_57__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "clinic_history_57_lowres",
+  "file": "degraded/clinic_history_57__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "clinic_history_57_blur",
+  "file": "degraded/clinic_history_57__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_57.txt",
+  "gt_fields": "ground_truth/clinic_history_57.fields.json"
+ },
+ {
+  "id": "prescription_58_rot",
+  "file": "degraded/prescription_58__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "prescription_58_noise",
+  "file": "degraded/prescription_58__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "prescription_58_jpeg40",
+  "file": "degraded/prescription_58__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "prescription_58_lowres",
+  "file": "degraded/prescription_58__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "prescription_58_blur",
+  "file": "degraded/prescription_58__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_58.txt",
+  "gt_fields": "ground_truth/prescription_58.fields.json"
+ },
+ {
+  "id": "lab_result_59_rot",
+  "file": "degraded/lab_result_59__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "lab_result_59_noise",
+  "file": "degraded/lab_result_59__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "lab_result_59_jpeg40",
+  "file": "degraded/lab_result_59__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "lab_result_59_lowres",
+  "file": "degraded/lab_result_59__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "lab_result_59_blur",
+  "file": "degraded/lab_result_59__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_59.txt",
+  "gt_fields": "ground_truth/lab_result_59.fields.json"
+ },
+ {
+  "id": "clinic_history_60_rot",
+  "file": "degraded/clinic_history_60__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "clinic_history_60_noise",
+  "file": "degraded/clinic_history_60__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "clinic_history_60_jpeg40",
+  "file": "degraded/clinic_history_60__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "clinic_history_60_lowres",
+  "file": "degraded/clinic_history_60__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "clinic_history_60_blur",
+  "file": "degraded/clinic_history_60__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_60.txt",
+  "gt_fields": "ground_truth/clinic_history_60.fields.json"
+ },
+ {
+  "id": "prescription_61_rot",
+  "file": "degraded/prescription_61__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "prescription_61_noise",
+  "file": "degraded/prescription_61__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "prescription_61_jpeg40",
+  "file": "degraded/prescription_61__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "prescription_61_lowres",
+  "file": "degraded/prescription_61__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "prescription_61_blur",
+  "file": "degraded/prescription_61__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_61.txt",
+  "gt_fields": "ground_truth/prescription_61.fields.json"
+ },
+ {
+  "id": "lab_result_62_rot",
+  "file": "degraded/lab_result_62__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "lab_result_62_noise",
+  "file": "degraded/lab_result_62__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "lab_result_62_jpeg40",
+  "file": "degraded/lab_result_62__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "lab_result_62_lowres",
+  "file": "degraded/lab_result_62__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "lab_result_62_blur",
+  "file": "degraded/lab_result_62__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_62.txt",
+  "gt_fields": "ground_truth/lab_result_62.fields.json"
+ },
+ {
+  "id": "clinic_history_63_rot",
+  "file": "degraded/clinic_history_63__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "clinic_history_63_noise",
+  "file": "degraded/clinic_history_63__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "clinic_history_63_jpeg40",
+  "file": "degraded/clinic_history_63__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "clinic_history_63_lowres",
+  "file": "degraded/clinic_history_63__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "clinic_history_63_blur",
+  "file": "degraded/clinic_history_63__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_63.txt",
+  "gt_fields": "ground_truth/clinic_history_63.fields.json"
+ },
+ {
+  "id": "prescription_64_rot",
+  "file": "degraded/prescription_64__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "prescription_64_noise",
+  "file": "degraded/prescription_64__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "prescription_64_jpeg40",
+  "file": "degraded/prescription_64__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "prescription_64_lowres",
+  "file": "degraded/prescription_64__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "prescription_64_blur",
+  "file": "degraded/prescription_64__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_64.txt",
+  "gt_fields": "ground_truth/prescription_64.fields.json"
+ },
+ {
+  "id": "lab_result_65_rot",
+  "file": "degraded/lab_result_65__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "lab_result_65_noise",
+  "file": "degraded/lab_result_65__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "lab_result_65_jpeg40",
+  "file": "degraded/lab_result_65__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "lab_result_65_lowres",
+  "file": "degraded/lab_result_65__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "lab_result_65_blur",
+  "file": "degraded/lab_result_65__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_65.txt",
+  "gt_fields": "ground_truth/lab_result_65.fields.json"
+ },
+ {
+  "id": "clinic_history_66_rot",
+  "file": "degraded/clinic_history_66__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "clinic_history_66_noise",
+  "file": "degraded/clinic_history_66__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "clinic_history_66_jpeg40",
+  "file": "degraded/clinic_history_66__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "clinic_history_66_lowres",
+  "file": "degraded/clinic_history_66__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "clinic_history_66_blur",
+  "file": "degraded/clinic_history_66__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_66.txt",
+  "gt_fields": "ground_truth/clinic_history_66.fields.json"
+ },
+ {
+  "id": "prescription_67_rot",
+  "file": "degraded/prescription_67__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "prescription_67_noise",
+  "file": "degraded/prescription_67__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "prescription_67_jpeg40",
+  "file": "degraded/prescription_67__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "prescription_67_lowres",
+  "file": "degraded/prescription_67__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "prescription_67_blur",
+  "file": "degraded/prescription_67__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_67.txt",
+  "gt_fields": "ground_truth/prescription_67.fields.json"
+ },
+ {
+  "id": "lab_result_68_rot",
+  "file": "degraded/lab_result_68__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "lab_result_68_noise",
+  "file": "degraded/lab_result_68__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "lab_result_68_jpeg40",
+  "file": "degraded/lab_result_68__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "lab_result_68_lowres",
+  "file": "degraded/lab_result_68__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "lab_result_68_blur",
+  "file": "degraded/lab_result_68__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_68.txt",
+  "gt_fields": "ground_truth/lab_result_68.fields.json"
+ },
+ {
+  "id": "clinic_history_69_rot",
+  "file": "degraded/clinic_history_69__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "clinic_history_69_noise",
+  "file": "degraded/clinic_history_69__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "clinic_history_69_jpeg40",
+  "file": "degraded/clinic_history_69__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "clinic_history_69_lowres",
+  "file": "degraded/clinic_history_69__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "clinic_history_69_blur",
+  "file": "degraded/clinic_history_69__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_69.txt",
+  "gt_fields": "ground_truth/clinic_history_69.fields.json"
+ },
+ {
+  "id": "prescription_70_rot",
+  "file": "degraded/prescription_70__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "prescription_70_noise",
+  "file": "degraded/prescription_70__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "prescription_70_jpeg40",
+  "file": "degraded/prescription_70__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "prescription_70_lowres",
+  "file": "degraded/prescription_70__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "prescription_70_blur",
+  "file": "degraded/prescription_70__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_70.txt",
+  "gt_fields": "ground_truth/prescription_70.fields.json"
+ },
+ {
+  "id": "lab_result_71_rot",
+  "file": "degraded/lab_result_71__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "lab_result_71_noise",
+  "file": "degraded/lab_result_71__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "lab_result_71_jpeg40",
+  "file": "degraded/lab_result_71__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "lab_result_71_lowres",
+  "file": "degraded/lab_result_71__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "lab_result_71_blur",
+  "file": "degraded/lab_result_71__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_71.txt",
+  "gt_fields": "ground_truth/lab_result_71.fields.json"
+ },
+ {
+  "id": "clinic_history_72_rot",
+  "file": "degraded/clinic_history_72__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "clinic_history_72_noise",
+  "file": "degraded/clinic_history_72__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "clinic_history_72_jpeg40",
+  "file": "degraded/clinic_history_72__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "clinic_history_72_lowres",
+  "file": "degraded/clinic_history_72__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "clinic_history_72_blur",
+  "file": "degraded/clinic_history_72__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_72.txt",
+  "gt_fields": "ground_truth/clinic_history_72.fields.json"
+ },
+ {
+  "id": "prescription_73_rot",
+  "file": "degraded/prescription_73__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "prescription_73_noise",
+  "file": "degraded/prescription_73__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "prescription_73_jpeg40",
+  "file": "degraded/prescription_73__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "prescription_73_lowres",
+  "file": "degraded/prescription_73__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "prescription_73_blur",
+  "file": "degraded/prescription_73__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_73.txt",
+  "gt_fields": "ground_truth/prescription_73.fields.json"
+ },
+ {
+  "id": "lab_result_74_rot",
+  "file": "degraded/lab_result_74__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "lab_result_74_noise",
+  "file": "degraded/lab_result_74__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "lab_result_74_jpeg40",
+  "file": "degraded/lab_result_74__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "lab_result_74_lowres",
+  "file": "degraded/lab_result_74__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "lab_result_74_blur",
+  "file": "degraded/lab_result_74__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_74.txt",
+  "gt_fields": "ground_truth/lab_result_74.fields.json"
+ },
+ {
+  "id": "clinic_history_75_rot",
+  "file": "degraded/clinic_history_75__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "clinic_history_75_noise",
+  "file": "degraded/clinic_history_75__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "clinic_history_75_jpeg40",
+  "file": "degraded/clinic_history_75__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "clinic_history_75_lowres",
+  "file": "degraded/clinic_history_75__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "clinic_history_75_blur",
+  "file": "degraded/clinic_history_75__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_75.txt",
+  "gt_fields": "ground_truth/clinic_history_75.fields.json"
+ },
+ {
+  "id": "prescription_76_rot",
+  "file": "degraded/prescription_76__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "prescription_76_noise",
+  "file": "degraded/prescription_76__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "prescription_76_jpeg40",
+  "file": "degraded/prescription_76__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "prescription_76_lowres",
+  "file": "degraded/prescription_76__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "prescription_76_blur",
+  "file": "degraded/prescription_76__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_76.txt",
+  "gt_fields": "ground_truth/prescription_76.fields.json"
+ },
+ {
+  "id": "lab_result_77_rot",
+  "file": "degraded/lab_result_77__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "lab_result_77_noise",
+  "file": "degraded/lab_result_77__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "lab_result_77_jpeg40",
+  "file": "degraded/lab_result_77__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "lab_result_77_lowres",
+  "file": "degraded/lab_result_77__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "lab_result_77_blur",
+  "file": "degraded/lab_result_77__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_77.txt",
+  "gt_fields": "ground_truth/lab_result_77.fields.json"
+ },
+ {
+  "id": "clinic_history_78_rot",
+  "file": "degraded/clinic_history_78__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "clinic_history_78_noise",
+  "file": "degraded/clinic_history_78__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "clinic_history_78_jpeg40",
+  "file": "degraded/clinic_history_78__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "clinic_history_78_lowres",
+  "file": "degraded/clinic_history_78__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "clinic_history_78_blur",
+  "file": "degraded/clinic_history_78__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_78.txt",
+  "gt_fields": "ground_truth/clinic_history_78.fields.json"
+ },
+ {
+  "id": "prescription_79_rot",
+  "file": "degraded/prescription_79__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "prescription_79_noise",
+  "file": "degraded/prescription_79__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "prescription_79_jpeg40",
+  "file": "degraded/prescription_79__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "prescription_79_lowres",
+  "file": "degraded/prescription_79__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "prescription_79_blur",
+  "file": "degraded/prescription_79__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_79.txt",
+  "gt_fields": "ground_truth/prescription_79.fields.json"
+ },
+ {
+  "id": "lab_result_80_rot",
+  "file": "degraded/lab_result_80__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "lab_result_80_noise",
+  "file": "degraded/lab_result_80__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "lab_result_80_jpeg40",
+  "file": "degraded/lab_result_80__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "lab_result_80_lowres",
+  "file": "degraded/lab_result_80__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "lab_result_80_blur",
+  "file": "degraded/lab_result_80__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_80.txt",
+  "gt_fields": "ground_truth/lab_result_80.fields.json"
+ },
+ {
+  "id": "clinic_history_81_rot",
+  "file": "degraded/clinic_history_81__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "clinic_history_81_noise",
+  "file": "degraded/clinic_history_81__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "clinic_history_81_jpeg40",
+  "file": "degraded/clinic_history_81__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "clinic_history_81_lowres",
+  "file": "degraded/clinic_history_81__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "clinic_history_81_blur",
+  "file": "degraded/clinic_history_81__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_81.txt",
+  "gt_fields": "ground_truth/clinic_history_81.fields.json"
+ },
+ {
+  "id": "prescription_82_rot",
+  "file": "degraded/prescription_82__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "prescription_82_noise",
+  "file": "degraded/prescription_82__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "prescription_82_jpeg40",
+  "file": "degraded/prescription_82__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "prescription_82_lowres",
+  "file": "degraded/prescription_82__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "prescription_82_blur",
+  "file": "degraded/prescription_82__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_82.txt",
+  "gt_fields": "ground_truth/prescription_82.fields.json"
+ },
+ {
+  "id": "lab_result_83_rot",
+  "file": "degraded/lab_result_83__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "lab_result_83_noise",
+  "file": "degraded/lab_result_83__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "lab_result_83_jpeg40",
+  "file": "degraded/lab_result_83__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "lab_result_83_lowres",
+  "file": "degraded/lab_result_83__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "lab_result_83_blur",
+  "file": "degraded/lab_result_83__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_83.txt",
+  "gt_fields": "ground_truth/lab_result_83.fields.json"
+ },
+ {
+  "id": "clinic_history_84_rot",
+  "file": "degraded/clinic_history_84__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "clinic_history_84_noise",
+  "file": "degraded/clinic_history_84__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "clinic_history_84_jpeg40",
+  "file": "degraded/clinic_history_84__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "clinic_history_84_lowres",
+  "file": "degraded/clinic_history_84__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "clinic_history_84_blur",
+  "file": "degraded/clinic_history_84__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_84.txt",
+  "gt_fields": "ground_truth/clinic_history_84.fields.json"
+ },
+ {
+  "id": "prescription_85_rot",
+  "file": "degraded/prescription_85__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "prescription_85_noise",
+  "file": "degraded/prescription_85__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "prescription_85_jpeg40",
+  "file": "degraded/prescription_85__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "prescription_85_lowres",
+  "file": "degraded/prescription_85__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "prescription_85_blur",
+  "file": "degraded/prescription_85__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_85.txt",
+  "gt_fields": "ground_truth/prescription_85.fields.json"
+ },
+ {
+  "id": "lab_result_86_rot",
+  "file": "degraded/lab_result_86__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "lab_result_86_noise",
+  "file": "degraded/lab_result_86__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "lab_result_86_jpeg40",
+  "file": "degraded/lab_result_86__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "lab_result_86_lowres",
+  "file": "degraded/lab_result_86__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "lab_result_86_blur",
+  "file": "degraded/lab_result_86__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_86.txt",
+  "gt_fields": "ground_truth/lab_result_86.fields.json"
+ },
+ {
+  "id": "clinic_history_87_rot",
+  "file": "degraded/clinic_history_87__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "clinic_history_87_noise",
+  "file": "degraded/clinic_history_87__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "clinic_history_87_jpeg40",
+  "file": "degraded/clinic_history_87__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "clinic_history_87_lowres",
+  "file": "degraded/clinic_history_87__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "clinic_history_87_blur",
+  "file": "degraded/clinic_history_87__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_87.txt",
+  "gt_fields": "ground_truth/clinic_history_87.fields.json"
+ },
+ {
+  "id": "prescription_88_rot",
+  "file": "degraded/prescription_88__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "prescription_88_noise",
+  "file": "degraded/prescription_88__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "prescription_88_jpeg40",
+  "file": "degraded/prescription_88__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "prescription_88_lowres",
+  "file": "degraded/prescription_88__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "prescription_88_blur",
+  "file": "degraded/prescription_88__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "prescription",
+  "language": "es",
+  "gt_text": "ground_truth/prescription_88.txt",
+  "gt_fields": "ground_truth/prescription_88.fields.json"
+ },
+ {
+  "id": "lab_result_89_rot",
+  "file": "degraded/lab_result_89__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "lab_result_89_noise",
+  "file": "degraded/lab_result_89__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "lab_result_89_jpeg40",
+  "file": "degraded/lab_result_89__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "lab_result_89_lowres",
+  "file": "degraded/lab_result_89__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "lab_result_89_blur",
+  "file": "degraded/lab_result_89__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "result",
+  "language": "es",
+  "gt_text": "ground_truth/lab_result_89.txt",
+  "gt_fields": "ground_truth/lab_result_89.fields.json"
+ },
+ {
+  "id": "clinic_history_90_rot",
+  "file": "degraded/clinic_history_90__rot.png",
+  "tier": "degraded",
+  "variant": "rot",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ },
+ {
+  "id": "clinic_history_90_noise",
+  "file": "degraded/clinic_history_90__noise.png",
+  "tier": "degraded",
+  "variant": "noise",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ },
+ {
+  "id": "clinic_history_90_jpeg40",
+  "file": "degraded/clinic_history_90__jpeg40.jpg",
+  "tier": "degraded",
+  "variant": "jpeg40",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ },
+ {
+  "id": "clinic_history_90_lowres",
+  "file": "degraded/clinic_history_90__lowres.png",
+  "tier": "degraded",
+  "variant": "lowres",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ },
+ {
+  "id": "clinic_history_90_blur",
+  "file": "degraded/clinic_history_90__blur.png",
+  "tier": "degraded",
+  "variant": "blur",
+  "doc_type": "clinical_history",
+  "language": "es",
+  "gt_text": "ground_truth/clinic_history_90.txt",
+  "gt_fields": "ground_truth/clinic_history_90.fields.json"
+ }
+]

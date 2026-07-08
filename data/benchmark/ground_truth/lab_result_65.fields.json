@@ -1,0 +1,30 @@
+{
+ "patient_id": 59685,
+ "patient_name": "Lorena Dulce Prats Luís",
+ "patient_dob": "1928-04-14",
+ "exam_date": "2025-03-04",
+ "clinic": "Gargallo, Bustos and Aller",
+ "tests": [
+  {
+   "test_name": "Distinctio Test",
+   "reference_range": "23-45",
+   "patient_result": "11.53"
+  },
+  {
+   "test_name": "Expedita Test",
+   "reference_range": "15-37",
+   "patient_result": "12.59"
+  },
+  {
+   "test_name": "Numquam Test",
+   "reference_range": "23-60",
+   "patient_result": "44.87"
+  },
+  {
+   "test_name": "Eius Test",
+   "reference_range": "20-60",
+   "patient_result": "50.76"
+  }
+ ],
+ "summary": "Neque voluptas soluta dolores at ab dolorum doloribus."
+}

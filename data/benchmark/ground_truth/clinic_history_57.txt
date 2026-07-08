@@ -1,0 +1,9 @@
+Patient Name: Poncio Bermúdez
+Patient ID: 14918
+Date of Birth: 1973-07-14
+Clinic: Pardo, Blazquez and Plana
+
+Annotations:
+- 2025-04-15: Commodi fuga non quisquam ratione tempora.
+- 2025-02-12: Deserunt consequuntur modi pariatur mollitia enim. Cupiditate accusantium iusto sit nobis itaque.
+- 2025-01-05: Perferendis id repudiandae provident animi quidem. Quae inventore ea sed.

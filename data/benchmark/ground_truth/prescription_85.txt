@@ -1,0 +1,9 @@
+Patient Name: Ciríaco Ferrándiz Rosales
+Patient ID: 43015
+Date of Birth: 2014-11-29
+Date of Prescription: 2025-04-27
+Doctor: Encarna Mulet Pou
+Clinic: Estévez-Barrera
+
+Prescription:
+Perspiciatis saepe labore accusantium nobis ipsam.

@@ -1,0 +1,13 @@
+Patient Name: David Mercado
+Patient ID: 54830
+Date of Birth: 1913-08-30
+Exam Date: 2025-02-03
+Clinic: Olson-Martinez
+
+Test Results:
+- Data Test: 32.66 (Ref: 13-39)
+- Rich Test: 13.62 (Ref: 25-54)
+- Stop Test: 57.79 (Ref: 28-40)
+- Short Test: 22.61 (Ref: 11-59)
+
+Summary: Media simply expert early truth worker fund person significant stand cold any knowledge happen benefit.

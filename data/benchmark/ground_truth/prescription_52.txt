@@ -1,0 +1,9 @@
+Patient Name: Rafa Márquez Macías
+Patient ID: 42123
+Date of Birth: 1993-02-15
+Date of Prescription: 2025-02-21
+Doctor: Camilo Villaverde Nuñez
+Clinic: Gutiérrez-Vergara
+
+Prescription:
+Molestiae repellat cum laborum aspernatur maxime.

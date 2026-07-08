@@ -1,0 +1,9 @@
+Patient Name: Jeremy Mack
+Patient ID: 22024
+Date of Birth: 1964-09-08
+Date of Prescription: 2025-02-07
+Doctor: Tiffany Moore
+Clinic: Morrison-Jones
+
+Prescription:
+Allow same lawyer watch mission.

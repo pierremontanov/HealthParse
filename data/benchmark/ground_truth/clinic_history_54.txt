@@ -1,0 +1,9 @@
+Patient Name: Gracia Ibañez Sarmiento
+Patient ID: 87441
+Date of Birth: 1952-09-03
+Clinic: Redondo LLC
+
+Annotations:
+- 2025-02-01: Aut debitis repellat. Saepe ipsam voluptatum molestiae pariatur illo dolorum.
+- 2025-03-13: Excepturi reiciendis vel nulla dolorum harum. Nobis esse quo architecto hic voluptates.
+- 2025-03-03: Est esse ab distinctio explicabo laudantium.

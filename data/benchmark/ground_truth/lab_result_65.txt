@@ -1,0 +1,13 @@
+Patient Name: Lorena Dulce Prats Luís
+Patient ID: 59685
+Date of Birth: 1928-04-14
+Exam Date: 2025-03-04
+Clinic: Gargallo, Bustos and Aller
+
+Test Results:
+- Distinctio Test: 11.53 (Ref: 23-45)
+- Expedita Test: 12.59 (Ref: 15-37)
+- Numquam Test: 44.87 (Ref: 23-60)
+- Eius Test: 50.76 (Ref: 20-60)
+
+Summary: Neque voluptas soluta dolores at ab dolorum doloribus.

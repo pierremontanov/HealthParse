@@ -1,0 +1,16 @@
+{
+ "patient_id": 99743,
+ "patient_name": "Noé Otero Reguera",
+ "patient_dob": "2013-07-01",
+ "clinic": "Gallardo Group",
+ "annotations": [
+  {
+   "date": "2025-02-21",
+   "note": "Accusamus amet impedit. Adipisci dolorum fugiat temporibus non."
+  },
+  {
+   "date": "2025-03-17",
+   "note": "Odit possimus adipisci. Laborum libero quo amet."
+  }
+ ]
+}

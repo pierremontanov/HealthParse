@@ -1,0 +1,9 @@
+Patient Name: Matthew Edwards
+Patient ID: 87382
+Date of Birth: 2006-06-21
+Date of Prescription: 2025-04-17
+Doctor: Joshua Jones
+Clinic: Ryan-Hampton
+
+Prescription:
+Red yeah them ten these often throughout.

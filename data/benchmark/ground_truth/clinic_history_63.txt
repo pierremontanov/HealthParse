@@ -1,0 +1,8 @@
+Patient Name: Noé Otero Reguera
+Patient ID: 99743
+Date of Birth: 2013-07-01
+Clinic: Gallardo Group
+
+Annotations:
+- 2025-02-21: Accusamus amet impedit. Adipisci dolorum fugiat temporibus non.
+- 2025-03-17: Odit possimus adipisci. Laborum libero quo amet.

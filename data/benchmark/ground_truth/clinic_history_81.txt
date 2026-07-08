@@ -1,0 +1,10 @@
+Patient Name: Isidora Teruel Villalba
+Patient ID: 78079
+Date of Birth: 2006-06-09
+Clinic: Duarte-Bermejo
+
+Annotations:
+- 2025-04-27: Unde deleniti consectetur delectus deserunt labore fuga.
+- 2025-03-15: Fugit rerum nulla velit sit.
+- 2025-03-31: Corporis nulla quasi accusamus a occaecati. Quisquam necessitatibus quae quidem ea dolorem.
+- 2025-01-14: Libero id possimus fugiat cum quas.

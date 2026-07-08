@@ -1,0 +1,35 @@
+{
+ "patient_id": 67129,
+ "patient_name": "Felicidad de Granados",
+ "patient_dob": "1940-08-16",
+ "exam_date": "2025-01-11",
+ "clinic": "Roldan, Alcalá and Menéndez",
+ "tests": [
+  {
+   "test_name": "Consectetur Test",
+   "reference_range": "26-40",
+   "patient_result": "32.27"
+  },
+  {
+   "test_name": "Quibusdam Test",
+   "reference_range": "12-50",
+   "patient_result": "24.24"
+  },
+  {
+   "test_name": "Adipisci Test",
+   "reference_range": "21-45",
+   "patient_result": "23.24"
+  },
+  {
+   "test_name": "Repudiandae Test",
+   "reference_range": "28-50",
+   "patient_result": "40.30"
+  },
+  {
+   "test_name": "Quaerat Test",
+   "reference_range": "16-48",
+   "patient_result": "19.86"
+  }
+ ],
+ "summary": "Expedita nulla commodi at commodi harum hic sit perferendis ipsam."
+}

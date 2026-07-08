@@ -1,0 +1,9 @@
+Patient Name: Calixto Seguí Fiol
+Patient ID: 73728
+Date of Birth: 1921-11-27
+Clinic: Díez Inc
+
+Annotations:
+- 2025-04-16: Aspernatur nam dignissimos et dolorem quas explicabo natus. Officia consequatur nihil ipsa.
+- 2025-01-18: Dolores aliquam quos dolores minima voluptatem.
+- 2025-02-17: Debitis quas fugiat commodi unde impedit.

@@ -1,0 +1,10 @@
+Patient Name: Francisco Chico Barón
+Patient ID: 55643
+Date of Birth: 1955-10-23
+Clinic: Barros-Martinez
+
+Annotations:
+- 2025-04-29: Omnis doloremque natus atque voluptates odit dignissimos. Magni magnam eum iste.
+- 2025-02-01: Itaque veniam error libero eos ratione.
+- 2025-02-04: Atque sequi enim accusamus error perferendis. Consectetur nostrum accusamus numquam dolores a quas.
+- 2025-02-24: Ut fuga cumque aliquid voluptas sequi consectetur. Libero doloremque voluptatem dolor nulla nesciunt optio architecto.

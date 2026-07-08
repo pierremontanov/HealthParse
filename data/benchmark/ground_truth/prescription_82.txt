@@ -1,0 +1,9 @@
+Patient Name: Efraín Cabezas-Nevado
+Patient ID: 37377
+Date of Birth: 1932-06-10
+Date of Prescription: 2025-02-01
+Doctor: Concepción Espinosa Lumbreras
+Clinic: Pino-Lobo
+
+Prescription:
+Vitae commodi delectus deleniti facere exercitationem beatae.

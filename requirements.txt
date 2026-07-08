@@ -24,7 +24,7 @@ Pillow>=10.0,<13                # PIL image handling
 
 # ── OCR ──────────────────────────────────────────────────────────
 paddlepaddle>=3.2,<4            # PaddlePaddle deep-learning framework (CPU)
-paddleocr>=3.4,<4               # PaddleOCR 3.4+ – table/form-aware OCR engine
+paddleocr>=3.6,<4               # PaddleOCR 3.6+ – required for PP-OCRv6 model tiers
 
 # ── NLP ──────────────────────────────────────────────────────────
 langdetect>=1.0.9,<2            # language detection (en/es)
