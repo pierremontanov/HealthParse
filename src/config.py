@@ -131,11 +131,12 @@ class DocIQSettings(BaseSettings):
     ocr_model: Literal[
         "pp-ocrv4", "pp-ocrv6_tiny", "pp-ocrv6_small", "pp-ocrv6_medium"
     ] = Field(
-        "pp-ocrv4",
-        description="OCR engine variant. 'pp-ocrv4' uses the legacy PP-OCRv4 "
-        "English model (requires paddleocr>=3.4). The 'pp-ocrv6_*' tiers use "
-        "the multilingual PP-OCRv6 models (50 languages incl. Spanish; "
-        "requires paddleocr>=3.6). Set via DOCIQ_OCR_MODEL.",
+        "pp-ocrv6_tiny",
+        description="OCR engine variant. Default 'pp-ocrv6_tiny' (multilingual "
+        "PP-OCRv6, 50 languages incl. Spanish, requires paddleocr>=3.6) per the "
+        "July 2026 benchmark. 'pp-ocrv6_small' trades ~2x latency for higher "
+        "accuracy. 'pp-ocrv4' is the legacy English-model fallback (strips "
+        "Spanish accents). Set via DOCIQ_OCR_MODEL.",
     )
     ocr_det_model: Optional[str] = Field(
         None,

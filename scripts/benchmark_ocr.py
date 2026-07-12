@@ -361,9 +361,4 @@ def main() -> int:
     if args.draft_gt:
         return draft_gt(args)
     if not args.run_name:
-        p.error("--run-name is required for a scoring run")
-    return run(args)
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+        p.error("--run-name is required for a scoring
