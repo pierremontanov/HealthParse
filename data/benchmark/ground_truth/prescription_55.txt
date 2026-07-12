@@ -1,0 +1,9 @@
+Patient Name: Modesta Colomer Valenzuela
+Patient ID: 54566
+Date of Birth: 2004-02-15
+Date of Prescription: 2025-03-24
+Doctor: Bernabé Cuesta Barrena
+Clinic: Jaén LLC
+
+Prescription:
+Fugit esse unde saepe a nobis magni atque sit.

@@ -1,0 +1,24 @@
+{
+ "patient_id": 93647,
+ "patient_name": "Aníbal del Baena",
+ "patient_dob": "1987-05-15",
+ "clinic": "Solana-Varela",
+ "annotations": [
+  {
+   "date": "2025-04-22",
+   "note": "Dolor repellendus similique explicabo tempore."
+  },
+  {
+   "date": "2025-01-19",
+   "note": "Natus reprehenderit molestias impedit doloremque ipsam molestiae. Voluptate esse natus corrupti odit."
+  },
+  {
+   "date": "2025-04-15",
+   "note": "Praesentium omnis doloremque."
+  },
+  {
+   "date": "2025-01-03",
+   "note": "Non at cupiditate ab."
+  }
+ ]
+}

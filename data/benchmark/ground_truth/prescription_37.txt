@@ -1,0 +1,9 @@
+Patient Name: James Sparks
+Patient ID: 23142
+Date of Birth: 1982-06-13
+Date of Prescription: 2025-03-28
+Doctor: Donna Hardy
+Clinic: Palmer, Alexander and Coleman
+
+Prescription:
+Least wait it where right out media.

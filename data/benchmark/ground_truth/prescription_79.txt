@@ -1,0 +1,9 @@
+Patient Name: Aurelia Codina Coca
+Patient ID: 17836
+Date of Birth: 1933-06-29
+Date of Prescription: 2025-01-18
+Doctor: Margarita Crespi-Viñas
+Clinic: Alberola, Palomino and Falcó
+
+Prescription:
+Fuga perferendis reprehenderit possimus necessitatibus accusamus.

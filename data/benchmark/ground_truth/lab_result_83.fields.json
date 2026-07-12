@@ -1,0 +1,35 @@
+{
+ "patient_id": 81419,
+ "patient_name": "Clementina Macarena Fajardo Mascaró",
+ "patient_dob": "2009-04-13",
+ "exam_date": "2025-01-13",
+ "clinic": "Montesinos, Calderón and Poza",
+ "tests": [
+  {
+   "test_name": "Doloremque Test",
+   "reference_range": "25-42",
+   "patient_result": "50.53"
+  },
+  {
+   "test_name": "Voluptatem Test",
+   "reference_range": "10-33",
+   "patient_result": "35.86"
+  },
+  {
+   "test_name": "Nam Test",
+   "reference_range": "16-33",
+   "patient_result": "59.86"
+  },
+  {
+   "test_name": "Ipsa Test",
+   "reference_range": "14-45",
+   "patient_result": "41.56"
+  },
+  {
+   "test_name": "Vero Test",
+   "reference_range": "23-32",
+   "patient_result": "32.29"
+  }
+ ],
+ "summary": "Neque et porro saepe illum neque tenetur laborum pariatur dolor animi voluptates reprehenderit consequuntur exercitationem nostrum."
+}

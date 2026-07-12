@@ -1,0 +1,30 @@
+{
+ "patient_id": 39217,
+ "patient_name": "Melchor Palma Aparicio",
+ "patient_dob": "1950-02-23",
+ "exam_date": "2025-03-02",
+ "clinic": "Segovia LLC",
+ "tests": [
+  {
+   "test_name": "Deserunt Test",
+   "reference_range": "28-55",
+   "patient_result": "59.50"
+  },
+  {
+   "test_name": "Temporibus Test",
+   "reference_range": "16-60",
+   "patient_result": "10.07"
+  },
+  {
+   "test_name": "Vel Test",
+   "reference_range": "13-32",
+   "patient_result": "37.95"
+  },
+  {
+   "test_name": "Minima Test",
+   "reference_range": "19-38",
+   "patient_result": "56.17"
+  }
+ ],
+ "summary": "In consequuntur laboriosam velit distinctio laborum magni vel quam alias molestiae occaecati quas minima maiores."
+}

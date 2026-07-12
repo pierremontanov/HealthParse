@@ -161,3 +161,9 @@ cython_debug/
 
 # Bundled poppler binaries (too large for git)
 poppler/
+
+# ── Real patient documents: NEVER commit (privacy) ──────────────
+spanish_test_set/
+data/Test/
+data/benchmark/real/
+data/benchmark/ground_truth/pruebas-*

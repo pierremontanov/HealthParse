@@ -1,0 +1,9 @@
+Patient Name: Ashley Huynh
+Patient ID: 14694
+Date of Birth: 1991-02-02
+Date of Prescription: 2025-02-24
+Doctor: David Pollard
+Clinic: Velazquez, Allen and Friedman
+
+Prescription:
+Ready stage reach power arm I begin wall speech.

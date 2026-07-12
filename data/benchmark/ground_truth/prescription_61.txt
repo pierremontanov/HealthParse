@@ -1,0 +1,9 @@
+Patient Name: Felipa Bustos Acuña
+Patient ID: 89502
+Date of Birth: 2020-07-11
+Date of Prescription: 2025-02-24
+Doctor: Catalina Jurado Company
+Clinic: Andres-Jordá
+
+Prescription:
+Pariatur sit harum quos ducimus esse minima culpa unde quisquam.

@@ -1,0 +1,9 @@
+Patient Name: Ruy Ramos Arenas
+Patient ID: 23518
+Date of Birth: 1985-08-13
+Date of Prescription: 2025-04-25
+Doctor: Obdulia Riba Tenorio
+Clinic: Giménez, Figuerola and Manso
+
+Prescription:
+Nostrum veritatis omnis doloribus blanditiis vitae deleniti cupiditate.

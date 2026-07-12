@@ -1,0 +1,9 @@
+Patient Name: María Carmen Pla Berrocal
+Patient ID: 36805
+Date of Birth: 2005-10-04
+Date of Prescription: 2025-04-27
+Doctor: Ema Pujadas Rovira
+Clinic: Infante Inc
+
+Prescription:
+Quo culpa ullam delectus sint a cum ab.

@@ -1,0 +1,9 @@
+Patient Name: Obdulia Montserrat Meléndez
+Patient ID: 31321
+Date of Birth: 2012-09-14
+Date of Prescription: 2025-04-01
+Doctor: Pacífica Gilabert-Castillo
+Clinic: Aranda, Gilabert and Segovia
+
+Prescription:
+Fugit quos architecto maiores suscipit cumque modi.

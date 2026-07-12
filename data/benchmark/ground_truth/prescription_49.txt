@@ -1,0 +1,9 @@
+Patient Name: Marisa Rodriguez Segarra
+Patient ID: 56902
+Date of Birth: 1967-03-23
+Date of Prescription: 2025-02-20
+Doctor: Alondra Cervera Vara
+Clinic: Estrada-Puig
+
+Prescription:
+Quidem odit dignissimos ipsum quia quod soluta eaque praesentium fugiat.

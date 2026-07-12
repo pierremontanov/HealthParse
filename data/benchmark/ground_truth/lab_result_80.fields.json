@@ -1,0 +1,35 @@
+{
+ "patient_id": 21490,
+ "patient_name": "Toño Cañizares Sarabia",
+ "patient_dob": "1948-03-01",
+ "exam_date": "2025-02-28",
+ "clinic": "Rojas, Chico and Abellán",
+ "tests": [
+  {
+   "test_name": "Consequuntur Test",
+   "reference_range": "28-59",
+   "patient_result": "56.49"
+  },
+  {
+   "test_name": "Cupiditate Test",
+   "reference_range": "23-53",
+   "patient_result": "43.45"
+  },
+  {
+   "test_name": "Vel Test",
+   "reference_range": "26-42",
+   "patient_result": "56.50"
+  },
+  {
+   "test_name": "Aperiam Test",
+   "reference_range": "12-41",
+   "patient_result": "21.58"
+  },
+  {
+   "test_name": "Eius Test",
+   "reference_range": "25-60",
+   "patient_result": "26.34"
+  }
+ ],
+ "summary": "Sit inventore aliquid cum odit voluptate reiciendis ullam porro minus suscipit."
+}

@@ -1,0 +1,5 @@
+id,tier,variant,language,doc_type,predicted_type,status,cls_ok,validated,cer,wer,accent_acc,field_recall,latency_s,error
+prescription_1_clean,clean,,en,prescription,prescription,ok,True,True,0.0286,0.3448,,0.8571,11.922,
+lab_result_2_clean,clean,,en,result,result,ok,True,True,0.2351,0.6491,,0.9524,11.218,
+clinic_history_3_clean,clean,,en,clinical_history,clinical_history,ok,True,True,0.0472,0.2576,,0.6667,20.344,
+prescription_4_clean,clean,,en,prescription,prescription,ok,True,True,0.0437,0.4062,,0.8571,13.453,

@@ -1,0 +1,9 @@
+Patient Name: Irene Vargas Páez
+Patient ID: 12111
+Date of Birth: 2019-11-05
+Date of Prescription: 2025-04-14
+Doctor: Brunilda Martínez-Gimeno
+Clinic: Diéguez, Rosales and Mascaró
+
+Prescription:
+Possimus ipsum eligendi recusandae consequatur harum itaque earum animi expedita.

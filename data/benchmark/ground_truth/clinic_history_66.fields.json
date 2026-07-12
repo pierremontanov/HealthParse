@@ -1,0 +1,24 @@
+{
+ "patient_id": 90723,
+ "patient_name": "Nydia Cerdán Calvet",
+ "patient_dob": "1956-10-24",
+ "clinic": "Gálvez, Bermejo and Botella",
+ "annotations": [
+  {
+   "date": "2025-01-17",
+   "note": "Minus vero suscipit dicta ea."
+  },
+  {
+   "date": "2025-03-09",
+   "note": "Assumenda fugit doloremque officiis assumenda ipsum aspernatur."
+  },
+  {
+   "date": "2025-03-15",
+   "note": "Sequi sunt et nisi ut."
+  },
+  {
+   "date": "2025-01-14",
+   "note": "Aspernatur rerum nihil neque."
+  }
+ ]
+}

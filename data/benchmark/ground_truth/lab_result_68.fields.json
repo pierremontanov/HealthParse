@@ -1,0 +1,25 @@
+{
+ "patient_id": 36197,
+ "patient_name": "José Antonio Robles González",
+ "patient_dob": "1911-03-18",
+ "exam_date": "2025-03-11",
+ "clinic": "Lago Group",
+ "tests": [
+  {
+   "test_name": "Beatae Test",
+   "reference_range": "29-59",
+   "patient_result": "59.95"
+  },
+  {
+   "test_name": "Laborum Test",
+   "reference_range": "20-34",
+   "patient_result": "57.38"
+  },
+  {
+   "test_name": "Sed Test",
+   "reference_range": "16-57",
+   "patient_result": "21.79"
+  }
+ ],
+ "summary": "Fuga quam quam nemo a architecto architecto quaerat quibusdam reiciendis."
+}

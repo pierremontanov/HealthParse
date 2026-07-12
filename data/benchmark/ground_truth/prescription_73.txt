@@ -1,0 +1,9 @@
+Patient Name: Azeneth Estévez-Gallardo
+Patient ID: 82202
+Date of Birth: 2011-04-07
+Date of Prescription: 2025-01-21
+Doctor: Jaime Sans Soria
+Clinic: Nebot-Pomares
+
+Prescription:
+Quisquam ut vel fuga unde ab magni officia.

@@ -1,0 +1,10 @@
+Patient Name: Nydia Cerdán Calvet
+Patient ID: 90723
+Date of Birth: 1956-10-24
+Clinic: Gálvez, Bermejo and Botella
+
+Annotations:
+- 2025-01-17: Minus vero suscipit dicta ea.
+- 2025-03-09: Assumenda fugit doloremque officiis assumenda ipsum aspernatur.
+- 2025-03-15: Sequi sunt et nisi ut.
+- 2025-01-14: Aspernatur rerum nihil neque.

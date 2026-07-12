@@ -1,0 +1,24 @@
+{
+ "patient_id": 55643,
+ "patient_name": "Francisco Chico Barón",
+ "patient_dob": "1955-10-23",
+ "clinic": "Barros-Martinez",
+ "annotations": [
+  {
+   "date": "2025-04-29",
+   "note": "Omnis doloremque natus atque voluptates odit dignissimos. Magni magnam eum iste."
+  },
+  {
+   "date": "2025-02-01",
+   "note": "Itaque veniam error libero eos ratione."
+  },
+  {
+   "date": "2025-02-04",
+   "note": "Atque sequi enim accusamus error perferendis. Consectetur nostrum accusamus numquam dolores a quas."
+  },
+  {
+   "date": "2025-02-24",
+   "note": "Ut fuga cumque aliquid voluptas sequi consectetur. Libero doloremque voluptatem dolor nulla nesciunt optio architecto."
+  }
+ ]
+}

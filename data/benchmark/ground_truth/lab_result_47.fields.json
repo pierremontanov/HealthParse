@@ -1,0 +1,30 @@
+{
+ "patient_id": 52046,
+ "patient_name": "Yago Escamilla Bru",
+ "patient_dob": "1940-05-30",
+ "exam_date": "2025-01-28",
+ "clinic": "Perea LLC",
+ "tests": [
+  {
+   "test_name": "Aliquid Test",
+   "reference_range": "10-50",
+   "patient_result": "13.11"
+  },
+  {
+   "test_name": "Similique Test",
+   "reference_range": "19-36",
+   "patient_result": "47.29"
+  },
+  {
+   "test_name": "Est Test",
+   "reference_range": "25-45",
+   "patient_result": "43.65"
+  },
+  {
+   "test_name": "Quae Test",
+   "reference_range": "14-53",
+   "patient_result": "40.06"
+  }
+ ],
+ "summary": "Earum iusto explicabo autem tempora voluptates magni velit quaerat optio corporis vero consectetur."
+}

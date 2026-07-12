@@ -1,0 +1,9 @@
+Patient Name: Kike Ledesma-Cámara
+Patient ID: 66086
+Date of Birth: 1935-04-15
+Date of Prescription: 2025-03-15
+Doctor: Teresita Peñalver Godoy
+Clinic: Prat, Pizarro and Villar
+
+Prescription:
+Consequuntur minima quos est ea illo.

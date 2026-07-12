@@ -1,0 +1,9 @@
+Patient Name: Ale Máximo Tudela Boada
+Patient ID: 13036
+Date of Birth: 1950-12-06
+Clinic: Rojas-Llobet
+
+Annotations:
+- 2025-03-17: Eum dolore laboriosam alias.
+- 2025-02-03: Rem sequi nostrum quaerat velit asperiores.
+- 2025-03-21: Id rerum odit commodi.

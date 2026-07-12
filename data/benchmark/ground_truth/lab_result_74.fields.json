@@ -1,0 +1,30 @@
+{
+ "patient_id": 77755,
+ "patient_name": "Susanita Pelayo Sanabria",
+ "patient_dob": "1945-01-04",
+ "exam_date": "2025-01-12",
+ "clinic": "Carranza LLC",
+ "tests": [
+  {
+   "test_name": "Ullam Test",
+   "reference_range": "10-36",
+   "patient_result": "17.35"
+  },
+  {
+   "test_name": "Molestias Test",
+   "reference_range": "20-40",
+   "patient_result": "29.22"
+  },
+  {
+   "test_name": "Alias Test",
+   "reference_range": "14-54",
+   "patient_result": "13.52"
+  },
+  {
+   "test_name": "Eos Test",
+   "reference_range": "16-50",
+   "patient_result": "18.24"
+  }
+ ],
+ "summary": "Neque adipisci at et aperiam commodi ut ipsum."
+}

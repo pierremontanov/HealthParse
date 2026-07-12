@@ -1,0 +1,25 @@
+{
+ "patient_id": 73850,
+ "patient_name": "Rufino de Crespi",
+ "patient_dob": "1997-07-29",
+ "exam_date": "2025-01-20",
+ "clinic": "Mulet, Valcárcel and Cordero",
+ "tests": [
+  {
+   "test_name": "Soluta Test",
+   "reference_range": "20-58",
+   "patient_result": "34.06"
+  },
+  {
+   "test_name": "Voluptatibus Test",
+   "reference_range": "22-38",
+   "patient_result": "11.80"
+  },
+  {
+   "test_name": "Nulla Test",
+   "reference_range": "24-59",
+   "patient_result": "20.94"
+  }
+ ],
+ "summary": "Cum ut blanditiis earum laboriosam incidunt consectetur."
+}

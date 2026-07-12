@@ -1,0 +1,30 @@
+{
+ "patient_id": 16955,
+ "patient_name": "Florentina Martina Vilalta Ariño",
+ "patient_dob": "1986-07-16",
+ "exam_date": "2025-01-29",
+ "clinic": "Ríos-Peral",
+ "tests": [
+  {
+   "test_name": "Temporibus Test",
+   "reference_range": "11-44",
+   "patient_result": "29.01"
+  },
+  {
+   "test_name": "Quas Test",
+   "reference_range": "23-46",
+   "patient_result": "36.76"
+  },
+  {
+   "test_name": "Recusandae Test",
+   "reference_range": "10-48",
+   "patient_result": "42.81"
+  },
+  {
+   "test_name": "Esse Test",
+   "reference_range": "13-50",
+   "patient_result": "46.59"
+  }
+ ],
+ "summary": "Numquam tempore minus aperiam tenetur fugit autem aut temporibus dignissimos sequi."
+}

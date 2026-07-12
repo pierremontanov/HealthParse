@@ -1,0 +1,30 @@
+{
+ "patient_id": 53245,
+ "patient_name": "Palmira de Flor",
+ "patient_dob": "1965-11-11",
+ "exam_date": "2025-04-08",
+ "clinic": "España and Sons",
+ "tests": [
+  {
+   "test_name": "Voluptates Test",
+   "reference_range": "19-51",
+   "patient_result": "12.89"
+  },
+  {
+   "test_name": "Ipsum Test",
+   "reference_range": "13-52",
+   "patient_result": "28.84"
+  },
+  {
+   "test_name": "Vitae Test",
+   "reference_range": "13-60",
+   "patient_result": "26.59"
+  },
+  {
+   "test_name": "Nemo Test",
+   "reference_range": "10-36",
+   "patient_result": "28.57"
+  }
+ ],
+ "summary": "Eius eum similique ipsum praesentium eum repudiandae magnam porro quidem optio enim doloribus consequatur eos."
+}

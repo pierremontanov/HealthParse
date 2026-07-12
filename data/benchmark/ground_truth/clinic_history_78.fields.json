@@ -1,0 +1,20 @@
+{
+ "patient_id": 73728,
+ "patient_name": "Calixto Seguí Fiol",
+ "patient_dob": "1921-11-27",
+ "clinic": "Díez Inc",
+ "annotations": [
+  {
+   "date": "2025-04-16",
+   "note": "Aspernatur nam dignissimos et dolorem quas explicabo natus. Officia consequatur nihil ipsa."
+  },
+  {
+   "date": "2025-01-18",
+   "note": "Dolores aliquam quos dolores minima voluptatem."
+  },
+  {
+   "date": "2025-02-17",
+   "note": "Debitis quas fugiat commodi unde impedit."
+  }
+ ]
+}

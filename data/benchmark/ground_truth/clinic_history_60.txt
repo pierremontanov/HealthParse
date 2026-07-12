@@ -1,0 +1,10 @@
+Patient Name: Geraldo Soto
+Patient ID: 11134
+Date of Birth: 1958-03-20
+Clinic: Villa, Camps and Castellanos
+
+Annotations:
+- 2025-01-18: Blanditiis tempore enim mollitia praesentium iusto soluta nulla. Odit quae dolore sunt animi pariatur accusantium.
+- 2025-05-01: Velit qui in odio maxime expedita assumenda quibusdam. Quidem rerum expedita tempora consequuntur mollitia.
+- 2025-03-09: Corrupti blanditiis eveniet perspiciatis officiis quis.
+- 2025-02-17: Ut cumque magni explicabo nostrum voluptatibus est. Cum optio itaque eaque sequi blanditiis tenetur.

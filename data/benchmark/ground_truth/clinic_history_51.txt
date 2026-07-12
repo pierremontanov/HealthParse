@@ -1,0 +1,9 @@
+Patient Name: Sandalio Vidal
+Patient ID: 39846
+Date of Birth: 1996-08-21
+Clinic: Pagès and Sons
+
+Annotations:
+- 2025-02-05: Atque incidunt a et dolore soluta ipsa.
+- 2025-04-16: Ipsam aliquid molestias amet odit.
+- 2025-02-12: Autem doloremque veritatis.

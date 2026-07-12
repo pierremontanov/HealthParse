@@ -1,0 +1,68 @@
+{
+ "run_name": "smoke",
+ "timestamp": "2026-07-08T09:44:39",
+ "ocr_model": "pp-ocrv4",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "python": "3.12.10",
+ "tiers": [
+  "clean"
+ ],
+ "summary": {
+  "overall": {
+   "model_load_s": 26.7,
+   "peak_rss_mb": 750.8
+  },
+  "per_tier": {
+   "clean": {
+    "files": 2,
+    "cer_median": 0.3034,
+    "wer_median": 0.5914,
+    "accent_acc_median": null,
+    "field_recall_median": 0.5952,
+    "cls_accuracy": 1.0,
+    "validated_rate": 1.0,
+    "latency_p50_s": 7.1565,
+    "latency_p95_s": 6.547,
+    "errors": 0
+   }
+  }
+ },
+ "results": [
+  {
+   "id": "prescription_1_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "prescription",
+   "language": "en",
+   "latency_s": 6.547,
+   "status": "ok",
+   "predicted_type": "prescription",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.3857,
+   "wer": 0.5862,
+   "accent_acc": null,
+   "field_recall": 0.5714,
+   "fields_found": 4,
+   "fields_total": 7
+  },
+  {
+   "id": "lab_result_2_clean",
+   "tier": "clean",
+   "variant": null,
+   "doc_type": "result",
+   "language": "en",
+   "latency_s": 7.766,
+   "status": "ok",
+   "predicted_type": "result",
+   "cls_ok": true,
+   "validated": true,
+   "cer": 0.221,
+   "wer": 0.5965,
+   "accent_acc": null,
+   "field_recall": 0.619,
+   "fields_found": 13,
+   "fields_total": 21
+  }
+ ]
+}
