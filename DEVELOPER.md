@@ -67,12 +67,14 @@ The `InferenceEngine._apply_model()` method supports multiple model interfaces. 
 
 ### OCR engine
 
-DocIQ uses PaddleOCR 3.4+ (PP-OCRv4 models) for all OCR tasks. The engine is managed as a thread-safe singleton in `src/pipeline/ocr_paddle.py` with double-checked locking. Key design decisions:
+DocIQ uses PaddleOCR 3.6+ for all OCR tasks, with **PP-OCRv6_tiny** as the default model. Engines are managed as thread-safe singletons in `src/pipeline/ocr_paddle.py` (double-checked locking, one cached instance per model name). Key design decisions:
 
-- **`enable_mkldnn=False`** -- Critical fix that bypasses the broken oneDNN/PIR code path in PaddlePaddle 3.x. This flows through PaddleX's config chain to force `run_mode="paddle"`.
-- **`lang="en"`** -- The English/Latin model handles all Latin-script languages including Spanish. PP-OCRv4 has no dedicated Spanish model.
-- **Sequential page processing** -- PaddleOCR is not thread-safe, so pages are processed one at a time (unlike PyMuPDF direct extraction which uses a thread pool).
-- **Accent stripping** -- PaddleOCR with the Latin model strips accents from Spanish text (e.g. "años" → "anos", "Cédula" → "Cedula"). The accent-flexible regex system compensates for this.
+- **Configurable model tier** -- `settings.ocr_model` (`DOCIQ_OCR_MODEL`) selects the engine: `pp-ocrv6_tiny` (default), `pp-ocrv6_small`, `pp-ocrv6_medium`, or the legacy `pp-ocrv4`. `_build_ocr_kwargs()` translates the setting into PaddleOCR constructor arguments; `ocr_det_model` allows an explicit detection-model override.
+- **Why v6_tiny is the default** -- a 584-document benchmark (July 2026, see `DocIQ_OCR_Benchmark_Report.docx`) showed v6_tiny cuts median CER by 61% on degraded documents and 30% on real Spanish scans versus PP-OCRv4, at 3.3x lower latency and with perfect-to-near-perfect Spanish accent preservation. `pp-ocrv6_small` halves the remaining real-document error again at ~2x tiny's latency.
+- **Multilingual recognition** -- PP-OCRv6 uses a single model covering 50 languages including Spanish, so no `lang` parameter is needed. The legacy `pp-ocrv4` path keeps `lang="en"` (English/Latin dictionary), which **strips Spanish accents** -- the historical reason `_accent_flex()` exists.
+- **`enable_mkldnn=False`** -- Bypasses the broken oneDNN/PIR code path in PaddlePaddle 3.x (flows through PaddleX's config chain to force `run_mode="paddle"`). Kept for both v4 and v6 for configuration parity; revisit for v6 in a future pass.
+- **Sequential page processing** -- PaddleOCR is not thread-safe within a process, so pages are processed one at a time (unlike PyMuPDF direct extraction which uses a thread pool). File-level parallelism across processes is safe.
+- **Model downloads** -- weights auto-download on first use to `~/.paddlex/official_models/`; pre-fetch with `python -m src.pipeline.ocr_paddle --download` (honours the configured model).
 
 ### Accent-flexible regex
 
@@ -84,6 +86,8 @@ _accent_flex("Identificacion")
 ```
 
 This is applied automatically inside `extract_field()`, `extract_date()`, and `extract_block()`, so all alias lists work transparently with both text sources. Developers only need to add one spelling per alias (unaccented preferred).
+
+Note: with PP-OCRv6 as the default engine, accents survive OCR (benchmark: 1.0 accent accuracy), so this layer is now defensive rather than essential. It remains in place for the `pp-ocrv4` fallback path and for documents whose *printed* accents are inconsistent; simplifying it is on the backlog.
 
 ### Raw text preservation
 
